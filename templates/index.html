@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Liquidity Rates</title>
+    <style>
+      table {
+        width: 50%;
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 18px;
+        text-align: left;
+      }
+      th,
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Money Market Rates</h1>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Token</th>
+          <th>Lending Rate</th>
+          <th>Borrowing Rate</th>
+          <th>Last updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for rate in rates %}
+        <tr>
+          <td>{{rate.protocol}}</td>
+
+          <td>{{ rate.token }}</td>
+          <td>{{ rate.liquidity_rate }}%</td>
+          <td>{{ rate.borrow_rate }}%</td>
+          <td>{{ rate.timestamp}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
