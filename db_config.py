@@ -18,4 +18,5 @@ class MoneyMarketRate(db.Model):
     token = db.Column(db.String(10), nullable=False)
     liquidity_rate = db.Column(db.Float, nullable=False)
     borrow_rate = db.Column(db.Float, nullable=False)
+    tvl = db.Column(db.Float, nullable=False, default=0)
     timestamp = db.Column(db.DateTime, default=datetime.now)

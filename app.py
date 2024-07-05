@@ -84,6 +84,13 @@ def get_liquidity_rates():
         else:
             rate.tvl_formatted = "N/A"  # or any default value you'd like to show
 
+    for rate in latest_rates:
+        if rate.liquidity_rate is not None:
+            rate.liquidity_rate = f"{rate.liquidity_rate:,.2f}"
+        else:
+            rate.liquidity_rate = "N/A"  # or any default value you'd like to show
+
+
     return render_template('index.html', rates=latest_rates)
 
 @app.route('/fetch_rates')

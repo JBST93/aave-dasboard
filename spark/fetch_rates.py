@@ -50,11 +50,15 @@ def fetch_store_rates():
             # Convert to percentage
             APY = apr_continuous * 100 #DSR rate
 
+            tvl = pool_contract.functions.Pie().call()
+            tvl_transformed = tvl / 1e18
+
             rate = MoneyMarketRate(
                 token=token,
                 protocol="Maker DAO",
                 liquidity_rate=APY,
-                borrow_rate=0,
+                borrow_rate="N/A",
+                tvl=tvl_transformed,
                 timestamp=datetime.utcnow()
             )
             db.session.add(rate)
