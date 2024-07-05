@@ -36,7 +36,7 @@ class MoneyMarketRate(db.Model):
 
 
 # Initialize Web3
-infura_url = os.getenv("INFURA_URL")
+infura_url = os.getenv('INFURA_URL')
 web3 = Web3(Web3.HTTPProvider(infura_url))
 
 # Load ABI from JSON files
@@ -98,7 +98,7 @@ def fetch_store_rates():
 
             rate = MoneyMarketRate(
                 token=token,
-                protocol="Aave",
+                protocol="Aave V3",
                 liquidity_rate=float(transformed_liquidity_rate),
                 borrow_rate=float(transformed_borrow_rate),
                 timestamp=datetime.utcnow()

@@ -30,7 +30,7 @@
     <table>
       <thead>
         <tr>
-          <th></th>
+          <th>Market</th>
           <th>Token</th>
           <th>Lending Rate</th>
           <th>Borrowing Rate</th>
@@ -40,12 +40,11 @@
       <tbody>
         {% for rate in rates %}
         <tr>
-          <td>{{rate.protocol}}</td>
-
+          <td>{{ rate.protocol }}</td>
           <td>{{ rate.token }}</td>
           <td>{{ rate.liquidity_rate }}%</td>
           <td>{{ rate.borrow_rate }}%</td>
-          <td>{{ rate.timestamp}}</td>
+          <td>{{ rate.timestamp }}</td>
         </tr>
         {% endfor %}
       </tbody>
