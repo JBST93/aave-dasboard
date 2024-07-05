@@ -22,7 +22,7 @@ infura_url = os.getenv('INFURA_URL')
 web3 = Web3(Web3.HTTPProvider(infura_url))
 
 pool_contract_address = "0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7" #DSR contract
-token = "DAI"
+token = "DAI (DSR)"
 
 with open('sdai_abi.json') as f:
     try:
@@ -52,7 +52,7 @@ def fetch_store_rates():
 
             rate = MoneyMarketRate(
                 token=token,
-                protocol="DSR",
+                protocol="Maker DAO",
                 liquidity_rate=APY,
                 borrow_rate=0,
                 timestamp=datetime.utcnow()
