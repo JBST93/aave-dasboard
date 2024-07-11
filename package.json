@@ -5,12 +5,8 @@
   "scripts": {
     "build": "npm install --prefix frontend && npm run build --prefix frontend"
   },
-  "dependencies": {
-    // Your existing dependencies
-  },
-  "devDependencies": {
-    // Your existing devDependencies
-  },
+  "dependencies": {},
+  "devDependencies": {},
   "engines": {
     "node": ">=14.x"
   }
