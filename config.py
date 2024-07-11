@@ -7,10 +7,10 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL2')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
 
 class ProductionConfig(Config):
-    DEVELOPMENT = True
+    DEVELOPMENT = False
     DEBUG = False
 
 class StagingConfig(Config):
