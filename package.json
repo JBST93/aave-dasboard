@@ -1,9 +1,9 @@
 {
   "name": "defi-dashboard",
   "version": "1.0.0",
-  "private": true,
   "scripts": {
-    "heroku-postbuild": "npm install --prefix frontend && npm run build --prefix frontend"
+    "start": "gunicorn app:app",
+    "postinstall": "npm install --prefix frontend && npm run build --prefix frontend"
   },
   "engines": {
     "node": ">=14.x"
