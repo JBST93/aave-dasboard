@@ -9,7 +9,7 @@ from flask_cors import CORS
 
 load_dotenv()
 
-app = Flask(__name__, static_folder='../frontend/build', static_url_path='')
+app = Flask(__name__, static_folder='../frontend/dist', static_url_path='')
 app.config.from_object(os.getenv('APP_SETTINGS', 'config.DevelopmentConfig'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
