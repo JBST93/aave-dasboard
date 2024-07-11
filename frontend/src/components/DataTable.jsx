@@ -36,7 +36,7 @@ export default function DataTable({ rows }) {
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 20 },
+            paginationModel: { page: 0, pageSize: 40 },
           },
         }}
         pageSizeOptions={[5, 50]}

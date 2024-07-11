@@ -1,7 +1,6 @@
 import React from 'react';
 import FetchData from './components/FetchData';
 import Footer from './components/Footer';
-import Statistics from './components/Statistics';
 
 import './App.css';
 
