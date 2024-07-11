@@ -7,7 +7,6 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL_DEV').replace("postgres://", "postgresql://")
 
 class ProductionConfig(Config):
     DEVELOPMENT = False
@@ -18,7 +17,10 @@ class ProductionConfig(Config):
 class StagingConfig(Config):
     DEVELOPMENT = False
     TESTING = True
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL_DEV').replace("postgres://", "postgresql://")
+
 
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL_DEV').replace("postgres://", "postgresql://")
