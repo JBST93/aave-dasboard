@@ -9,7 +9,7 @@ from flask_cors import CORS
 
 load_dotenv()
 
-app = Flask(__name__, static_folder='../frontend/dist', static_url_path='')
+app = Flask(__name__, static_folder='frontend/dist', static_url_path='')
 app.config.from_object(os.getenv('APP_SETTINGS', 'config.DevelopmentConfig'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -55,9 +55,10 @@ def get_liquidity_rates():
 
     return jsonify(rates_list)
 
-@app.route('/')
+
+@app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
-def serve_react_app(path=''):
+def serve_react_app(path):
     if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
         return send_from_directory(app.static_folder, path)
     else:
