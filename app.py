@@ -58,9 +58,14 @@ def get_liquidity_rates():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve_react_app(path):
+    print(f"Requested path: {path}")
+    print(f"Static folder: {app.static_folder}")
+    print(f"Full path: {os.path.join(app.static_folder, path)}")
     if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        print("Serving static file.")
         return send_from_directory(app.static_folder, path)
     else:
+        print("Serving index.html")
         return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
