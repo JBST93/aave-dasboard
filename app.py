@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dotenv import load_dotenv
@@ -9,7 +9,7 @@ from flask_cors import CORS
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend/build', static_url_path='')
 app.config.from_object(os.getenv('APP_SETTINGS', 'config.DevelopmentConfig'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -18,8 +18,11 @@ migrate = Migrate(app, db)
 
 CORS(app)
 
-
 @app.route('/')
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/api/liquidity_rates')
 def get_liquidity_rates():
     from instances.MoneyMarketRate import MoneyMarketRate as MMR
 
@@ -57,6 +60,10 @@ def get_liquidity_rates():
     ]
 
     return jsonify(rates_list)
+
+@app.route('/<path:path>')
+def static_proxy(path):
+    return send_from_directory(app.static_folder, path)
 
 if __name__ == '__main__':
     from jobs.fetch_store_data import fetch_store_data, start_scheduler
