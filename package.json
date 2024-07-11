@@ -1,0 +1,9 @@
+{
+  "name": "defi-dashboard",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "echo 'This is a placeholder command.'",
+    "build": "npm run build --prefix frontend"
+  },
+  "dependencies": {}
+}
