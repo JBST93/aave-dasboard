@@ -5,30 +5,32 @@ import sys
 import json
 import math
 from datetime import datetime
+from app import app, db
 
 # Ensure the root directory is in the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
 
-# Import the db and MoneyMarketRate from db_config
-from db_config import app, db, MoneyMarketRate
-
-# Load environment variables
 load_dotenv(os.path.join(project_root, '.env'))
 
+
+from instances.MoneyMarketRate import MoneyMarketRate
 
 # Connect to an Ethereum node
 infura_url = os.getenv('INFURA_URL')
 web3 = Web3(Web3.HTTPProvider(infura_url))
 
 pool_contract_address = "0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7" #DSR contract
-token = "DAI (DSR)"
+token = "DAI"
 
-with open('sdai_abi.json') as f:
+abi_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dsr_abi.json')
+
+
+with open(abi_path) as f:
     try:
         provider_abi = json.load(f)
     except FileNotFoundError:
-        print("ABI file not found. Please make sure 'sdai_abi.json' is in the current directory.")
+        print("ABI file not found. Please make sure 'dsr_abi.json' is in the current directory.")
         exit(1)
 
 pool_contract = web3.eth.contract(address=pool_contract_address, abi=provider_abi)
@@ -55,22 +57,20 @@ def fetch_store_rates():
 
             rate = MoneyMarketRate(
                 token=token,
-                protocol="Maker DAO",
+                protocol="Maker (DSR)",
                 liquidity_rate=APY,
-                borrow_rate="N/A",
                 tvl=tvl_transformed,
-                timestamp=datetime.utcnow()
+                timestamp=datetime.utcnow(),
+                chain="Ethereum",
+                borrow_rate=0
             )
             db.session.add(rate)
             db.session.commit()
-            print("Fetched")
-
+            print("sDAI Fetched")
 
     except Exception as e:
         print(f"Error fetching {token} Saving Rate: {e}", 500)
 
-    # return "Fetched"
-
-
+# return "Fetched"
 
 fetch_store_rates()

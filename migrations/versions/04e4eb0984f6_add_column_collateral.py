@@ -1,4 +1,4 @@
-"""Increase length of token column in MoneyMarketRate
+"""add column collateral in MoneyMarketRate
 
 Revision ID: 04e4eb0984f6
 Revises: bf60f00425af

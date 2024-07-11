@@ -3,16 +3,20 @@ import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
   { field: 'sequentialId', headerName: '', width: 70 },
-  { field: 'token', headerName: 'Market', width: 130 },
+  { field: 'token', headerName: 'Market', width: 100 },
+  { field: 'collateral', headerName: 'Collateral', width: 100 },
+
   { field: 'protocol', headerName: 'Project', width: 130 },
+  { field: 'chain', headerName: 'Chain', width: 150 },
   {
-    field: 'liquidity_rate',
+    field: 'liquidity_rate_formatted',
     headerName: 'APY',
     type: 'number',
     width: 80,
+    renderCell: (params) => `${params.value}%`,
   },
   {
-    field: 'tvl',
+    field: 'tvl_formatted',
     headerName: 'Amount Supplied',
     type: 'number',
     width: 150,

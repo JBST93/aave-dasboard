@@ -5,13 +5,13 @@ import sys
 import json
 import math
 from datetime import datetime
+from app import app,db
+from instances.MoneyMarketRate import MoneyMarketRate
+
 
 # Ensure the root directory is in the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
-
-# Import the db and MoneyMarketRate from db_config
-from db_config import app, db, MoneyMarketRate
 
 # Load environment variables
 load_dotenv(os.path.join(project_root, '.env'))
@@ -27,7 +27,14 @@ pool_contract_address = {
     "GHO": "0x4d56c9cBa373AD39dF69Eb18F076b7348000AE09",
     "DAI": "0xe7146F53dBcae9D6Fa3555FE502648deb0B2F823"
 }
-with open('gearbox_abi.json') as f:
+
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the absolute path to the aave_abi.json file
+abi_path = os.path.join(script_dir, 'gearbox_abi.json')
+
+with open(abi_path) as f:
     try:
         provider_abi = json.load(f)
     except FileNotFoundError:
@@ -35,6 +42,7 @@ with open('gearbox_abi.json') as f:
 
 
 def fetch_store_rates():
+    print("Starting to Fetch Data for Gearbox")
     with app.app_context():
         try:
             for token,value in pool_contract_address.items():
@@ -47,9 +55,12 @@ def fetch_store_rates():
                 supply_apy = supply_apy_raw / 1e27 * 100
 
                 total_supply_raw = pool_contract.functions.totalSupply().call()
-                total_supply = total_supply_raw/1e6
+                if token == "USDC" or token =="USDT":
+                    total_supply = total_supply_raw/1e6
+                else:
+                    total_supply = total_supply_raw/1e18
 
-                print(total_supply)
+
 
 
                 rate = MoneyMarketRate(
@@ -57,21 +68,18 @@ def fetch_store_rates():
                     protocol="Gearbox",
                     liquidity_rate=supply_apy,
                     borrow_rate=0,
+                    chain='Ethereum',
                     tvl=total_supply,
                     timestamp=datetime.utcnow()
                 )
                 db.session.add(rate)
-                print("Fetched")
 
 
         except Exception as e:
             print(f"Error fetching {token} Saving Rate: {e}", 500)
+        print("Gearbox Fetched")
 
         db.session.commit()
 
 
     # return "Fetched"
-
-
-
-fetch_store_rates()

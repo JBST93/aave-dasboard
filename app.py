@@ -1,79 +1,66 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from web3 import Web3
-import json
-from datetime import datetime
 from dotenv import load_dotenv
 import os
 import humanize
+from datetime import datetime
+from flask_cors import CORS
 
-
-# Load environment variables from .env file
 load_dotenv()
 
-
 app = Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///liquidity_rates.db'
+app.config.from_object(os.getenv('APP_SETTINGS', 'config.DevelopmentConfig'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-class MoneyMarketRate(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    protocol = db.Column(db.String(15), nullable=False)
-    token = db.Column(db.String(10), nullable=False)
-    liquidity_rate = db.Column(db.Float, nullable=False)
-    borrow_rate = db.Column(db.Float, nullable=False)
-    tvl = db.Column(db.Float, nullable=False, default=0)
-    timestamp = db.Column(db.DateTime, default=datetime.now)
+CORS(app)
+
 
 @app.route('/')
 def get_liquidity_rates():
-      # Subquery to get the latest timestamp for each token-protocol combination
+    from instances.MoneyMarketRate import MoneyMarketRate as MMR
+
+    # Subquery to get the latest timestamp for each token-protocol-collateral-chain combination
     subquery = (
         db.session.query(
-            MoneyMarketRate.token,
-            MoneyMarketRate.protocol,
-            db.func.max(MoneyMarketRate.timestamp).label('latest')
+            MMR.token,
+            MMR.protocol,
+            MMR.collateral,
+            MMR.chain,
+            db.func.max(MMR.timestamp).label('latest')
         )
-        .group_by(MoneyMarketRate.token, MoneyMarketRate.protocol)
+        .group_by(MMR.token, MMR.protocol, MMR.collateral, MMR.chain)
         .subquery()
     )
 
-    # Query to get the latest rates based on the subquery
-    latest_rates = db.session.query(MoneyMarketRate).join(
+    # Main query to get the latest rates based on the subquery
+    latest_rates = db.session.query(MMR).join(
         subquery,
-        (MoneyMarketRate.token == subquery.c.token) &
-        (MoneyMarketRate.protocol == subquery.c.protocol) &
-        (MoneyMarketRate.timestamp == subquery.c.latest)
-    ).order_by(MoneyMarketRate.liquidity_rate.desc()).all()
+        (MMR.token == subquery.c.token) &
+        (MMR.protocol == subquery.c.protocol) &
+        (MMR.chain == subquery.c.chain) &
+        ((MMR.collateral == subquery.c.collateral) | (MMR.collateral.is_(None) & subquery.c.collateral.is_(None))) &
+        (MMR.timestamp == subquery.c.latest)
+    ).order_by(MMR.liquidity_rate.desc()).all()
 
-    for rate in latest_rates:
-        if rate.tvl is not None:
-            rate.tvl_formatted = f"{rate.tvl:,.0f}"
-        else:
-            rate.tvl_formatted = "N/A"  # or any default value you'd like to show
+    rates_list = [
+        {
+            **rate.to_dict(),
+            'tvl_formatted': f"{rate.tvl:,.0f}" if rate.tvl is not None else "N/A",
+            'liquidity_rate_formatted': f"{rate.liquidity_rate:,.2f}" if rate.liquidity_rate is not None else "N/A",
+            'humanized_timestamp': humanize.naturaltime(datetime.utcnow() - rate.timestamp)
+        }
+        for rate in latest_rates
+    ]
 
-    for rate in latest_rates:
-        if rate.liquidity_rate is not None:
-            rate.liquidity_rate = f"{rate.liquidity_rate:,.2f}"
-        else:
-            rate.liquidity_rate = "N/A"  # or any default value you'd like to show
-
-        rate.humanized_timestamp = humanize.naturaltime(datetime.utcnow() - rate.timestamp)
-
-
-    return render_template('index.html', rates=latest_rates)
-
-@app.shell_context_processor
-def make_shell_context():
-    return {'db': db, 'MoneyMarketRate': MoneyMarketRate}
+    return jsonify(rates_list)
 
 if __name__ == '__main__':
+    from jobs.fetch_store_data import fetch_store_data, start_scheduler
     with app.app_context():
         db.create_all()  # Ensure the database and tables are created
+        scheduler = start_scheduler()
     app.run(debug=True)
