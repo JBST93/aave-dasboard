@@ -64,7 +64,7 @@ def serve_react_app(path):
         return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
-    from jobs.jobs import fetch_store_data
+    from jobs.schedule import fetch_store_data
     with app.app_context():
         fetch_store_data()
         db.create_all()  # Ensure the database and tables are created
