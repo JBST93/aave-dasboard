@@ -1,1 +1,1 @@
-web: gunicorn app:app
+web: npm run build --prefix frontend && gunicorn app:app
