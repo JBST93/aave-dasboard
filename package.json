@@ -1,9 +1,12 @@
 {
   "name": "defi-dashboard",
   "version": "1.0.0",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "start": "echo 'This is a placeholder command.'",
-    "build": "npm run build --prefix frontend"
+    "build": "npm install --prefix frontend && npm run build --prefix frontend"
   },
   "dependencies": {}
 }

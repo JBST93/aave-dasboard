@@ -1,2 +1,2 @@
-release: npm run build --prefix frontend
+release: npm install --prefix frontend && npm run build --prefix frontend
 web: gunicorn app:app
