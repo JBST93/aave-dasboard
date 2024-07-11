@@ -61,6 +61,7 @@ def serve_react_app(path):
     print(f"Requested path: {path}")
     print(f"Static folder: {app.static_folder}")
     print(f"Full path: {os.path.join(app.static_folder, path)}")
+    print(f"Files in directory: {os.listdir(app.static_folder)}")
     if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
         print("Serving static file.")
         return send_from_directory(app.static_folder, path)
@@ -73,4 +74,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()  # Ensure the database and tables are created
         scheduler = start_scheduler()
-    app.run(debug=False)
+    app.run(debug=True)
