@@ -10,7 +10,7 @@ const FetchData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/');
+        const response = await axios.get('/api/liquidity_rates');
         console.log('Response from Flask:', response); // Log the response
 
         // Transform data to include sequential IDs

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://defi-dashboard-99d015fc546e.herokuapp.com/', // Replace with your Flask backend URL
+  baseURL: process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000', // Use environment variable or default to localhost for development
 });
 
 export default instance;
