@@ -59,16 +59,13 @@ def get_liquidity_rates():
 @app.route('/<path:path>')
 def serve_react_app(path):
     if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-        print("Serving static file.")
         return send_from_directory(app.static_folder, path)
     else:
-        print("Serving index.html")
         return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
-    from jobs.fetch_store_data import fetch_store_data, start_scheduler
+    from jobs.jobs import fetch_store_data
     with app.app_context():
         fetch_store_data()
         db.create_all()  # Ensure the database and tables are created
-        scheduler = start_scheduler()
-    app.run(debug=True)
+    app.run(debug=False)
