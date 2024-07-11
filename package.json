@@ -3,10 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "npm install --prefix frontend && npm run build --prefix frontend"
+    "heroku-postbuild": "npm install --prefix frontend && npm run build --prefix frontend"
   },
-  "dependencies": {},
-  "devDependencies": {},
   "engines": {
     "node": ">=14.x"
   }
