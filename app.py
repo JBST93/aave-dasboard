@@ -18,15 +18,10 @@ migrate = Migrate(app, db)
 
 CORS(app)
 
-@app.route('/')
-def serve():
-    return send_from_directory(app.static_folder, 'index.html')
-
 @app.route('/api/liquidity_rates')
 def get_liquidity_rates():
     from instances.MoneyMarketRate import MoneyMarketRate as MMR
 
-    # Subquery to get the latest timestamp for each token-protocol-collateral-chain combination
     subquery = (
         db.session.query(
             MMR.token,
@@ -39,7 +34,6 @@ def get_liquidity_rates():
         .subquery()
     )
 
-    # Main query to get the latest rates based on the subquery
     latest_rates = db.session.query(MMR).join(
         subquery,
         (MMR.token == subquery.c.token) &
@@ -61,9 +55,13 @@ def get_liquidity_rates():
 
     return jsonify(rates_list)
 
+@app.route('/')
 @app.route('/<path:path>')
-def static_proxy(path):
-    return send_from_directory(app.static_folder, path)
+def serve_react_app(path=''):
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
     from jobs.fetch_store_data import fetch_store_data, start_scheduler
