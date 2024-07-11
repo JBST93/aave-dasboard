@@ -55,7 +55,6 @@ def get_liquidity_rates():
 
     return jsonify(rates_list)
 
-
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve_react_app(path):
