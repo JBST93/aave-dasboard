@@ -5,19 +5,19 @@ import Filter from './Filter'; // Import the Filter component
 
 const FetchData = () => {
   const [data, setData] = useState([]);
-  const [filter, setFilter] = useState(''); // State for the filter input
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/liquidity_rates');
-        console.log('Response from Flask:', response); // Log the response
 
         // Transform data to include sequential IDs
         const transformedData = response.data.map((item, index) => ({
           ...item,
           sequentialId: index + 1, // Add a sequential ID starting from 1
           id: item.id, // Ensure each row has a unique `id` field for DataGrid
+          tvl_formatted2: Math.round(item.tvl),
         }));
 
         setData(transformedData);

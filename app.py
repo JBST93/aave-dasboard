@@ -41,13 +41,13 @@ def get_liquidity_rates():
         (MMR.chain == subquery.c.chain) &
         ((MMR.collateral == subquery.c.collateral) | (MMR.collateral.is_(None) & subquery.c.collateral.is_(None))) &
         (MMR.timestamp == subquery.c.latest)
-    ).order_by(MMR.liquidity_rate.desc()).all()
+    ).order_by(MMR.tvl.desc()).all()
 
     rates_list = [
         {
             **rate.to_dict(),
-            'tvl_formatted': f"{rate.tvl:,.0f}" if rate.tvl is not None else "N/A",
-            'liquidity_rate_formatted': f"{rate.liquidity_rate:,.2f}" if rate.liquidity_rate is not None else "N/A",
+            'tvl_formatted': f"{rate.tvl:,.0f}" if rate.tvl is not None else 0,
+            'liquidity_rate_formatted': f"{rate.liquidity_rate:,.2f}" if rate.liquidity_rate is not None else 0,
             'humanized_timestamp': humanize.naturaltime(datetime.utcnow() - rate.timestamp)
         }
         for rate in latest_rates

@@ -24,9 +24,10 @@ const DataTable = ({ rows }) => {
           cellClassName: 'sticky',
         },
         {
-          field: 'tvl_formatted',
+          field: 'tvl_formatted2',
           headerName: 'Supplied',
           type: 'number',
+          sortable: true,
           minWidth: 150,
           cellClassName: 'sticky',
         },
@@ -49,9 +50,10 @@ const DataTable = ({ rows }) => {
           renderCell: (params) => `${params.value}%`,
         },
         {
-          field: 'tvl_formatted',
+          field: 'tvl_formatted2',
           headerName: 'Amount Supplied',
           type: 'number',
+          sortable: true,
           width: 150,
         },
         {
