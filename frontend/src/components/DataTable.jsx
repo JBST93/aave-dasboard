@@ -13,12 +13,9 @@ const DataTable = ({ rows }) => {
           headerName: 'Market',
           width: 90,
           pinned: 'left',
+          cellClassName: 'sticky',
         },
-        {
-          field: 'collateral',
-          headerName: 'Collateral',
-          width: 90,
-        },
+
         {
           field: 'liquidity_rate_formatted',
           headerName: 'APY',
@@ -31,6 +28,11 @@ const DataTable = ({ rows }) => {
           headerName: 'Supplied',
           type: 'number',
           width: 120,
+        },
+        {
+          field: 'collateral',
+          headerName: 'Collateral',
+          width: 90,
         },
       ]
     : [
@@ -72,6 +74,19 @@ const DataTable = ({ rows }) => {
         pageSize={5}
         rowsPerPageOptions={[5, 10, 20]}
         disableSelectionOnClick
+        disableColumnResize={true}
+        sx={{
+          '& .sticky': {
+            position: 'sticky',
+            left: 0,
+            backgroundColor: 'inherit',
+            zIndex: 1,
+          },
+          '& .MuiDataGrid-root': {
+            width: '100%',
+            overflowX: 'auto',
+          },
+        }}
       />
     </Box>
   );
