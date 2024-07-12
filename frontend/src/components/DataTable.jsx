@@ -1,46 +1,88 @@
-import * as React from 'react';
+import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { useMediaQuery } from '@mui/material';
+import Box from '@mui/material/Box';
 
-const columns = [
-  { field: 'sequentialId', headerName: '', width: 70 },
-  { field: 'token', headerName: 'Market', width: 100 },
-  { field: 'collateral', headerName: 'Collateral', width: 100 },
+const DataTable = ({ rows }) => {
+  const isSmallScreen = useMediaQuery('(max-width:600px)');
 
-  { field: 'protocol', headerName: 'Project', width: 130 },
-  { field: 'chain', headerName: 'Chain', width: 150 },
-  {
-    field: 'liquidity_rate_formatted',
-    headerName: 'APY',
-    type: 'number',
-    width: 80,
-    renderCell: (params) => `${params.value}%`,
-  },
-  {
-    field: 'tvl_formatted',
-    headerName: 'Amount Supplied',
-    type: 'number',
-    width: 150,
-  },
-  {
-    field: 'humanized_timestamp',
-    headerName: 'Last Updated',
-    width: 160,
-  },
-];
+  const columns = isSmallScreen
+    ? [
+        {
+          field: 'token',
+          headerName: 'Market',
+          width: 150,
+          headerClassName: 'super-app-theme--header',
+          cellClassName: 'super-app-theme--cell',
+          pinned: 'left',
+        },
+        {
+          field: 'liquidity_rate_formatted',
+          headerName: 'APY',
+          type: 'number',
+          width: 100,
+          renderCell: (params) => `${params.value}%`,
+        },
+        {
+          field: 'tvl_formatted',
+          headerName: 'Amount Supplied',
+          type: 'number',
+          width: 150,
+        },
+        // Other fields
+      ]
+    : [
+        { field: 'sequentialId', headerName: '#', width: 70 },
+        {
+          field: 'token',
+          headerName: 'Market',
+          width: 150,
+          headerClassName: 'super-app-theme--header',
+          cellClassName: 'super-app-theme--cell',
+          pinned: 'left',
+        },
+        { field: 'collateral', headerName: 'Collateral', width: 100 },
+        { field: 'protocol', headerName: 'Project', width: 130 },
+        { field: 'chain', headerName: 'Chain', width: 150 },
+        {
+          field: 'liquidity_rate_formatted',
+          headerName: 'APY',
+          type: 'number',
+          width: 100,
+          renderCell: (params) => `${params.value}%`,
+        },
+        {
+          field: 'tvl_formatted',
+          headerName: 'Amount Supplied',
+          type: 'number',
+          width: 150,
+        },
+        {
+          field: 'humanized_timestamp',
+          headerName: 'Last Updated',
+          width: 160,
+        },
+      ];
 
-export default function DataTable({ rows }) {
   return (
-    <div style={{ height: '100%', width: '100%' }}>
+    <Box sx={{ height: 600, width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 40 },
+        pageSize={5}
+        rowsPerPageOptions={[5, 10, 20]}
+        disableSelectionOnClick
+        sx={{
+          '& .super-app-theme--header': {
+            backgroundColor: 'rgba(255, 7, 0, 0.55)',
+          },
+          '& .super-app-theme--cell': {
+            backgroundColor: 'rgba(255, 7, 0, 0.55)',
           },
         }}
-        pageSizeOptions={[5, 50]}
       />
-    </div>
+    </Box>
   );
-}
+};
+
+export default DataTable;
