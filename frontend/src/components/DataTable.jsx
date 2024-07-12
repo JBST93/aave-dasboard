@@ -12,8 +12,6 @@ const DataTable = ({ rows }) => {
           field: 'token',
           headerName: 'Market',
           width: 150,
-          headerClassName: 'super-app-theme--header',
-          cellClassName: 'super-app-theme--cell',
           pinned: 'left',
         },
         {
@@ -29,7 +27,14 @@ const DataTable = ({ rows }) => {
           type: 'number',
           width: 150,
         },
-        // Other fields
+        { field: 'collateral', headerName: 'Collateral', width: 100 },
+        { field: 'protocol', headerName: 'Project', width: 130 },
+        { field: 'chain', headerName: 'Chain', width: 150 },
+        {
+          field: 'humanized_timestamp',
+          headerName: 'Last Updated',
+          width: 160,
+        },
       ]
     : [
         { field: 'sequentialId', headerName: '#', width: 70 },
@@ -37,8 +42,6 @@ const DataTable = ({ rows }) => {
           field: 'token',
           headerName: 'Market',
           width: 150,
-          headerClassName: 'super-app-theme--header',
-          cellClassName: 'super-app-theme--cell',
           pinned: 'left',
         },
         { field: 'collateral', headerName: 'Collateral', width: 100 },
@@ -65,7 +68,7 @@ const DataTable = ({ rows }) => {
       ];
 
   return (
-    <Box sx={{ height: 600, width: '100%' }}>
+    <Box sx={{ height: 'auto', width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
