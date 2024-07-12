@@ -27,14 +27,6 @@ const DataTable = ({ rows }) => {
           type: 'number',
           width: 150,
         },
-        { field: 'collateral', headerName: 'Collateral', width: 100 },
-        { field: 'protocol', headerName: 'Project', width: 130 },
-        { field: 'chain', headerName: 'Chain', width: 150 },
-        {
-          field: 'humanized_timestamp',
-          headerName: 'Last Updated',
-          width: 160,
-        },
       ]
     : [
         { field: 'sequentialId', headerName: '#', width: 70 },
