@@ -11,16 +11,14 @@ const DataTable = ({ rows }) => {
         {
           field: 'token',
           headerName: 'Market',
-          minwidth: 130,
-          pinned: 'left',
+          minWidth: 130,
           cellClassName: 'sticky',
         },
-
         {
           field: 'liquidity_rate_formatted',
           headerName: 'APY',
           type: 'number',
-          minwidth: 100,
+          minWidth: 100,
           renderCell: (params) => `${params.value}%`,
           cellClassName: 'sticky',
         },
@@ -28,12 +26,12 @@ const DataTable = ({ rows }) => {
           field: 'tvl_formatted',
           headerName: 'Supplied',
           type: 'number',
-          minwidth: 150,
+          minWidth: 150,
         },
         {
           field: 'collateral',
           headerName: 'Collateral',
-          minwidth: 100,
+          minWidth: 100,
         },
       ]
     : [
@@ -42,7 +40,6 @@ const DataTable = ({ rows }) => {
           field: 'token',
           headerName: 'Market',
           width: 150,
-          pinned: 'left',
         },
         { field: 'collateral', headerName: 'Collateral', width: 100 },
         { field: 'protocol', headerName: 'Project', width: 130 },
@@ -68,14 +65,14 @@ const DataTable = ({ rows }) => {
       ];
 
   return (
-    <Box sx={{ height: 'auto', width: '100%', overflow: 'hidden' }}>
+    <Box sx={{ height: 'auto', width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5, 10, 20]}
         disableSelectionOnClick
-        disableColumnResize={true}
+        disableColumnResize
         sx={{
           '& .sticky': {
             position: 'sticky',
