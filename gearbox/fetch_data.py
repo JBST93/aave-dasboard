@@ -3,15 +3,17 @@ from dotenv import load_dotenv
 import os
 import sys
 import json
-import math
 from datetime import datetime
-from app import app,db
-from instances.MoneyMarketRate import MoneyMarketRate
 
 
 # Ensure the root directory is in the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
+
+from app import app,db
+from instances.MoneyMarketRate import MoneyMarketRate
+
+
 
 # Load environment variables
 load_dotenv(os.path.join(project_root, '.env'))
@@ -25,7 +27,8 @@ pool_contract_address = {
     "USDC":"0xda00000035fef4082F78dEF6A8903bee419FbF8E",
     "USDT":"0x05A811275fE9b4DE503B3311F51edF6A856D936e",
     "GHO": "0x4d56c9cBa373AD39dF69Eb18F076b7348000AE09",
-    "DAI": "0xe7146F53dBcae9D6Fa3555FE502648deb0B2F823"
+    "DAI": "0xe7146F53dBcae9D6Fa3555FE502648deb0B2F823",
+    "crvUSD":"0x8ef73f036feec873d0b2fd20892215df5b8bdd72",
 }
 
 

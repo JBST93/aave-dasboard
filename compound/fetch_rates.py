@@ -74,10 +74,9 @@ def fetch_store_rates():
                 if chain=="ethereum":
                     # Connect to an Ethereum node
                     infura_url = os.getenv('INFURA_URL')
-                elif chain=="arbitrum":
-                    infura_url=(f"https://arbitrum-mainnet.infura.io/v3/{os.getenv('INFURA_KEY')}")
-                elif chain=="optimism":
-                    infura_url=(f"https://optimism-mainnet.infura.io/v3/{os.getenv('INFURA_KEY')}")
+                else:
+                    infura_url=(f"https://{chain}-mainnet.infura.io/v3/{os.getenv('INFURA_KEY')}")
+
 
             web3 = Web3(Web3.HTTPProvider(infura_url))
             pool_contract = web3.eth.contract(address=address, abi=provider_abi)
