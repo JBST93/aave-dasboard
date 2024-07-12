@@ -2,6 +2,7 @@ import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
+import '../index.css';
 
 const DataTable = ({ rows }) => {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -27,6 +28,7 @@ const DataTable = ({ rows }) => {
           headerName: 'Supplied',
           type: 'number',
           minWidth: 150,
+          cellClassName: 'sticky',
         },
         {
           field: 'collateral',
@@ -65,7 +67,7 @@ const DataTable = ({ rows }) => {
       ];
 
   return (
-    <Box sx={{ height: 'auto', width: '100%' }}>
+    <Box sx={{ height: 'auto', width: '100%', overflowX: 'auto' }}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -74,15 +76,14 @@ const DataTable = ({ rows }) => {
         disableSelectionOnClick
         disableColumnResize
         sx={{
+          '& .MuiDataGrid-root': {
+            overflowX: 'auto',
+          },
           '& .sticky': {
             position: 'sticky',
             left: 0,
-            backgroundColor: 'inherit',
             zIndex: 1,
-          },
-          '& .MuiDataGrid-root': {
-            width: '100%',
-            overflowX: 'auto',
+            backgroundColor: '#1E1E1E', // adjust based on your theme
           },
         }}
       />

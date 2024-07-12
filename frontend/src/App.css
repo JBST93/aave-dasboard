@@ -16,6 +16,8 @@ h1 {
   z-index: 1;
 }
 
-.MuiDataGrid-root {
-  overflow-x: auto;
+@media (max-width: 600px) {
+  .MuiDataGrid-cell {
+    min-width: 100px;
+  }
 }
