@@ -16,29 +16,70 @@ from instances.MoneyMarketRate import MoneyMarketRate
 
 # Construct the absolute path to the aave_abi.json file
 script_dir = os.path.dirname(os.path.abspath(__file__))
-abi_path = os.path.join(script_dir, 'compound_abi.json')
 
-with open(abi_path) as f:
-    try:
-        provider_abi = json.load(f)
-    except FileNotFoundError:
-        exit(1)
-
-# Connect to an Ethereum node
-infura_url = os.getenv('INFURA_URL')
-web3 = Web3(Web3.HTTPProvider(infura_url))
 
 #Compounds contracts
-contracts= {
-    "USDC":"0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-    "USDT":"0x3Afdc9BCA9213A35503b077a6072F3D0d5AB0840",
-}
+contracts= [
+    {
+        "token":"USDC",
+        "address":"0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+        "chain":"ethereum"
+    },
+    {
+        "token": "USDT",
+        "address":"0x3Afdc9BCA9213A35503b077a6072F3D0d5AB0840",
+        "chain": "ethereum"
+    },
+    {
+        "token": "USDC",
+        "address":"0x9c4ec768c28520B50860ea7a15bd7213a9fF58bf",
+        "chain": "arbitrum"
+    },
+    {
+        "token": "USDC",
+        "address":"0x2e44e174f7D53F0212823acC11C01A11d58c5bCB",
+        "chain": "optimism"
+    },
+    {
+        "token": "USDT",
+        "address": "0xd98Be00b5D27fc98112BdE293e487f8D4cA57d07",
+        "chain": "arbitrum"
+    },
+    {
+        "token":"USDT",
+        "address":"0x2e44e174f7D53F0212823acC11C01A11d58c5bCB",
+        "chain":"optimism"
+    }
+
+]
+
 
 
 def fetch_store_rates():
-    print("Starting Fetching Data for CompoundV3")
+    print("Starting Fetching Data for Compound V3")
     with app.app_context():
-        for token, address in contracts.items():
+        for contract in contracts:
+            token = contract["token"]
+            address = contract["address"]
+            chain = contract["chain"]
+
+            abi_path = os.path.join(script_dir, f'compound_abi_{chain}.json')
+
+            with open(abi_path) as f:
+                try:
+                    provider_abi = json.load(f)
+                except FileNotFoundError:
+                    exit(1)
+
+                if chain=="ethereum":
+                    # Connect to an Ethereum node
+                    infura_url = os.getenv('INFURA_URL')
+                elif chain=="arbitrum":
+                    infura_url=(f"https://arbitrum-mainnet.infura.io/v3/{os.getenv('INFURA_KEY')}")
+                elif chain=="optimism":
+                    infura_url=(f"https://optimism-mainnet.infura.io/v3/{os.getenv('INFURA_KEY')}")
+
+            web3 = Web3(Web3.HTTPProvider(infura_url))
             pool_contract = web3.eth.contract(address=address, abi=provider_abi)
             try:
                 # getSupplyRate(Utilization) / (10 ^ 18) * Seconds Per Year (3,154e+7) * 100
@@ -55,17 +96,21 @@ def fetch_store_rates():
                     protocol="Compound V3",
                     liquidity_rate=liquidity_rate,
                     borrow_rate=0,
-                    chain='Ethereum',
+                    chain=chain.capitalize(),
                     tvl=tvl_transformed,
                     timestamp=datetime.utcnow()
                 )
+
+                print(token)
+                print(liquidity_rate)
 
                 db.session.add(rate)
             except Exception as e:
                 print(f"Error fetching data for {token}: {e}")
 
         db.session.commit()
-        print("Coumpound Date Fetched")
+        print("Compound Data Fetched")
+
 
 if __name__ == '__main__':
     fetch_store_rates()
