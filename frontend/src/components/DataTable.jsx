@@ -11,21 +11,26 @@ const DataTable = ({ rows }) => {
         {
           field: 'token',
           headerName: 'Market',
-          width: 150,
+          width: 80,
           pinned: 'left',
+        },
+        {
+          field: 'collateral',
+          headerName: 'Collateral',
+          width: 80,
         },
         {
           field: 'liquidity_rate_formatted',
           headerName: 'APY',
           type: 'number',
-          width: 100,
+          width: 80,
           renderCell: (params) => `${params.value}%`,
         },
         {
           field: 'tvl_formatted',
-          headerName: 'Amount Supplied',
+          headerName: 'Supplied',
           type: 'number',
-          width: 150,
+          width: 120,
         },
       ]
     : [
