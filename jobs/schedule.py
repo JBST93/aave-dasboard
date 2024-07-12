@@ -9,6 +9,8 @@ from aave.fetch_data_aavev3 import fetch_store_rates as aave
 from curve.fetch_store_data import fetch_store_data as curve
 from gearbox.fetch_data import fetch_store_rates as gearbox
 from spark.fetch_rates import fetch_store_rates as maker_dsr
+from compound.fetch_rates import fetch_store_rates as compound
+
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -16,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('interval', minutes=30)
+@sched.scheduled_job('interval', minutes=2)
 def fetch_store_data():
     try:
         logger.info("Fetching Data for Aave")
@@ -45,6 +47,13 @@ def fetch_store_data():
         logger.info("Maker DSR Data fetched")
     except Exception as e:
         logger.error(f"Error fetching Maker DSR data: {e}")
+
+    try:
+        logger.info("Fetching Data for Compound")
+        compound()
+        logger.info("Compound Data fetched")
+    except Exception as e:
+        logger.error(f"Error fetching Compound data: {e}")
 
     logger.info("Data fetching completed")
 
