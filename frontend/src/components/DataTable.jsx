@@ -11,7 +11,7 @@ const DataTable = ({ rows }) => {
         {
           field: 'token',
           headerName: 'Market',
-          width: 90,
+          minwidth: 100,
           pinned: 'left',
           cellClassName: 'sticky',
         },
@@ -20,19 +20,20 @@ const DataTable = ({ rows }) => {
           field: 'liquidity_rate_formatted',
           headerName: 'APY',
           type: 'number',
-          width: 80,
+          minwidth: 100,
           renderCell: (params) => `${params.value}%`,
+          cellClassName: 'sticky',
         },
         {
           field: 'tvl_formatted',
           headerName: 'Supplied',
           type: 'number',
-          width: 120,
+          minwidth: 150,
         },
         {
           field: 'collateral',
           headerName: 'Collateral',
-          width: 90,
+          minwidth: 100,
         },
       ]
     : [
