@@ -65,21 +65,13 @@ const DataTable = ({ rows }) => {
       ];
 
   return (
-    <Box sx={{ height: 'auto', width: '100%' }}>
+    <Box sx={{ height: 'auto', width: '100%', overflow: 'hidden' }}>
       <DataGrid
         rows={rows}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5, 10, 20]}
         disableSelectionOnClick
-        sx={{
-          '& .super-app-theme--header': {
-            backgroundColor: 'rgba(255, 7, 0, 0.55)',
-          },
-          '& .super-app-theme--cell': {
-            backgroundColor: 'rgba(255, 7, 0, 0.55)',
-          },
-        }}
       />
     </Box>
   );
