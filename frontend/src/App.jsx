@@ -23,8 +23,9 @@ function App() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          width: '100vw', // Ensures the Box takes up the full width of the viewport
-          textAlign: 'center', // Ensures text is centered within the Box
+          width: '100vw',
+          textAlign: 'center',
+          minHeight: '100vh', // Ensure the box covers the full viewport height
         }}
       >
         <h1>Money Market Rates</h1>

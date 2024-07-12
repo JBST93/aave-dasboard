@@ -9,15 +9,36 @@ h1 {
   margin-bottom: 20px;
 }
 
-.sticky {
-  position: sticky;
-  left: 0;
-  background-color: inherit;
-  z-index: 1;
-}
-
 @media (max-width: 600px) {
   .MuiDataGrid-cell {
     min-width: 100px;
   }
+}
+
+/* App.css */
+.DataGrid-container {
+  background-color: inherit; /* Ensure the background color is consistent */
+}
+
+.DataGrid-row {
+  background-color: inherit; /* Ensure each row has the same background color */
+}
+
+.MuiDataGrid-root .MuiDataGrid-cell--textLeft {
+  text-align: left;
+}
+
+.MuiDataGrid-root .MuiDataGrid-cell--textRight {
+  text-align: right;
+}
+
+.MuiDataGrid-root .MuiDataGrid-cell--textCenter {
+  text-align: center;
+}
+
+.MuiDataGrid-root .sticky {
+  position: sticky;
+  left: 0;
+  background-color: inherit;
+  z-index: 1;
 }

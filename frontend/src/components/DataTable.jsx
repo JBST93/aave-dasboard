@@ -2,7 +2,7 @@ import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
-import '../index.css';
+import '../App.css';
 
 const DataTable = ({ rows }) => {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -12,14 +12,14 @@ const DataTable = ({ rows }) => {
         {
           field: 'token',
           headerName: 'Market',
-          minWidth: 130,
           cellClassName: 'sticky',
+          headerClassName: 'sticky',
         },
+        { field: 'protocol', headerName: 'Project' },
         {
           field: 'liquidity_rate_formatted',
           headerName: 'APY',
           type: 'number',
-          minWidth: 100,
           renderCell: (params) => `${params.value}%`,
           cellClassName: 'sticky',
         },
@@ -28,8 +28,14 @@ const DataTable = ({ rows }) => {
           headerName: 'Supplied',
           type: 'number',
           sortable: true,
-          minWidth: 150,
           cellClassName: 'sticky',
+        },
+        { field: 'collateral', headerName: 'Collateral' },
+
+        { field: 'chain', headerName: 'Chain' },
+        {
+          field: 'humanized_timestamp',
+          headerName: 'Last Updated',
         },
       ]
     : [
@@ -41,7 +47,7 @@ const DataTable = ({ rows }) => {
         },
         { field: 'collateral', headerName: 'Collateral', width: 100 },
         { field: 'protocol', headerName: 'Project', width: 130 },
-        { field: 'chain', headerName: 'Chain', width: 150 },
+        { field: 'chain', headerName: 'Chain', width: 130 },
         {
           field: 'liquidity_rate_formatted',
           headerName: 'APY',
@@ -64,21 +70,26 @@ const DataTable = ({ rows }) => {
       ];
 
   return (
-    <Box sx={{ height: 'auto', width: '100%', overflowX: 'auto' }}>
+    <Box
+      sx={{
+        width: isSmallScreen ? '80vw' : '100%',
+        backgroundColor: 'inherit',
+      }}
+    >
       <DataGrid
         rows={rows}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5, 10, 20]}
         disableSelectionOnClick
-        disableColumnResize
+        disableColumnResize={true}
+        className="DataGrid-container"
+        getRowClassName={() => 'DataGrid-row'}
         sx={{
-          '& .MuiDataGrid-root': {
-            overflowX: 'auto',
-          },
           '& .sticky': {
             position: 'sticky',
             left: 0,
+            backgroundColor: 'inherit',
             zIndex: 1,
           },
         }}
