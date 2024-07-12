@@ -11,13 +11,13 @@ const DataTable = ({ rows }) => {
         {
           field: 'token',
           headerName: 'Market',
-          width: 80,
+          width: 90,
           pinned: 'left',
         },
         {
           field: 'collateral',
           headerName: 'Collateral',
-          width: 80,
+          width: 90,
         },
         {
           field: 'liquidity_rate_formatted',
