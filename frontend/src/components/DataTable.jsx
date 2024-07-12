@@ -30,11 +30,6 @@ const DataTable = ({ rows }) => {
           minWidth: 150,
           cellClassName: 'sticky',
         },
-        {
-          field: 'collateral',
-          headerName: 'Collateral',
-          minWidth: 100,
-        },
       ]
     : [
         { field: 'sequentialId', headerName: '#', width: 70 },
@@ -83,7 +78,6 @@ const DataTable = ({ rows }) => {
             position: 'sticky',
             left: 0,
             zIndex: 1,
-            backgroundColor: '#1E1E1E', // adjust based on your theme
           },
         }}
       />
