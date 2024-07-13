@@ -72,5 +72,5 @@ def fetch_store_rates():
         print(f"Error fetching {token} Saving Rate: {e}", 500)
 
 # return "Fetched"
-
-fetch_store_rates()
+if __name__ == '__main__':
+    fetch_store_rates()
