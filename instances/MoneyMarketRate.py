@@ -13,6 +13,7 @@ class MoneyMarketRate(db.Model):
 
     liquidity_rate = db.Column(db.Float, nullable=False)
     liquidity_reward_rate = db.Column(db.Float, nullable=True)
+    liquidity_reward_token = db.Column(db.Float, nullable=True)
 
     borrow_rate = db.Column(db.Float, nullable=False)
     chain = db.Column(db.String(20), nullable=False)
@@ -26,6 +27,8 @@ class MoneyMarketRate(db.Model):
             'token': self.token,
             'liquidity_rate': self.liquidity_rate,
             'liquidity_reward_rate': self.liquidity_reward_rate,
+            'liquidity_reward_token': self.liquidity_reward_token,
+
             'collateral': self.collateral,
             'borrow_rate': self.borrow_rate,
             'tvl': self.tvl,
