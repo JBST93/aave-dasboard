@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import axios from '../api/axios';
-import DataTable from './DataTable';
-import Filter from './Filter'; // Import the Filter component
+
+const DataTable = React.lazy(() => import('./DataTable'));
+const Filter = React.lazy(() => import('./Filter'));
 
 const FetchData = () => {
   const [data, setData] = useState([]);
@@ -25,14 +26,13 @@ const FetchData = () => {
               ? ''
               : item.liquidity_reward_rate.toFixed(2),
           apy_sum: (
-            item.liquidity_rate +
+            parseFloat(item.liquidity_rate) +
             (item.liquidity_reward_rate
               ? parseFloat(item.liquidity_reward_rate)
               : 0)
           ).toFixed(2), // Calculate APY sum
         }));
 
-        console.log('Transformed data:', transformedData);
         setData(transformedData);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -47,15 +47,18 @@ const FetchData = () => {
     item.token.toLowerCase().includes(filter.toLowerCase())
   );
 
-  console.log('Filtered data:', filteredData);
-
   return (
     <div>
-      <Filter
-        filter={filter}
-        setFilter={setFilter}
-      />
-      <DataTable rows={filteredData} />
+      <Suspense fallback={<div>Loading filter...</div>}>
+        <Filter
+          filter={filter}
+          setFilter={setFilter}
+        />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading data...</div>}>
+        <DataTable rows={filteredData} />
+      </Suspense>
     </div>
   );
 };
