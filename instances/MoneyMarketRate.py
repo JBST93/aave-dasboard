@@ -13,7 +13,7 @@ class MoneyMarketRate(db.Model):
 
     liquidity_rate = db.Column(db.Float, nullable=False)
     liquidity_reward_rate = db.Column(db.Float, nullable=True)
-    liquidity_reward_token = db.Column(db.Float, nullable=True)
+    liquidity_reward_token = db.Column(db.String(50), nullable=True)
 
     borrow_rate = db.Column(db.Float, nullable=False)
     chain = db.Column(db.String(20), nullable=False)
