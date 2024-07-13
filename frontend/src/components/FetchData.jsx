@@ -24,6 +24,9 @@ const FetchData = () => {
             item.liquidity_reward_rate === 0
               ? ''
               : item.liquidity_reward_rate.toFixed(2),
+          apy_sum: (
+            item.liquidity_rate + (item.liquidity_reward_rate || 0)
+          ).toFixed(2), // Calculate APY sum
         }));
 
         console.log('Transformed data:', transformedData);

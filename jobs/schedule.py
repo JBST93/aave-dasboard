@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('interval', minutes=1)
+@sched.scheduled_job('interval', minutes=30)
 def fetch_store_data():
     try:
         logger.info("Fetching Data for Aave")

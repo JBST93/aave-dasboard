@@ -16,6 +16,7 @@ const DataTable = ({ rows }) => {
           headerClassName: 'sticky',
         },
         { field: 'protocol', headerName: 'Project' },
+        { field: 'apy_sum', headerName: 'APY' },
         {
           field: 'liquidity_rate_formatted',
           headerName: 'Base APY',
@@ -51,6 +52,9 @@ const DataTable = ({ rows }) => {
         { field: 'collateral', headerName: 'Collateral', width: 100 },
         { field: 'protocol', headerName: 'Project', width: 130 },
         { field: 'chain', headerName: 'Chain', width: 130 },
+
+        { field: 'apy_sum', headerName: 'APY' },
+
         {
           field: 'liquidity_rate_formatted',
           headerName: 'Base APY',
