@@ -30,16 +30,20 @@ def fetch_store_data():
                     token = dataset["assets"]["borrowed"]["symbol"]
                     collateral = dataset["assets"]["collateral"]["symbol"]
                     tvl = dataset["totalSupplied"]["usdTotal"]
+                    liquidity_reward_rate = dataset["gaugeRewards"][0]["apy"]
+                    liquidity_reward_token = dataset["gaugeRewards"][0]["symbol"]
+
 
                     rate = MoneyMarketRate(
                                     token=token,
                                     collateral=collateral,
                                     protocol="Curve Lend",
                                     liquidity_rate=lend_apy,
+                                    liquidity_reward_rate=liquidity_reward_rate,
                                     chain=chain.capitalize(),
                                     borrow_rate=borrow_apy,
                                     tvl=tvl,
-                                    timestamp=datetime.utcnow()
+                                    timestamp=datetime.utcnow(),
                                 )
 
 

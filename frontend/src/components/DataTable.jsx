@@ -18,10 +18,14 @@ const DataTable = ({ rows }) => {
         { field: 'protocol', headerName: 'Project' },
         {
           field: 'liquidity_rate_formatted',
-          headerName: 'APY',
+          headerName: 'base APY',
           type: 'number',
           renderCell: (params) => `${params.value}%`,
           cellClassName: 'sticky',
+        },
+        {
+          field: 'liquidity_reward_rate',
+          headerName: 'reward APY',
         },
         {
           field: 'tvl_formatted2',
@@ -50,10 +54,14 @@ const DataTable = ({ rows }) => {
         { field: 'chain', headerName: 'Chain', width: 130 },
         {
           field: 'liquidity_rate_formatted',
-          headerName: 'APY',
+          headerName: 'base APY',
           type: 'number',
           width: 100,
           renderCell: (params) => `${params.value}%`,
+        },
+        {
+          field: 'liquidity_reward_rate',
+          headerName: 'reward APY',
         },
         {
           field: 'tvl_formatted2',

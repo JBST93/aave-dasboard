@@ -9,9 +9,11 @@ class MoneyMarketRate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     protocol = db.Column(db.String(50), nullable=False)
     token = db.Column(db.String(50), nullable=False)
-    collateral = db.Column(db.String(50), nullable=True)  # New column
+    collateral = db.Column(db.String(50), nullable=True)
 
     liquidity_rate = db.Column(db.Float, nullable=False)
+    liquidity_reward_rate = db.Column(db.Float, nullable=True)
+
     borrow_rate = db.Column(db.Float, nullable=False)
     chain = db.Column(db.String(20), nullable=False)
     tvl = db.Column(db.Float, nullable=False, default=0)
@@ -23,6 +25,7 @@ class MoneyMarketRate(db.Model):
             'protocol': self.protocol,
             'token': self.token,
             'liquidity_rate': self.liquidity_rate,
+            'liquidity_reward_rate': self.liquidity_reward_rate,
             'collateral': self.collateral,
             'borrow_rate': self.borrow_rate,
             'tvl': self.tvl,
