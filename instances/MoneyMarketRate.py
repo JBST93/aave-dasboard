@@ -2,7 +2,6 @@ from app import db
 from datetime import datetime
 
 
-
 class MoneyMarketRate(db.Model):
     __tablename__ = "money_market_rate"
 
@@ -36,8 +35,9 @@ class MoneyMarketRate(db.Model):
             'timestamp': self.timestamp.isoformat(),  # Convert datetime to string
             'tvl_formatted': getattr(self, 'tvl_formatted', None),
             'liquidity_rate_formatted': getattr(self, 'liquidity_rate_formatted', None),
-            'humanized_timestamp': getattr(self, 'humanized_timestamp', None)
+            'humanized_timestamp': getattr(self, 'humanized_timestamp', None),
+
         }
 
 def __repr__(self) -> str:
-        return f"Protocol (id={self.id!r}, name={self.name!r}, fullname={self.fullname!r})"
+        return f"MoneyMarketRate (id={self.id!r},protocol={self.protocol!r}, token={self.token!r}, chain={self.chain!r})"

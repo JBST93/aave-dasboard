@@ -11,6 +11,7 @@ const FetchData = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/liquidity_rates');
+        console.log('API response:', response.data);
 
         // Transform data to include sequential IDs
         const transformedData = response.data.map((item, index) => ({
@@ -18,8 +19,14 @@ const FetchData = () => {
           sequentialId: index + 1, // Add a sequential ID starting from 1
           id: item.id, // Ensure each row has a unique `id` field for DataGrid
           tvl_formatted2: Math.round(item.tvl),
+          liquidity_reward_rate_formatted:
+            item.liquidity_reward_rate === null ||
+            item.liquidity_reward_rate === 0
+              ? ''
+              : item.liquidity_reward_rate.toFixed(2),
         }));
 
+        console.log('Transformed data:', transformedData);
         setData(transformedData);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -34,12 +41,14 @@ const FetchData = () => {
     item.token.toLowerCase().includes(filter.toLowerCase())
   );
 
+  console.log('Filtered data:', filteredData);
+
   return (
     <div>
       <Filter
         filter={filter}
         setFilter={setFilter}
-      />{' '}
+      />
       <DataTable rows={filteredData} />
     </div>
   );
