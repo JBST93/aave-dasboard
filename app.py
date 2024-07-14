@@ -18,42 +18,11 @@ migrate = Migrate(app, db)
 
 CORS(app)
 
-@app.route('/api/liquidity_rates')
-def get_liquidity_rates():
-    from instances.MoneyMarketRate import MoneyMarketRate as MMR
+from scripts.stablecoin_yield import get_stablecoin_rates
 
-    subquery = (
-        db.session.query(
-            MMR.token,
-            MMR.protocol,
-            MMR.collateral,
-            MMR.chain,
-            db.func.max(MMR.timestamp).label('latest')
-        )
-        .group_by(MMR.token, MMR.protocol, MMR.collateral, MMR.chain)
-        .subquery()
-    )
-
-    latest_rates = db.session.query(MMR).join(
-        subquery,
-        (MMR.token == subquery.c.token) &
-        (MMR.protocol == subquery.c.protocol) &
-        (MMR.chain == subquery.c.chain) &
-        ((MMR.collateral == subquery.c.collateral) | (MMR.collateral.is_(None) & subquery.c.collateral.is_(None))) &
-        (MMR.timestamp == subquery.c.latest)
-    ).filter(MMR.tvl > 1000).order_by(MMR.tvl.desc()).all()
-
-    rates_list = [
-        {
-            **rate.to_dict(),
-            'tvl_formatted': f"{rate.tvl:,.0f}" if rate.tvl is not None else 0,
-            'liquidity_rate_formatted': f"{rate.liquidity_rate:,.2f}" if rate.liquidity_rate is not None else 0,
-            'humanized_timestamp': humanize.naturaltime(datetime.utcnow() - rate.timestamp)
-        }
-        for rate in latest_rates
-    ]
-
-    return jsonify(rates_list)
+@app.route('/api/liquidity_rates', methods=['GET'])
+def liquidity_rates():
+    return get_stablecoin_rates()
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')

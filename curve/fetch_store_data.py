@@ -24,7 +24,7 @@ def fetch_store_data():
 
         try:
             r = requests.get(api_url)
-            r.raise_for_status()  # Raise an HTTPError for bad responses
+            r.raise_for_status()
 
             data = r.json()["data"]["lendingVaultData"]
             logging.info(f"Starting to fetch data for Curve Lend - {chain}")
