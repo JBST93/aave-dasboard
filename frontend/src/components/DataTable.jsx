@@ -7,15 +7,18 @@ import '../App.css';
 const DataTable = ({ rows }) => {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
 
+  const handleImageError = (event) => {
+    event.target.style.display = 'none';
+  };
+
   const columns = isSmallScreen
     ? [
         {
           field: 'token',
           headerName: 'Market',
-          cellClassName: 'sticky',
-          headerClassName: 'sticky',
+          width: 110,
         },
-        { field: 'protocol', headerName: 'Project' },
+        { field: 'protocol', headerName: 'Project', width: 120 },
         { field: 'apy_sum', headerName: 'APY', type: 'number' },
         {
           field: 'liquidity_rate_formatted',
@@ -23,8 +26,9 @@ const DataTable = ({ rows }) => {
           type: 'number',
         },
         {
-          field: 'liquidity_reward_rate',
+          field: 'liquidity_reward_rate_formatted',
           headerName: 'Reward APY',
+          type: 'number',
         },
         {
           field: 'tvl_formatted2',
@@ -33,7 +37,6 @@ const DataTable = ({ rows }) => {
           sortable: true,
         },
         { field: 'collateral', headerName: 'Collateral' },
-
         { field: 'chain', headerName: 'Chain' },
         {
           field: 'humanized_timestamp',
@@ -50,9 +53,7 @@ const DataTable = ({ rows }) => {
         { field: 'collateral', headerName: 'Collateral', width: 100 },
         { field: 'protocol', headerName: 'Project', width: 130 },
         { field: 'chain', headerName: 'Chain', width: 130 },
-
         { field: 'apy_sum', headerName: 'APY', type: 'number' },
-
         {
           field: 'liquidity_rate_formatted',
           headerName: 'Base APY',
