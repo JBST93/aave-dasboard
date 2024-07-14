@@ -1,8 +1,15 @@
 import requests
-import json
+from datetime import datetime
+import sys, os
+
+# Ensure the root directory is in the Python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(project_root)
+
+from app import app, db
+from instances.MoneyMarketRate import MoneyMarketRate
 
 def fetch_data():
-    # Define the GraphQL query
     query = """
     query {
       markets {
@@ -31,6 +38,13 @@ def fetch_data():
             fee
             utilization
           }
+        morphoBlue {
+            chain {
+              id
+              network
+              currency
+            }
+          }
         }
       }
     }
@@ -47,54 +61,44 @@ def fetch_data():
         'Origin': 'https://blue-api.morpho.org'
     }
 
-    # List of stablecoin symbols
-    stablecoins = {"USDT", "USDC", "DAI", "BUSD", "TUSD", "PAX", "GUSD"}
-
     # Send the request
     response = requests.post(url, headers=headers, json={'query': query})
 
-    # Check if the request was successful
     if response.status_code == 200:
-        # Parse the response JSON
         data = response.json().get("data", {}).get("markets", {}).get("items", [])
+        with app.app_context():
 
-        # Filter out items with zero or None TVL and non-stablecoins
-        filtered_data = [
-            market for market in data
-            if market.get("state", {}).get("supplyAssetsUsd") not in (0, None) and
-            (
-                (market.get("loanAsset") and market["loanAsset"].get("symbol") in stablecoins) or
-                (market.get("collateralAsset") and market["collateralAsset"].get("symbol") in stablecoins)
-            )
-        ]
+            for market in data:
+                if market["state"]["supplyAssetsUsd"]:
+                    try:
+                        protocol = "Morpho Blue"
+                        supply_token = market["loanAsset"]["symbol"]
+                        collateral_token = market["collateralAsset"]["symbol"] if market["collateralAsset"] else ""
+                        supply_apy = market["state"]['supplyApy']
+                        borrow_apy = market["state"]['borrowApy']
+                        supply_amount = market["state"]["supplyAssetsUsd"]
+                        chain = market["morphoBlue"]["chain"]["network"]
 
-        # Process the filtered data
-        for market in filtered_data:
-            try:
-                loan_asset = market.get("loanAsset")
-                if loan_asset:
-                    token = loan_asset.get("symbol", "N/A")
-                else:
-                    token = "N/A"
+                        print(f"{supply_token} / {collateral_token} - {chain} {supply_amount} - {supply_apy} / {borrow_apy}")
 
-                collateral_asset = market.get("collateralAsset")
-                if collateral_asset:
-                    collateral = collateral_asset.get("symbol", "N/A")
-                else:
-                    collateral = "N/A"
+                        rate = MoneyMarketRate(
+                                token=supply_token,
+                                collateral=collateral_token,
+                                protocol="Morpho Blue",
+                                liquidity_rate=supply_apy,
+                                liquidity_reward_rate=0,
+                                chain=chain.capitalize(),
+                                borrow_rate=borrow_apy,
+                                tvl=supply_amount,
+                                timestamp=datetime.utcnow(),
+                            )
 
-                state = market.get("state")
-                if state:
-                    supply_apy = state.get("supplyApy", "N/A")
-                    tvl = state.get("supplyAssetsUsd", "N/A")
-                else:
-                    supply_apy = "N/A"
-                    tvl = "N/A"
+                        db.session.add(rate)
 
-                print(f"Token: {token}, Collateral: {collateral}, Supply APY: {supply_apy}, TVL: {tvl}")
+                    except KeyError as e:
+                        print(f"{e}")
 
-            except Exception as e:
-                print(f"Error processing market: {market}, error: {e}")
+            db.session.commit()
 
     else:
         print(f"Query failed to run with a {response.status_code}.")
