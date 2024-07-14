@@ -41,7 +41,7 @@ def get_liquidity_rates():
         (MMR.chain == subquery.c.chain) &
         ((MMR.collateral == subquery.c.collateral) | (MMR.collateral.is_(None) & subquery.c.collateral.is_(None))) &
         (MMR.timestamp == subquery.c.latest)
-    ).order_by(MMR.tvl.desc()).all()
+    ).filter(MMR.tvl > 1000).order_by(MMR.tvl.desc()).all()
 
     rates_list = [
         {

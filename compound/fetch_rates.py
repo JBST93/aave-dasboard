@@ -100,9 +100,6 @@ def fetch_store_rates():
                     timestamp=datetime.utcnow()
                 )
 
-                print(token)
-                print(liquidity_rate)
-
                 db.session.add(rate)
             except Exception as e:
                 print(f"Error fetching data for {token}: {e}")

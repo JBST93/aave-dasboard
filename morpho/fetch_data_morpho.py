@@ -79,14 +79,12 @@ def fetch_data():
                         supply_amount = market["state"]["supplyAssetsUsd"]
                         chain = market["morphoBlue"]["chain"]["network"]
 
-                        print(f"{supply_token} / {collateral_token} - {chain} {supply_amount} - {supply_apy} / {borrow_apy}")
-
                         rate = MoneyMarketRate(
                                 token=supply_token,
                                 collateral=collateral_token,
                                 protocol="Morpho Blue",
                                 liquidity_rate=supply_apy*100,
-                                liquidity_reward_rate=0,
+                                liquidity_reward_rate=None,
                                 chain=chain.capitalize(),
                                 borrow_rate=borrow_apy,
                                 tvl=supply_amount,
@@ -104,4 +102,5 @@ def fetch_data():
         print(f"Query failed to run with a {response.status_code}.")
 
 # Call the function
-fetch_data()
+if __name__ == '__main__':
+    fetch_data()

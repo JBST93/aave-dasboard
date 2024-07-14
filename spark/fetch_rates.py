@@ -66,7 +66,6 @@ def fetch_store_rates():
             )
             db.session.add(rate)
             db.session.commit()
-            print("sDAI Fetched")
 
     except Exception as e:
         print(f"Error fetching {token} Saving Rate: {e}", 500)
