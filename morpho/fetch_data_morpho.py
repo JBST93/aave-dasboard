@@ -198,7 +198,7 @@ def fetch_data_metamorpho():
 
 def fetch_data_morpho():
     fetch_data()
-    fetch_data_metamorpho
+    fetch_data_metamorpho()
 
 if __name__ == '__main__':
     fetch_data_morpho()

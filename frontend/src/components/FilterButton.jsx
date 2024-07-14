@@ -5,14 +5,9 @@ const getTokenIconUrl = (symbol) => {
   return `https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/32@2x/color/${symbol.toLowerCase()}@2x.png`;
 };
 
-// Function to handle button click
-const handleButtonClick = (token) => {
-  console.log(`Button ${token} clicked`);
-};
-
-const FilterButton = ({ token }) => (
+const FilterButton = ({ token, onClick }) => (
   <button
-    onClick={() => handleButtonClick(token)}
+    onClick={() => onClick(token)}
     style={{
       padding: '10px 20px',
       fontSize: '16px',

@@ -28,9 +28,18 @@ const Filter = ({ filter, setFilter }) => {
         className="button-group"
         style={{ display: 'flex', flexWrap: 'wrap' }}
       >
-        <FilterButton token="" />
-        <FilterButton token="USDC" />
-        <FilterButton token="USDT" />
+        <FilterButton
+          token=""
+          onClick={handleButtonClick}
+        />
+        <FilterButton
+          token="USDC"
+          onClick={handleButtonClick}
+        />
+        <FilterButton
+          token="USDT"
+          onClick={handleButtonClick}
+        />
       </div>
 
       <style jsx>{`
