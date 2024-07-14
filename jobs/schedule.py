@@ -10,7 +10,7 @@ from curve.fetch_store_data import fetch_store_data as curve
 from gearbox.fetch_data import fetch_store_rates as gearbox
 from spark.fetch_rates import fetch_store_rates as maker_dsr
 from compound.fetch_rates import fetch_store_rates as compound
-from morpho.fetch_data_morpho import fetch_data as morpho
+from morpho.fetch_data_morpho import fetch_data_morpho as morpho
 
 
 # Setup logging
