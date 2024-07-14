@@ -24,6 +24,12 @@ from scripts.stablecoin_yield import get_stablecoin_rates
 def liquidity_rates():
     return get_stablecoin_rates()
 
+@app.route('/api/manual_fetch', methods=['POST'])
+def manual_fetch():
+    from jobs.schedule import fetch_store_data
+    fetch_store_data()
+    return jsonify({"status": "Data fetch triggered manually"})
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve_react_app(path):
