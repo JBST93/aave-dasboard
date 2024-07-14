@@ -21,7 +21,6 @@ const DataTable = ({ rows }) => {
           field: 'liquidity_rate_formatted',
           headerName: 'Base APY',
           type: 'number',
-          cellClassName: 'sticky',
         },
         {
           field: 'liquidity_reward_rate',
@@ -32,7 +31,6 @@ const DataTable = ({ rows }) => {
           headerName: 'Supplied',
           type: 'number',
           sortable: true,
-          cellClassName: 'sticky',
         },
         { field: 'collateral', headerName: 'Collateral' },
 
