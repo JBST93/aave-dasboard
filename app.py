@@ -35,6 +35,6 @@ def serve_react_app(path):
 if __name__ == '__main__':
     from jobs.schedule import fetch_store_data
     with app.app_context():
-        fetch_store_data()
+        liquidity_rates()
         db.create_all()  # Ensure the database and tables are created
     app.run(debug=False)
