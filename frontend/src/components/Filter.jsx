@@ -1,4 +1,5 @@
 import React from 'react';
+import FilterButton from './FilterButton';
 
 const Filter = ({ filter, setFilter }) => {
   const handleButtonClick = (token) => {
@@ -23,52 +24,15 @@ const Filter = ({ filter, setFilter }) => {
           backgroundColor: 'black', // Assuming you want a dark background for contrast
         }}
       />
-      <div className="button-group">
-        <button
-          onClick={() => handleButtonClick('')}
-          style={{
-            padding: '10px 20px',
-            fontSize: '16px',
-            borderRadius: '4px',
-            border: '1px solid #ccc',
-            marginRight: '10px',
-            cursor: 'pointer',
-            color: 'white',
-            backgroundColor: 'black', // Assuming you want a dark background for contrast
-          }}
-        >
-          ALL
-        </button>
-        <button
-          onClick={() => handleButtonClick('USDC')}
-          style={{
-            padding: '10px 20px',
-            fontSize: '16px',
-            borderRadius: '4px',
-            border: '1px solid #ccc',
-            marginRight: '10px',
-            cursor: 'pointer',
-            color: 'white',
-            backgroundColor: 'black', // Assuming you want a dark background for contrast
-          }}
-        >
-          USDC
-        </button>
-        <button
-          onClick={() => handleButtonClick('USDT')}
-          style={{
-            padding: '10px 20px',
-            fontSize: '16px',
-            borderRadius: '4px',
-            border: '1px solid #ccc',
-            cursor: 'pointer',
-            color: 'white',
-            backgroundColor: 'black', // Assuming you want a dark background for contrast
-          }}
-        >
-          USDT
-        </button>
+      <div
+        className="button-group"
+        style={{ display: 'flex', flexWrap: 'wrap' }}
+      >
+        <FilterButton token="" />
+        <FilterButton token="USDC" />
+        <FilterButton token="USDT" />
       </div>
+
       <style jsx>{`
         .button-group {
           display: flex;
