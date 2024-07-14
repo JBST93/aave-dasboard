@@ -85,7 +85,7 @@ def fetch_data():
                                 token=supply_token,
                                 collateral=collateral_token,
                                 protocol="Morpho Blue",
-                                liquidity_rate=supply_apy,
+                                liquidity_rate=supply_apy*100,
                                 liquidity_reward_rate=0,
                                 chain=chain.capitalize(),
                                 borrow_rate=borrow_apy,
