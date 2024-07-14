@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('interval', minutes=30)
+@sched.scheduled_job('interval', minutes=5)
 def fetch_store_data():
     try:
         logger.info("Fetching Data for Aave")
@@ -56,12 +56,6 @@ def fetch_store_data():
     except Exception as e:
         logger.error(f"Error fetching Compound data: {e}")
 
-    try:
-        logger.info("Fetching Data for Morpho")
-        morpho()
-        logger.info("Morpho Data fetched")
-    except Exception as e:
-        logger.error(f"Error fetching Compound data: {e}")
 
     logger.info("Data fetching completed")
 
