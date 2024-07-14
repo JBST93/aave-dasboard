@@ -10,6 +10,7 @@ from curve.fetch_store_data import fetch_store_data as curve
 from gearbox.fetch_data import fetch_store_rates as gearbox
 from spark.fetch_rates import fetch_store_rates as maker_dsr
 from compound.fetch_rates import fetch_store_rates as compound
+from morpho.fetch_data_morpho import fetch_data as morpho
 
 
 # Setup logging
@@ -52,6 +53,13 @@ def fetch_store_data():
         logger.info("Fetching Data for Compound")
         compound()
         logger.info("Compound Data fetched")
+    except Exception as e:
+        logger.error(f"Error fetching Compound data: {e}")
+
+    try:
+        logger.info("Fetching Data for Morpho")
+        morpho()
+        logger.info("Morpho Data fetched")
     except Exception as e:
         logger.error(f"Error fetching Compound data: {e}")
 
