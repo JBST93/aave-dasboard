@@ -93,6 +93,7 @@ const DataTable = ({ rows }) => {
         rowsPerPageOptions={[5, 10, 20]}
         disableSelectionOnClick
         disableColumnResize={true}
+        disableColumnMenu={true}
         className="DataGrid-container"
         getRowClassName={() => 'DataGrid-row'}
         sx={{
