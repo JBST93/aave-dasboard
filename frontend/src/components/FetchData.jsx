@@ -12,7 +12,6 @@ const FetchData = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/liquidity_rates');
-        console.log('API response:', response.data);
 
         // Transform data to include sequential IDs
         const transformedData = response.data.map((item, index) => ({
