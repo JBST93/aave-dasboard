@@ -28,7 +28,7 @@ function App() {
           minHeight: '100vh', // Ensure the box covers the full viewport height
         }}
       >
-        <h1>Money Market Rates</h1>
+        <h1 className="my-8">Money Market Rates</h1>
         <FetchData />
         <Footer />
       </Box>
