@@ -36,7 +36,7 @@ const DataTable = ({ rows }) => {
           type: 'number',
           sortable: true,
         },
-        { field: 'collateral', headerName: 'Collateral' },
+        { field: 'collateral_formatted', headerName: 'Collateral' },
         { field: 'chain', headerName: 'Chain' },
         {
           field: 'humanized_timestamp',
@@ -50,7 +50,7 @@ const DataTable = ({ rows }) => {
           headerName: 'Market',
           width: 150,
         },
-        { field: 'collateral', headerName: 'Collateral', width: 100 },
+        { field: 'collateral_formatted', headerName: 'Collateral', width: 100 },
         { field: 'protocol', headerName: 'Project', width: 130 },
         { field: 'chain', headerName: 'Chain', width: 130 },
         { field: 'apy_sum', headerName: 'APY', type: 'number' },

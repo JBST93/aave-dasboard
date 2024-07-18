@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 import sys, os
 import humanize
 from datetime import datetime
+from sqlalchemy.dialects.postgresql import JSONB
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
@@ -10,45 +11,29 @@ from app import app, db
 from instances.MoneyMarketRate import MoneyMarketRate as Table
 
 stablecoins = [
-    "USDC",
-    "USDT",
-    "DAI",
-    "USDe",
-    "USDD",
-    "pyUSD",
-    "FRAX",
-    "crvUSD",
-    "GHO",
-    "LUSD",
-    "USDA",
-    "sDai",
-    "sFrax",
-    "FRAX",
+    "USDC", "USDT", "DAI", "USDe", "USDD", "pyUSD",
+    "FRAX", "crvUSD", "GHO", "LUSD", "USDA", "sDai",
+    "sFrax", "FRAX",
 ]
 
 def get_stablecoin_rates():
     with app.app_context():
-        subquery = (
-                db.session.query(
-                    Table.token,
-                    Table.protocol,
-                    Table.collateral,
-                    Table.chain,
-                    db.func.max(Table.timestamp).label('latest')
-                )
-                .group_by(Table.token, Table.protocol, Table.collateral, Table.chain)
-                .subquery()
-            )
+        # Fetch all records that match the conditions
+        records = db.session.query(Table).filter(
+            Table.tvl > 1000,
+            Table.token.in_(stablecoins)
+        ).order_by(Table.token, Table.chain, Table.protocol, Table.timestamp.desc()).all()
 
-        latest_rates = db.session.query(Table).join(
-            subquery,
-            (Table.token == subquery.c.token) &
-            (Table.protocol == subquery.c.protocol) &
-            (Table.chain == subquery.c.chain) &
-            ((Table.collateral == subquery.c.collateral) | (Table.collateral.is_(None) & subquery.c.collateral.is_(None))) &
-            (Table.timestamp == subquery.c.latest)
-        ).filter(Table.tvl > 1000, Table.token.in_(stablecoins)
-        ).order_by(Table.tvl.desc()).all()
+        print(f"Found {len(records)} records")  # Debugging statement
+
+        # Dictionary to hold the latest entry for each combination of (token, chain, collateral, protocol)
+        unique_rates = {}
+        for rate in records:
+            collateral_key = tuple(sorted(rate.collateral)) if isinstance(rate.collateral, list) else rate.collateral
+            key = (rate.token, rate.chain, collateral_key, rate.protocol)
+            if key not in unique_rates:
+                unique_rates[key] = rate
+
         rates_list = [
             {
                 **rate.to_dict(),
@@ -56,7 +41,17 @@ def get_stablecoin_rates():
                 'liquidity_rate_formatted': f"{rate.liquidity_rate:,.2f}" if rate.liquidity_rate is not None else 0,
                 'humanized_timestamp': humanize.naturaltime(datetime.utcnow() - rate.timestamp)
             }
-            for rate in latest_rates
+            for rate in unique_rates.values()
         ]
 
+        # Debugging: print each MetaMorpho entry
+        metamorpho_rates = [rate for rate in rates_list if rate['protocol'] == 'MetaMorpho']
+        print(f"MetaMorpho rates: {len(metamorpho_rates)}")
+        for rate in metamorpho_rates:
+            print(rate)
+
         return jsonify(rates_list)
+
+# Run the Flask app
+if __name__ == "__main__":
+    app.run()

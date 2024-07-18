@@ -8,12 +8,25 @@ const FetchData = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState('');
 
+  const transformCollateral = (collateral) => {
+    if (collateral === null) {
+      return '';
+    } else if (Array.isArray(collateral)) {
+      if (collateral.length === 1) {
+        return collateral[0];
+      } else {
+        return collateral.join(', ');
+      }
+    }
+    return collateral;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/liquidity_rates');
 
-        // Transform data to include sequential IDs
+        // Transform data to include sequential IDs and formatted collateral
         const transformedData = response.data.map((item, index) => ({
           ...item,
           sequentialId: index + 1, // Add a sequential ID starting from 1
@@ -30,6 +43,7 @@ const FetchData = () => {
               ? parseFloat(item.liquidity_reward_rate)
               : 0)
           ).toFixed(2), // Calculate APY sum
+          collateral_formatted: transformCollateral(item.collateral), // Transform collateral
         }));
 
         setData(transformedData);

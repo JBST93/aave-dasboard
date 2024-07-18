@@ -95,9 +95,12 @@ def fetch_data_morpho():
                         )
 
                         db.session.add(rate)
+                        db.session.commit()
+
+                        print(f"{rate.token} - {rate.collateral} added")
                 except Exception as e:
                     logger.error(f"Error processing market data: {e}")
-            db.session.commit()
+            print("Morpho Blue comitted")
     else:
         logger.error(f"Query failed to run with a {response.status_code}.")
 
@@ -172,23 +175,37 @@ def fetch_data_metamorpho():
                         chain = market["chain"]["network"]
                         supply_amount = market["state"].get("totalAssetsUsd", 0)
 
+                        collaterals = []
+                        collateral_data = market.get("state",{}).get("allocation",{})
+                        for item in collateral_data:
+                            collateral_asset = item.get("market",{}).get("collateralAsset",{})
+                            if collateral_asset:
+                                collateral = collateral_asset.get("symbol")
+                                collaterals.append(collateral)
+
                         rate = MoneyMarketRate(
-                            token=supply_token,
-                            collateral="",
-                            protocol=protocol,
-                            liquidity_rate=supply_apy * 100,
-                            liquidity_reward_rate=None,
-                            chain=chain.capitalize(),
-                            borrow_rate=0,
-                            tvl=supply_amount,
-                            timestamp=datetime.utcnow(),
+                        token=supply_token,
+                        collateral=collaterals,
+                        protocol=protocol,
+                        liquidity_rate=supply_apy * 100,
+                        liquidity_reward_rate=None,
+                        chain=chain.capitalize(),
+                        borrow_rate=0,
+                        tvl=supply_amount,
+                        timestamp=datetime.utcnow(),
                         )
 
                         db.session.add(rate)
+                        db.session.commit()
+
+                        print(f"{rate.token} - {rate.collateral} added")
+
+
                 except Exception as e:
                     logger.error(f"Error processing vault data: {e}")
 
-            db.session.commit()
+            print("Morpho Blue comitted")
+
 
     else:
         logger.error(f"Query failed to run with a {response.status_code}.")
