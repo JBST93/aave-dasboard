@@ -1,2 +1,2 @@
-web: npm run postinstall && gunicorn app:app
+web: gunicorn app:app
 clock: python jobs/schedule.py
