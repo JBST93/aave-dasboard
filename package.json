@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "gunicorn app:app",
-    "postinstall": "npm install --prefix frontend && npm run build --prefix frontend"
+    "postinstall": "cd frontend && npm install && npm run build"
   },
   "engines": {
     "node": ">=14.x"
