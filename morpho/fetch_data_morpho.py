@@ -207,7 +207,7 @@ def fetch_data_metamorpho():
                         collateral=collaterals,
                         protocol=protocol,
                         liquidity_rate=supply_apy * 100,
-                        liquidity_reward_rate=reward_rate,
+                        liquidity_reward_rate=reward_rate * 100,
                         liquidity_reward_token=reward_asset,
                         chain=chain.capitalize(),
                         borrow_rate=0,
