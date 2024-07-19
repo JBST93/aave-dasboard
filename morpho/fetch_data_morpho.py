@@ -97,7 +97,6 @@ def fetch_data_morpho():
                         db.session.add(rate)
                         db.session.commit()
 
-                        print(f"{rate.token} - {rate.collateral} added")
                 except Exception as e:
                     logger.error(f"Error processing market data: {e}")
             print("Morpho Blue comitted")
@@ -132,6 +131,18 @@ def fetch_data_metamorpho():
             totalAssets
             totalAssetsUsd
             fee
+            rewards {
+                yearlySupplyTokens
+                supplyApr
+                amountPerSuppliedToken
+                asset {
+                        symbol
+                        yield
+                            {
+                                apr
+                            }
+                        }
+                    }
             timelock
             allocation {
               market {
@@ -183,12 +194,21 @@ def fetch_data_metamorpho():
                                 collateral = collateral_asset.get("symbol")
                                 collaterals.append(collateral)
 
+                        if market["state"].get("rewards"):
+                            reward_rate = market["state"].get("rewards")[0].get("supplyApr")
+                            reward_asset = market["state"].get("rewards")[0].get("asset").get("symbol")
+                        else:
+                            reward_rate = 0
+                            reward_asset = ""
+
+
                         rate = MoneyMarketRate(
                         token=supply_token,
                         collateral=collaterals,
                         protocol=protocol,
                         liquidity_rate=supply_apy * 100,
-                        liquidity_reward_rate=None,
+                        liquidity_reward_rate=reward_rate,
+                        liquidity_reward_token=reward_asset,
                         chain=chain.capitalize(),
                         borrow_rate=0,
                         tvl=supply_amount,
@@ -198,13 +218,11 @@ def fetch_data_metamorpho():
                         db.session.add(rate)
                         db.session.commit()
 
-                        print(f"{rate.token} - {rate.collateral} added")
-
 
                 except Exception as e:
                     logger.error(f"Error processing vault data: {e}")
 
-            print("Morpho Blue comitted")
+            print("MetaMorpho comitted")
 
 
     else:
