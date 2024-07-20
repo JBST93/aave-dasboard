@@ -7,19 +7,8 @@ const getTokenIconUrl = (symbol) => {
 
 const FilterButton = ({ token, onClick }) => (
   <button
+    className="flex focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
     onClick={() => onClick(token)}
-    style={{
-      padding: '10px 20px',
-      fontSize: '16px',
-      borderRadius: '4px',
-      border: '1px solid #ccc',
-      marginRight: '10px',
-      cursor: 'pointer',
-      color: 'white',
-      backgroundColor: 'black', // Assuming you want a dark background for contrast
-      display: 'flex',
-      alignItems: 'center',
-    }}
   >
     {token && (
       <img
