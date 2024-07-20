@@ -35,10 +35,3 @@ h1 {
 .MuiDataGrid-root .MuiDataGrid-cell--textCenter {
   text-align: center;
 }
-
-.MuiDataGrid-root .sticky {
-  position: sticky;
-  left: 0;
-  background-color: inherit;
-  z-index: 1;
-}

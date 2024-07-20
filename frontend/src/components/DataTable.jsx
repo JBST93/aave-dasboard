@@ -11,6 +11,12 @@ const DataTable = ({ rows }) => {
     event.target.style.display = 'none';
   };
 
+  // Add sequential ID to each row
+  const rowsWithId = rows.map((row, index) => ({
+    ...row,
+    sequentialId: index + 1,
+  }));
+
   const columns = isSmallScreen
     ? [
         {
@@ -44,16 +50,17 @@ const DataTable = ({ rows }) => {
         },
       ]
     : [
-        { field: 'sequentialId', headerName: '#', width: 70 },
+        { field: 'sequentialId', headerName: '#', width: 50 },
         {
           field: 'token',
           headerName: 'Market',
-          width: 150,
+          width: 100,
         },
         { field: 'collateral_formatted', headerName: 'Collateral', width: 100 },
         { field: 'protocol', headerName: 'Project', width: 130 },
-        { field: 'chain', headerName: 'Chain', width: 130 },
-        { field: 'apy_sum', headerName: 'APY', type: 'number' },
+        { field: 'apy_sum', headerName: 'APY', type: 'number', width: 90 },
+
+        { field: 'chain', headerName: 'Chain', width: 100 },
         {
           field: 'liquidity_rate_formatted',
           headerName: 'Base APY',
@@ -64,7 +71,9 @@ const DataTable = ({ rows }) => {
           field: 'liquidity_reward_rate_formatted',
           headerName: 'Reward APY',
           type: 'number',
+          width: 105,
         },
+
         {
           field: 'tvl_formatted2',
           headerName: 'Amount Supplied',
@@ -82,27 +91,26 @@ const DataTable = ({ rows }) => {
   return (
     <Box
       sx={{
-        width: isSmallScreen ? '80vw' : '100%',
+        width: isSmallScreen ? '80vw' : '75vw',
         backgroundColor: 'inherit',
       }}
+      className="bg-white dark:bg-gray-800 text-black dark:text-white"
     >
       <DataGrid
-        rows={rows}
+        rows={rowsWithId}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5, 10, 20]}
         disableSelectionOnClick
         disableColumnResize={true}
         disableColumnMenu={true}
-        className="DataGrid-container"
         getRowClassName={() => 'DataGrid-row'}
-        sx={{
-          '& .sticky': {
-            position: 'sticky',
-            left: 0,
-            backgroundColor: 'inherit',
-            zIndex: 1,
-          },
+        classes={{
+          root: 'bg-white dark:bg-gray-800 text-black dark:text-white',
+          columnHeader: 'text-black dark:text-white bg-white dark:bg-gray-800',
+          cell: 'text-black dark:text-white',
+          row: 'bg-white dark:bg-gray-800',
+          footerContainer: 'bg-white dark:bg-gray-800',
         }}
       />
     </Box>
