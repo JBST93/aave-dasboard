@@ -4,7 +4,6 @@ function StablecoinInfo() {
   return (
     <>
       <h1>Stablecoin Info</h1>
-      <Footer />
     </>
   );
 }

@@ -22,7 +22,7 @@ const Filter = ({ filter, setFilter }) => {
           marginBottom: '10px', // Ensure spacing between input and buttons on mobile
         }}
       />
-      <div className="button-group flex">
+      <div className="flex space-x-4 mb-4">
         <FilterButton
           token=""
           onClick={handleButtonClick}

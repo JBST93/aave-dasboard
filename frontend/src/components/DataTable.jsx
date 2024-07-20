@@ -44,16 +44,17 @@ const DataTable = ({ rows }) => {
         },
       ]
     : [
-        { field: 'sequentialId', headerName: '#', width: 70 },
+        { field: 'sequentialId', headerName: '#', width: 50 },
         {
           field: 'token',
           headerName: 'Market',
-          width: 150,
+          width: 100,
         },
         { field: 'collateral_formatted', headerName: 'Collateral', width: 100 },
         { field: 'protocol', headerName: 'Project', width: 130 },
-        { field: 'chain', headerName: 'Chain', width: 130 },
-        { field: 'apy_sum', headerName: 'APY', type: 'number' },
+        { field: 'apy_sum', headerName: 'APY', type: 'number', width: 90 },
+
+        { field: 'chain', headerName: 'Chain', width: 100 },
         {
           field: 'liquidity_rate_formatted',
           headerName: 'Base APY',
@@ -64,7 +65,9 @@ const DataTable = ({ rows }) => {
           field: 'liquidity_reward_rate_formatted',
           headerName: 'Reward APY',
           type: 'number',
+          width: 105,
         },
+
         {
           field: 'tvl_formatted2',
           headerName: 'Amount Supplied',
@@ -82,7 +85,7 @@ const DataTable = ({ rows }) => {
   return (
     <Box
       sx={{
-        width: isSmallScreen ? '80vw' : '100%',
+        width: isSmallScreen ? '80vw' : '75vw',
         backgroundColor: 'inherit',
       }}
     >
@@ -94,16 +97,7 @@ const DataTable = ({ rows }) => {
         disableSelectionOnClick
         disableColumnResize={true}
         disableColumnMenu={true}
-        className="DataGrid-container"
         getRowClassName={() => 'DataGrid-row'}
-        sx={{
-          '& .sticky': {
-            position: 'sticky',
-            left: 0,
-            backgroundColor: 'inherit',
-            zIndex: 1,
-          },
-        }}
       />
     </Box>
   );
