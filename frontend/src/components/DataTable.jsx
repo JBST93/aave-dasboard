@@ -11,6 +11,12 @@ const DataTable = ({ rows }) => {
     event.target.style.display = 'none';
   };
 
+  // Add sequential ID to each row
+  const rowsWithId = rows.map((row, index) => ({
+    ...row,
+    sequentialId: index + 1,
+  }));
+
   const columns = isSmallScreen
     ? [
         {
@@ -88,9 +94,10 @@ const DataTable = ({ rows }) => {
         width: isSmallScreen ? '80vw' : '75vw',
         backgroundColor: 'inherit',
       }}
+      className="bg-white dark:bg-gray-800 text-black dark:text-white"
     >
       <DataGrid
-        rows={rows}
+        rows={rowsWithId}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5, 10, 20]}
@@ -98,6 +105,13 @@ const DataTable = ({ rows }) => {
         disableColumnResize={true}
         disableColumnMenu={true}
         getRowClassName={() => 'DataGrid-row'}
+        classes={{
+          root: 'bg-white dark:bg-gray-800 text-black dark:text-white',
+          columnHeader: 'text-black dark:text-white bg-white dark:bg-gray-800',
+          cell: 'text-black dark:text-white',
+          row: 'bg-white dark:bg-gray-800',
+          footerContainer: 'bg-white dark:bg-gray-800',
+        }}
       />
     </Box>
   );

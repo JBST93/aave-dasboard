@@ -1,13 +1,21 @@
 import FetchData from '../components/FetchData';
+import AverageYieldRate from '../components/AverageRate';
 
-function StablecoinYield() {
+const StablecoinYield = ({ data }) => {
+  const { averageYield } = 5;
+
   return (
     <>
-      <h1 className="m-15">Stablecoin Rates</h1>
-      <p>Get the latest yiedls on your stablecoins.</p>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-4xl font-bold">Stablecoin Rates</h1>
+        <div className="flex space-x-4">
+          <AverageYieldRate averageYield="5" />{' '}
+        </div>
+      </div>
+
       <FetchData />
     </>
   );
-}
+};
 
 export default StablecoinYield;
