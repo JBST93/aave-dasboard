@@ -26,27 +26,34 @@ const DataTable = ({ rows }) => {
         },
         { field: 'protocol', headerName: 'Project', width: 120 },
         { field: 'apy_sum', headerName: 'APY', type: 'number' },
-        {
-          field: 'liquidity_rate_formatted',
-          headerName: 'Base APY',
-          type: 'number',
-        },
-        {
-          field: 'liquidity_reward_rate_formatted',
-          headerName: 'Reward APY',
-          type: 'number',
-        },
+
         {
           field: 'tvl_formatted2',
           headerName: 'Supplied',
           type: 'number',
           sortable: true,
+          width: 130,
         },
-        { field: 'collateral_formatted', headerName: 'Collateral' },
-        { field: 'chain', headerName: 'Chain' },
+
+        {
+          field: 'liquidity_rate_formatted',
+          headerName: 'Base APY',
+          type: 'number',
+          width: 120,
+        },
+        {
+          field: 'liquidity_reward_rate_formatted',
+          headerName: 'Reward APY',
+          type: 'number',
+          width: 130,
+        },
+
+        { field: 'collateral_formatted', headerName: 'Collateral', width: 120 },
+        { field: 'chain', headerName: 'Chain', width: 120 },
         {
           field: 'humanized_timestamp',
           headerName: 'Last Updated',
+          width: 150,
         },
       ]
     : [

@@ -32,7 +32,7 @@ const Filter = ({ filter, setFilter }) => {
           </span>
           <input
             type="text"
-            className="w-full py-2 pl-10 pr-10 text-sm rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full py-2 pl-10 pr-10 text-sm rounded-full border border-gray-300 dark:border-teal-700 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Search for a token"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}

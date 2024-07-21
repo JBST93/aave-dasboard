@@ -40,7 +40,9 @@ const NavBar = () => {
       >
         <div>
           <h1 className="text-2xl font-bold mb-4">Token Data View</h1>
-          <DarkModeToggle />
+          <button className="text-gray-900 bg-white border dark:border-teal-700 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+            <DarkModeToggle />
+          </button>
           <br></br>
           <ul className="space-y-4 text-white">
             <li>
