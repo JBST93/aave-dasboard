@@ -15,6 +15,24 @@ h1 {
   }
 }
 
+/* Add to your global CSS file */
+@media (max-width: 768px) {
+  .flex-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .button-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .button-group button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
 /* App.css */
 .DataGrid-container {
   background-color: inherit; /* Ensure the background color is consistent */
@@ -34,4 +52,8 @@ h1 {
 
 .MuiDataGrid-root .MuiDataGrid-cell--textCenter {
   text-align: center;
+}
+
+.DataGrid-row:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.1);
 }

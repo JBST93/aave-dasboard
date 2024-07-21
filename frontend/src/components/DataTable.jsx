@@ -91,7 +91,6 @@ const DataTable = ({ rows }) => {
   return (
     <Box
       sx={{
-        width: isSmallScreen ? '80vw' : '75vw',
         backgroundColor: 'inherit',
       }}
       className="bg-white dark:bg-gray-800 text-black dark:text-white"
@@ -100,6 +99,7 @@ const DataTable = ({ rows }) => {
         rows={rowsWithId}
         columns={columns}
         pageSize={5}
+        pagination
         rowsPerPageOptions={[5, 10, 20]}
         disableSelectionOnClick
         disableColumnResize={true}
@@ -110,7 +110,8 @@ const DataTable = ({ rows }) => {
           columnHeader: 'text-black dark:text-white bg-white dark:bg-gray-800',
           cell: 'text-black dark:text-white',
           row: 'bg-white dark:bg-gray-800',
-          footerContainer: 'bg-white dark:bg-gray-800',
+          footerContainer:
+            'text-black dark:text-white bg-white dark:bg-gray-800',
         }}
       />
     </Box>
