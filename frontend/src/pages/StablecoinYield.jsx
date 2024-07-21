@@ -6,10 +6,10 @@ const StablecoinYield = () => {
     <>
       <div className="px-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-4xl font-bold">Stablecoin Rates</h1>
+          <h1 className="md:text-4xl text-xl font-bold">Stablecoin Rates</h1>
         </div>
         <div className="mb-4 text-center md:text-left">
-          <p className="text-lg text-left">
+          <p className="md:text-lg text-base text-left">
             We aggregate interest rates and yields, ensuring you always have
             access to the highest yields. Discover the best rates in real-time
             and make informed investment decisions effortlessly.

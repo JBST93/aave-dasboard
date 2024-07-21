@@ -12,7 +12,7 @@ const NavBar = () => {
   return (
     <>
       <button
-        className="md:hidden p-4 fixed top-0 right-0 z-20"
+        className="md:hidden focus:outline-none p-4 fixed top-0 right-0 z-20"
         onClick={toggleNavbar}
       >
         <svg
@@ -33,7 +33,9 @@ const NavBar = () => {
 
       <nav
         className={`bg-gray-200 dark:bg-gray-800 text-black dark:text-white h-screen w-1/5 fixed top-0 left-0 p-4 flex flex-col justify-between transform ${
-          isOpen ? '-translate-x-0 w-4/5 z-20' : '-translate-x-full w-0/5'
+          isOpen
+            ? '-translate-x-0 w-4/5 z-20'
+            : '-translate-x-full w-0/5 overflow-hidden'
         } md:translate-x-0 transition-transform duration-300 ease-in-out`}
       >
         <div>
