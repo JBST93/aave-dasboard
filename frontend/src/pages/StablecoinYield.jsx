@@ -1,5 +1,6 @@
 import FetchData from '../components/FetchData';
 import AverageYieldRate from '../components/AverageRate';
+import ButtonCarousel from '../components/ButtonCarousel';
 
 const StablecoinYield = () => {
   return (

@@ -1,5 +1,6 @@
 import React from 'react';
 import FilterButton from './FilterButton';
+import ButtonCarousel from './ButtonCarousel';
 
 const Filter = ({ filter, setFilter }) => {
   const handleButtonClick = (token) => {
@@ -59,23 +60,8 @@ const Filter = ({ filter, setFilter }) => {
             </button>
           )}
         </div>
-        <div className="flex flex-wrap justify-start md:ml-4 p-2 mt-0">
-          <FilterButton
-            token=""
-            onClick={handleButtonClick}
-          />
-          <FilterButton
-            token="USDC"
-            onClick={handleButtonClick}
-          />
-          <FilterButton
-            token="USDT"
-            onClick={handleButtonClick}
-          />
-          <FilterButton
-            token="DAI"
-            onClick={handleButtonClick}
-          />
+        <div className="flex flex-wrap justify-start md:ml-4 p-2 mt-2 md:mt-0">
+          <ButtonCarousel onClick={handleButtonClick} />
         </div>
       </div>
     </>
