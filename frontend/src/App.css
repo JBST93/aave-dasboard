@@ -36,6 +36,7 @@ h1 {
 /* App.css */
 .DataGrid-container {
   background-color: inherit; /* Ensure the background color is consistent */
+  color: inherit;
 }
 
 .DataGrid-row {

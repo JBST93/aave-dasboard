@@ -97,6 +97,12 @@ const DataTable = ({ rows }) => {
     >
       <DataGrid
         autoHeight
+        slotProps={{
+          loadingOverlay: {
+            variant: 'skeleton',
+            noRowsVariant: 'skeleton',
+          },
+        }}
         rows={rowsWithId}
         columns={columns}
         pageSize={5}
@@ -118,7 +124,7 @@ const DataTable = ({ rows }) => {
           cell: 'text-black dark:text-white',
           row: 'bg-white dark:bg-gray-800',
           footerContainer:
-            'text-black dark:text-white bg-white dark:bg-gray-800',
+            'text-white dark:text-white bg-white dark:bg-gray-800',
           filler: 'bg-white dark:bg-gray-800',
         }}
       />
