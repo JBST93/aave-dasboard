@@ -96,10 +96,17 @@ const DataTable = ({ rows }) => {
       className="bg-white dark:bg-gray-800 text-black dark:text-white"
     >
       <DataGrid
+        autoHeight
         rows={rowsWithId}
         columns={columns}
         pageSize={5}
-        pagination
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 50,
+            },
+          },
+        }}
         rowsPerPageOptions={[5, 10, 20]}
         disableSelectionOnClick
         disableColumnResize={true}

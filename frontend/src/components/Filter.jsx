@@ -8,13 +8,13 @@ const Filter = ({ filter, setFilter }) => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row w-full md:w-auto dark:text-black pb-2">
+      <div className="flex flex-col md:flex-row w-full md:w-auto pb-2">
         <input
           type="text"
           placeholder="Type the ticker of the token you're looking"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="w-full md:w-auto my-2 md:mb-0"
+          className="w-full md:w-auto my-2 md:mb-0 bg-white  dark:bg-black"
         />
         <div className="flex flex-wrap p-2 justify-start  md:justify-start space-x-2">
           <FilterButton
