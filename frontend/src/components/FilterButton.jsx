@@ -7,7 +7,7 @@ const getTokenIconUrl = (symbol) => {
 
 const FilterButton = ({ token, onClick, label }) => (
   <button
-    className="flex items-center justify-center focus:outline-none font-semibold text-black dark:text-white bg-yellow-400 dark:bg-teal-700 hover:bg-yellow-500 dark:hover:bg-teal-500 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-900 rounded-lg text-sm px-4 py-2 m-1"
+    className="flex items-center justify-center focus:outline-none font-semibold text-black dark:text-white bg-yellow-400 dark:bg-teal-700 hover:bg-yellow-500 dark:hover:bg-teal-500 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-900 rounded-lg text-sm px-4 p-2 m-1"
     onClick={() => onClick(token)}
   >
     {token && (

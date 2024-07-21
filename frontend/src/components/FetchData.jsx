@@ -106,7 +106,7 @@ const FetchData = () => {
 
   return (
     <div className="min-h-screen ">
-      <div className="pb-4">
+      <div className="pb-0">
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 md:mb-0">
           <AverageYieldRate
             title="DeFi Base Yield"

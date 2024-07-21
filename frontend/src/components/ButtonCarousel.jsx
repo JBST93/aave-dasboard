@@ -18,6 +18,7 @@ const ButtonCarousel = ({ onClick }) => {
   const updateCarousel = (index) => {
     if (carouselRef.current) {
       const itemWidth = carouselRef.current.children[0].clientWidth;
+      carouselRef.current.style.transition = 'transform 0.2s ease-out';
       carouselRef.current.style.transform = `translateX(${
         -index * itemWidth
       }px)`;
@@ -69,16 +70,17 @@ const ButtonCarousel = ({ onClick }) => {
   };
 
   return (
-    <div className="relative flex items-center w-full max-w-lg mx-auto">
+    <div className="relative flex items-center w-full mx-auto">
       <button
         onClick={handlePrev}
-        className="absolute left-0 z-10  text-basefocus:outline-none"
+        className="absolute left-0 z-10 text-basefocus:outline-none block md:hidden"
         style={{ transform: 'translateX(-50%)' }}
       >
-        <FaChevronLeft className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+        <FaChevronLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
       </button>
+
       <div
-        className="w-full overflow-hidden"
+        className="w-full overflow-hidden m-3"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -93,17 +95,17 @@ const ButtonCarousel = ({ onClick }) => {
               token={item.token}
               onClick={onClick}
               label={item.label}
-              className="flex-shrink-0 p-1"
+              className="flex-shrink-0 p-2"
             />
           ))}
         </div>
       </div>
       <button
         onClick={handleNext}
-        className="absolute right-0 z-10 p-2 text-base  focus:outline-none"
+        className="absolute right-0 z-10 p-2 text-base  focus:outline-none block md:hidden"
         style={{ transform: 'translateX(50%)' }}
       >
-        <FaChevronRight className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+        <FaChevronRight className="w-5 h-5 text-gray-700 dark:text-gray-300" />
       </button>
     </div>
   );

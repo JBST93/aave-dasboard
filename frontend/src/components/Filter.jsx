@@ -13,7 +13,7 @@ const Filter = ({ filter, setFilter }) => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row md:items-center max-w-full mx-auto my-4">
+      <div className="flex flex-col md:flex-row md:items-center max-w-full mx-auto mt-2">
         <div className="relative flex items-center md:flex-none md:w-1/3">
           <span className="absolute inset-y-0 left-0 flex items-center pl-3">
             <svg
@@ -60,7 +60,7 @@ const Filter = ({ filter, setFilter }) => {
             </button>
           )}
         </div>
-        <div className="flex flex-wrap justify-start md:ml-4 p-2 mt-2 md:mt-0">
+        <div className="flex flex-wrap justify-start md:ml-4 p-2 md:mt-0">
           <ButtonCarousel onClick={handleButtonClick} />
         </div>
       </div>
