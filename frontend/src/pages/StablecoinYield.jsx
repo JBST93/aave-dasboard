@@ -1,15 +1,24 @@
 import FetchData from '../components/FetchData';
 import AverageYieldRate from '../components/AverageRate';
 
-const StablecoinYield = ({ data }) => {
-  const { averageYield } = 5;
-
+const StablecoinYield = () => {
   return (
     <>
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-4xl font-bold">Stablecoin Rates</h1>
-        <div className="flex space-x-4">
-          <AverageYieldRate averageYield="5" />{' '}
+      <div className="px-4">
+        <div className="flex justify-between items-center">
+          <h1 className="text-4xl font-bold">Stablecoin Rates</h1>
+        </div>
+        <div className="mb-4 text-center md:text-left">
+          <p className="text-lg text-left">
+            We aggregate interest rates and yields, ensuring you always have
+            access to the highest yields. Discover the best rates in real-time
+            and make informed investment decisions effortlessly.
+          </p>
+          <p className="text-sm text-left	 text-gray-500">
+            Disclaimer: We do not vet or audit the platforms we aggregate.
+            Always conduct your own due diligence before making any investment
+            decisions.
+          </p>
         </div>
       </div>
 

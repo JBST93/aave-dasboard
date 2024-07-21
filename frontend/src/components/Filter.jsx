@@ -7,36 +7,35 @@ const Filter = ({ filter, setFilter }) => {
   };
 
   return (
-    <div style={{ marginBottom: '20px' }}>
-      <input
-        type="text"
-        placeholder="Filter by token..."
-        value={filter}
-        onChange={(e) => setFilter(e.target.value)}
-        style={{
-          padding: '10px',
-          fontSize: '16px',
-          width: '300px',
-          borderRadius: '4px',
-          border: '1px solid #ccc',
-          marginBottom: '10px', // Ensure spacing between input and buttons on mobile
-        }}
-      />
-      <div className="flex space-x-4 mb-4">
-        <FilterButton
-          token=""
-          onClick={handleButtonClick}
+    <>
+      <div className="flex flex-col md:flex-row w-full md:w-auto dark:text-black pb-2">
+        <input
+          type="text"
+          placeholder="Type the ticker of the token you're looking"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className="w-full md:w-auto my-2 md:mb-0"
         />
-        <FilterButton
-          token="USDC"
-          onClick={handleButtonClick}
-        />
-        <FilterButton
-          token="USDT"
-          onClick={handleButtonClick}
-        />
+        <div className="flex flex-wrap p-2 justify-start  md:justify-start space-x-2">
+          <FilterButton
+            token=""
+            onClick={handleButtonClick}
+          />
+          <FilterButton
+            token="USDC"
+            onClick={handleButtonClick}
+          />
+          <FilterButton
+            token="USDT"
+            onClick={handleButtonClick}
+          />
+          <FilterButton
+            token="DAI"
+            onClick={handleButtonClick}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
