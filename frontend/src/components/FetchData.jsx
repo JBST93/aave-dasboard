@@ -113,7 +113,7 @@ const FetchData = () => {
             description="The average yield rate for assets with TVL greater than 500 million across all of DeFi."
             data={avgRate}
             input="%"
-            className="w-2/3 pt-0 md:w-1/3"
+            className="w-2/3 md:w-1/3"
           />
           <AverageYieldRate
             title="Selection Average Yield"
@@ -124,7 +124,7 @@ const FetchData = () => {
           />
           <AverageYieldRate
             title="FED Rate"
-            description="The average yield rate from your selection, including those with TVL less than 500 million."
+            description="The FED rate is the risk-free rate, representing the return on low-risk investments like government bonds. The difference between this rate and the yields listed here is the risk premium, which compensates for the higher risk associated with DeFi investments."
             data="5.3"
             input="%"
             className="hidden md:block w-full md:w-1/3"

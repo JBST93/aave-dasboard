@@ -33,12 +33,13 @@ const NavBar = () => {
 
       <nav
         className={`bg-gray-200 dark:bg-gray-800 text-black dark:text-white h-screen w-1/5 fixed top-0 left-0 p-4 flex flex-col justify-between transform ${
-          isOpen ? '-translate-x-0 w-4/5' : '-translate-x-full w-1/5'
-        } md:translate-x-0 transition-transform duration-300 ease-in-out z-20`}
+          isOpen ? '-translate-x-0 w-4/5 z-20' : '-translate-x-full w-0/5'
+        } md:translate-x-0 transition-transform duration-300 ease-in-out`}
       >
         <div>
           <h1 className="text-2xl font-bold mb-4">Token Data View</h1>
           <DarkModeToggle />
+          <br></br>
           <ul className="space-y-4 text-white">
             <li>
               <Link
@@ -54,30 +55,6 @@ const NavBar = () => {
                 className="hover:text-yellow-500 text-black dark:text-white"
               >
                 Stablecoin yields
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/"
-                className="hover:text-yellow-500 text-black dark:text-white"
-              >
-                Ethereum yields (in progress)
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/"
-                className="hover:text-yellow-500 text-black dark:text-white"
-              >
-                CEX Volumes
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/"
-                className="hover:text-yellow-500 text-black dark:text-white"
-              >
-                Bitcoin ETF
               </Link>
             </li>
           </ul>
