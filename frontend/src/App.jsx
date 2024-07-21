@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 const Layout = () => (
   <div className="md:flex md:min-h-screen">
     <Navbar />
-    <div className="flex-1 md:ml-[20%] p-4 dark:bg-slate-900 text-black dark:text-white">
+    <div className="flex-1 md:ml-[20%] p-4 bg-white dark:bg-gray-900 text-black dark:text-white">
       <Outlet />
       <Footer />
     </div>

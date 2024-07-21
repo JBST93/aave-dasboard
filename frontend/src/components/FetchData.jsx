@@ -105,7 +105,7 @@ const FetchData = () => {
   }, [filteredData]);
 
   return (
-    <div className="min-h-screen p-4 bg-white dark:bg-gray-900 text-black dark:text-white">
+    <div className="min-h-screen ">
       <div className="pb-4">
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 md:mb-0">
           <AverageYieldRate

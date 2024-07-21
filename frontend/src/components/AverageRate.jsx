@@ -23,7 +23,7 @@ const AverageYieldRate = ({ title, data, input, description, className }) => (
     placement="top"
   >
     <div
-      className={`bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 mb-4 md:mb-0 ${className}`}
+      className={`bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 md:mb-0 ${className}`}
     >
       <h3 className="text-xl font-bold mb-2 flex items-center leading-tight">
         {title}

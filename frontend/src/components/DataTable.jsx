@@ -112,6 +112,7 @@ const DataTable = ({ rows }) => {
           row: 'bg-white dark:bg-gray-800',
           footerContainer:
             'text-black dark:text-white bg-white dark:bg-gray-800',
+          filler: 'bg-white dark:bg-gray-800',
         }}
       />
     </Box>
