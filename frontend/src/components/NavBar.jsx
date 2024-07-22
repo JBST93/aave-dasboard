@@ -47,7 +47,7 @@ const NavBar = () => {
           <ul className="space-y-4 text-white">
             <li>
               <Link
-                to="/"
+                to="/stablecoin"
                 className="hover:text-yellow-500 text-black dark:text-white"
               >
                 Stablecoins (in progress)

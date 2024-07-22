@@ -13,7 +13,7 @@ from instances.MoneyMarketRate import MoneyMarketRate as Table
 stablecoins = [
     "USDC", "USDT", "DAI", "USDe", "USDD", "pyUSD",
     "FRAX", "crvUSD", "GHO", "LUSD", "USDA", "sDai",
-    "sFrax", "FRAX",
+    "sFrax", "FRAX", "eUSD"
 ]
 
 def get_stablecoin_rates():
@@ -43,12 +43,6 @@ def get_stablecoin_rates():
             }
             for rate in unique_rates.values()
         ]
-
-        # Debugging: print each MetaMorpho entry
-        metamorpho_rates = [rate for rate in rates_list if rate['protocol'] == 'MetaMorpho']
-        print(f"MetaMorpho rates: {len(metamorpho_rates)}")
-        for rate in metamorpho_rates:
-            print(rate)
 
         return jsonify(rates_list)
 

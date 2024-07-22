@@ -19,11 +19,17 @@ migrate = Migrate(app, db)
 CORS(app)
 
 from scripts.stablecoin_yield import get_stablecoin_rates
+from scripts.stablecoin_info_render import get_stablecoin_info_render
 
 
 @app.route('/api/liquidity_rates', methods=['GET'])
 def liquidity_rates():
     return get_stablecoin_rates()
+
+@app.route('/api/stablecoin_info', methods=['GET'])
+def stablecoin_info():
+    return get_stablecoin_info_render()
+
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
