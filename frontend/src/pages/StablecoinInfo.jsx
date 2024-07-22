@@ -3,6 +3,8 @@ import axios from '../api/axios';
 
 import DataTable from '../components/DataTableStablecoin';
 import AverageYieldRate from '../components/AverageRate';
+import PieChartMktShare from '../components/PieChart';
+import ButtonCarousel from '../components/ButtonCarousel';
 
 function StablecoinInfo() {
   const [data, setData] = useState([]);
@@ -36,6 +38,10 @@ function StablecoinInfo() {
 
     fetchData();
   }, []);
+
+  const handleButtonClick = () => {
+    console.log('OK');
+  };
 
   return (
     <>
@@ -77,6 +83,10 @@ function StablecoinInfo() {
           data={summaryInfo.centralised_dominance_percentage}
           className="w-2/3 md:w-1/3"
         />
+      </div>
+
+      <div className="flex flex-wrap justify-start md:mt-0">
+        <ButtonCarousel onClick={handleButtonClick} />
       </div>
 
       <Suspense fallback={<div>Loading data...</div>}>

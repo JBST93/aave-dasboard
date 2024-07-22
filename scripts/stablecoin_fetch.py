@@ -165,6 +165,32 @@ list_chain = [
         "info":"centralised",
         "chain":"ethereum",
         "pegged_against":"USD"
+    },
+    {
+        "entity":"Statis",
+        "token":"EURs",
+        "contract":"0xdb25f211ab05b1c97d595516f45794528a807ad8",
+        "decimals":2,
+        "info":"centralised",
+        "chain":"ethereum",
+        "pegged_against":"EUR"
+    },
+    {   "entity":"Gemini",
+        "token":"GUSD",
+        "contract":"0x056fd409e1d7a124bd7017459dfea2f387b6d5cd",
+        "decimals":2,
+        "info":"centralised",
+        "chain":"ethereum",
+        "pegged_against":"USD"
+    },
+    {
+        "entity":"Tether",
+        "token":"XAUt",
+        "contract":"0x68749665ff8d2d112fa859aa293f07a622782f38",
+        "decimals":6,
+        "info":"centralised",
+        "chain":"ethereum",
+        "pegged_against":"GOLD"
     }
 ]
 
@@ -188,7 +214,7 @@ def create_instance(token, entity, supply_transformed, chain, pegged_against, pr
                     supply=supply_transformed,
                     chain=chain,
                     pegged_against=pegged_against,
-                    info=info,
+                    info=info.capitalize(),
                     timestamp=datetime.utcnow(),
                 )
         db.session.add(info)
@@ -221,17 +247,23 @@ def tether():
     data = data.get("data")
 
     for key, stable in data.items():
-        token = stable["currency_iso"]
+        token = stable["currency_iso"].upper()
         entity = "Tether"
         chain = "All"
         info = "centralised"
         supply_transformed = round(float(stable["total_liabilities"]))
-        if token == "usdt":
+        if token == "USDT":
             contract="0xdac17f958d2ee523a2206206994597c13d831ec7"
-            price = get_curve_price(contract)
             pegged_against = "USD"
-            print(f"Added {token}")
-            create_instance(token, entity, supply_transformed, chain, pegged_against, price, info)
+
+        elif token == "EURT":
+            contract="0xc581b735a1688071a1746c968e0798d642ede491"
+            pegged_against = "EUR"
+
+        price = get_curve_price(contract)
+        print(f"Added {token}")
+        create_instance(token, entity, supply_transformed, chain, pegged_against, price, info)
+
 
 def circle():
     api_url = circle_info["url"]
@@ -247,9 +279,14 @@ def circle():
         info = "centralised"
         if token == 'USDC':
             contract="0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
-            price = get_curve_price(contract)
-            print(f"Added {token}")
-            create_instance(token, entity, supply_transformed, chain, pegged_against, price, info)
+            pegged_against = "USD"
+        elif token =='EUROC':
+            contract="0x1abaea1f7c830bd89acc67ec4af516284b1bc33c"
+            pegged_against = "EUR"
+
+        price = get_curve_price(contract)
+        print(f"Added {token}")
+        create_instance(token, entity, supply_transformed, chain, pegged_against, price, info)
 
 def curve():
     api_url = "https://api.curve.fi/v1/getCrvusdTotalSupply"
