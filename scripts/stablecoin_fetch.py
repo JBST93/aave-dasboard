@@ -2,12 +2,19 @@ import requests
 import time
 from datetime import datetime
 import os, sys
+from dotenv import load_dotenv
+
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
 
+load_dotenv(os.path.join(project_root, '.env'))
+
 from app import app, db
 from instances.Stablecoin import Stablecoin
+
+etherscan_key = os.getenv('ETHERSCAN_KEY')
+
 
 tether_info = {
         "company": "Tether",
@@ -190,7 +197,7 @@ def create_instance(token, entity, supply_transformed, chain, pegged_against, pr
 def chain():
     for stable in list_chain:
         time.sleep(1)
-        api_url = f"https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress={stable['contract']}&apikey=AG19FSTRGXG6JGRDVA5FA4JZEI2EMDEW3Z"
+        api_url = f"https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress={stable['contract']}&apikey={etherscan_key}"
         r = requests.get(api_url)
         data = r.json()
         decimal = float(f"1e{stable['decimals']}")
