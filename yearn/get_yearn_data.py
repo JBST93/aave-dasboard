@@ -29,6 +29,7 @@ def fetch_yearn():
                     tvl = vault["tvl"]["tvl"]
                     apy = vault["apy"]["net_apy"]*100
                     token_deposit = vault["token"]["symbol"]
+                    contract_address=vault["address"]
                     if len(token_deposit) < 6 and tvl and tvl > 0:
 
                         rate = MoneyMarketRate(
@@ -36,7 +37,7 @@ def fetch_yearn():
                                                 protocol="Yearn",
                                                 liquidity_rate=apy,
                                                 liquidity_reward_rate=None,
-                                                chain="",
+                                                chain="Ethereum",
                                                 borrow_rate=0,
                                                 collateral= name,
                                                 tvl=tvl,
