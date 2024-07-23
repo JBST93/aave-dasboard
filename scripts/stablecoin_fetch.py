@@ -370,9 +370,12 @@ def euroe():
     create_instance(token, entity, supply_transformed, chain, pegged_against, price, info)
 
 
-if __name__ == '__main__':
+def get_stablecoin_data():
     euroe()
     chain()
     curve()
     circle()
     tether()
+
+if __name__ == '__main__':
+    get_stablecoin_data()
