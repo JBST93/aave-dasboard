@@ -229,7 +229,6 @@ def fetch_data_metamorpho():
         logger.error(f"Query failed to run with a {response.status_code}.")
 
 def fetch_data():
-    fetch_data_morpho()
     fetch_data_metamorpho()
 
 if __name__ == '__main__':
