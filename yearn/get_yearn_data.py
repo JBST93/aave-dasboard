@@ -6,52 +6,67 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
+# Ensure the app's directory is in the system path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
 
+# Import Flask app and db from your application
 from app import app, db
 from instances.MoneyMarketRate import MoneyMarketRate
 
-# Documentation: https://docs.yearn.fi/developers/v2/yearn-api#api-schema
-api_url = "https://api.yexporter.io/v1/chains/1/vaults/all"
-
-r = requests.get(api_url)
-data = r.json()
+# Define the chain_id dictionary
+chain_id = {
+    "Ethereum": 1,
+    "Base": 8453,
+    "BSC": 56,
+    "Optimism": 10,
+    "Arbitrum": 42161,
+    "Polygon": 137,
+    "Avalanche": 43114
+}
 
 def fetch_yearn():
-    if r.status_code == 200:
-        with app.app_context():
-            try:
+    for chain_name, chain_number in chain_id.items():
+        api_url = f"https://api.yexporter.io/v1/chains/{chain_number}/vaults/all"
 
-                for vault in data:
-                    name = vault["name"]
-                    tvl = vault["tvl"]["tvl"]
-                    apy = vault["apy"]["net_apy"]*100
-                    token_deposit = vault["token"]["symbol"]
-                    contract_address=vault["address"]
-                    if len(token_deposit) < 6 and tvl and tvl > 0:
+        try:
+            r = requests.get(api_url)
+            r.raise_for_status()  # Raise HTTPError for bad responses
+            data = r.json()
 
-                        rate = MoneyMarketRate(
-                                                token=token_deposit,
-                                                protocol="Yearn",
-                                                liquidity_rate=apy,
-                                                liquidity_reward_rate=None,
-                                                chain="Ethereum",
-                                                borrow_rate=0,
-                                                collateral= name,
-                                                tvl=tvl,
-                                                timestamp=datetime.utcnow(),
-                                            )
+            with app.app_context():
+                try:
+                    for vault in data:
+                        name = vault["name"]
+                        tvl = vault["tvl"]["tvl"]
+                        apy = vault["apy"]["net_apy"] * 100
+                        token_deposit = vault["token"]["symbol"]
+                        contract_address = vault["address"]
+                        chain = chain_name
 
-                        db.session.add(rate)
-                        db.session.commit()
+                        if len(token_deposit) < 6 and tvl and tvl > 0:
+                            rate = MoneyMarketRate(
+                                token=token_deposit,
+                                protocol="Yearn",
+                                liquidity_rate=apy,
+                                liquidity_reward_rate=None,
+                                chain=chain,
+                                borrow_rate=0,
+                                collateral=name,
+                                tvl=tvl,
+                                timestamp=datetime.utcnow(),
+                            )
 
-            except Exception as e:
-                    logger.error(f"Error processing market data: {e}")
-    else:
-        logger.error(f"Query failed to run with a {r.status_code}.")
+                            db.session.add(rate)
+                            db.session.commit()
 
+                except Exception as e:
+                    logger.error(f"Error processing market data for {chain_name}: {e}")
+
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Request failed for {chain_name}: {e}")
+        except ValueError as e:
+            logger.error(f"Error parsing JSON response for {chain_name}: {e}")
 
 if __name__ == '__main__':
     fetch_yearn()
