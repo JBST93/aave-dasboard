@@ -19,7 +19,7 @@ function StablecoinInfo() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('api/stablecoin_info');
+        const response = await axios.get('/api/stablecoin_info');
         const dataset = response.data.stablecoin_info;
         const summaryData = response.data.summary_info;
 

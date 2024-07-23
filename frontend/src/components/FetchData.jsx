@@ -4,10 +4,10 @@ import AverageYieldRate from '../components/AverageRate';
 
 const DataTable = React.lazy(() => import('./DataTable'));
 const Filter = React.lazy(() => import('./Filter'));
-
 const FetchData = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState('');
+
   const [avgRate, setAvgRate] = useState('');
   const [filteredAvgRate, setFilteredAvgRate] = useState('');
 
