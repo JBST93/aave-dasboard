@@ -11,6 +11,7 @@ from gearbox.fetch_data import fetch_store_rates as gearbox
 from spark.fetch_rates import fetch_store_rates as maker_dsr
 from compound.fetch_rates import fetch_store_rates as compound
 from morpho.fetch_data_morpho import fetch_data as morpho
+from scripts.stablecoin_fetch import get_stablecoin_data as stablecoin
 
 
 # Setup logging
@@ -66,6 +67,17 @@ def fetch_store_data():
         logger.info("Data fetching completed")
 
 sched.add_job(fetch_store_data, 'interval', minutes=30)
+
+def get_stable_data():
+    with app.app_context():
+        try:
+            logger.info("Fetching Stablecoin Data")
+            stablecoin()
+            logger.info("Stablecoin Data fetched")
+        except Exception as e:
+            logger.error(f"Error fetching Stablecoin data: {e}")
+
+sched.add_job(get_stable_data, 'interval', minutes=10)
 
 if __name__ == '__main__':
     sched.start()

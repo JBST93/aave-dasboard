@@ -33,15 +33,11 @@ def stablecoin_info():
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
-def serve_react_app(path):
+def catch_all(path):
     if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
         return send_from_directory(app.static_folder, path)
     else:
         return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
-    from jobs.schedule import fetch_store_data
-    with app.app_context():
-        liquidity_rates()
-        db.create_all()  # Ensure the database and tables are created
-    app.run(debug=False)
+    app.run()
