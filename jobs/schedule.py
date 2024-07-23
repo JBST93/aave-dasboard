@@ -12,7 +12,7 @@ from spark.fetch_rates import fetch_store_rates as maker_dsr
 from compound.fetch_rates import fetch_store_rates as compound
 from morpho.fetch_data_morpho import fetch_data as morpho
 from scripts.stablecoin_fetch import get_stablecoin_data as stablecoin
-
+from yearn.get_yearn_data import fetch_yearn as yearn
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -64,9 +64,16 @@ def fetch_store_data():
         except Exception as e:
             logger.error(f"Error fetching Morpho data: {e}")
 
+        try:
+            logger.info("Fetching Data for Yearn")
+            yearn()
+            logger.info("Morpho Data fetched")
+        except Exception as e:
+            logger.error(f"Error fetching yearn data: {e}")
+
         logger.info("Data fetching completed")
 
-sched.add_job(fetch_store_data, 'interval', minutes=30)
+sched.add_job(fetch_store_data, 'interval', minutes=10)
 
 def get_stable_data():
     with app.app_context():
@@ -77,7 +84,7 @@ def get_stable_data():
         except Exception as e:
             logger.error(f"Error fetching Stablecoin data: {e}")
 
-sched.add_job(get_stable_data, 'interval', minutes=10)
+sched.add_job(get_stable_data, 'interval', minutes=60)
 
 if __name__ == '__main__':
     sched.start()
