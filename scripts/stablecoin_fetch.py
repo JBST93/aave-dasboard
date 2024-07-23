@@ -371,11 +371,37 @@ def euroe():
 
 
 def get_stablecoin_data():
-    euroe()
-    chain()
-    curve()
-    circle()
-    tether()
+    try:
+        print("Starting euroe()")
+        euroe()
+    except Exception as e:
+        print(f"euroe() failed: {e}")
+
+    try:
+        print("Finished euroe(), starting circle()")
+        circle()
+    except Exception as e:
+        print(f"circle() failed: {e}")
+
+    try:
+        print("Finished circle(), starting tether()")
+        tether()
+    except Exception as e:
+        print(f"tether() failed: {e}")
+
+    try:
+        print("Finished tether(), starting chain()")
+        chain()
+    except Exception as e:
+        print(f"chain() failed: {e}")
+
+    try:
+        print("Finished chain(), starting curve()")
+        curve()
+    except Exception as e:
+        print(f"curve() failed: {e}")
+
+    print("Finished all functions")
 
 if __name__ == '__main__':
     get_stablecoin_data()
