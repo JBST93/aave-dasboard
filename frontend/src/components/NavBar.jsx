@@ -50,7 +50,7 @@ const NavBar = () => {
                 to="/stablecoin"
                 className="hover:text-yellow-500 text-black dark:text-white"
               >
-                Stablecoins (in progress)
+                Stablecoins
               </Link>
             </li>
             <li>
@@ -58,7 +58,7 @@ const NavBar = () => {
                 to="/"
                 className="hover:text-yellow-500 text-black dark:text-white"
               >
-                Stablecoin yields
+                Stablecoin Yields
               </Link>
             </li>
           </ul>

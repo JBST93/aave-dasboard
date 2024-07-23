@@ -3,11 +3,12 @@ import axios from '../api/axios';
 
 import DataTable from '../components/DataTableStablecoin';
 import AverageYieldRate from '../components/AverageRate';
-import PieChartMktShare from '../components/PieChart';
-import ButtonCarousel from '../components/ButtonCarousel';
+import FilterButton from '../components/FilterButton';
 
 function StablecoinInfo() {
   const [data, setData] = useState([]);
+  const [filter, setFilter] = useState('');
+
   const [summaryInfo, setSummaryInfo] = useState({
     centralised_dominance_percentage: '0%',
     total_supply: '0',
@@ -25,8 +26,9 @@ function StablecoinInfo() {
         const transformedData = dataset.map((item, index) => ({
           ...item,
           sequentialId: index + 1,
-          off_peg: (((item.price - 1) / 1) * 100).toFixed(2),
-          price_formatted: parseFloat(item.price).toFixed(4),
+          off_peg: (((item.price_peg - 1) / 1) * 100).toFixed(2),
+          price_usd_formatted: parseFloat(item.price_usd).toFixed(4),
+          price_peg_formatted: parseFloat(item.price_peg).toFixed(4),
         }));
 
         setData(transformedData);
@@ -39,9 +41,9 @@ function StablecoinInfo() {
     fetchData();
   }, []);
 
-  const handleButtonClick = () => {
-    console.log('OK');
-  };
+  const filteredData = data.filter((item) =>
+    item.pegged_against.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <>
@@ -79,18 +81,26 @@ function StablecoinInfo() {
           className="w-2/3 md:w-1/3"
         />
         <AverageYieldRate
-          title="Centralised Stablecoins Dominance"
+          title="Centralised Dominance"
           data={summaryInfo.centralised_dominance_percentage}
           className="w-2/3 md:w-1/3"
         />
       </div>
 
       <div className="flex flex-wrap justify-start md:mt-0">
-        <ButtonCarousel onClick={handleButtonClick} />
+        <FilterButton onClick={() => setFilter('')} />
+        <FilterButton
+          token="USD"
+          onClick={() => setFilter('USD')}
+        />
+        <FilterButton
+          token="EUR"
+          onClick={() => setFilter('EUR')}
+        />
       </div>
 
       <Suspense fallback={<div>Loading data...</div>}>
-        <DataTable rows={data} />
+        <DataTable rows={filteredData} />
       </Suspense>
     </>
   );

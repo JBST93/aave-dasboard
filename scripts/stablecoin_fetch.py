@@ -117,7 +117,24 @@ list_chain = [
         "decimals": 18,
         "info":"decentralised",
         "chain":"ethereum",
-        "query": "chain",
+        "pegged_against":"USD"
+    },
+    {
+        "entity":"Angle",
+        "token":"EURA",
+        "contract":"0x1a7e4e63778b4f12a199c062f3efdd288afcbce8",
+        "decimals":18,
+        "info":"decentralised",
+        "chain":"ethereum",
+        "pegged_against":"EUR"
+    },
+    {
+        "entity":"Angle",
+        "token":"USDA",
+        "contract":"0x0000206329b97db379d5e1bf586bbdb969c63274",
+        "decimals":18,
+        "info":"decentralised",
+        "chain":"ethereum",
         "pegged_against":"USD"
     },
     {
@@ -204,6 +221,36 @@ def get_curve_price(contract_address):
         if pool.get("address").lower() == contract_address.lower():  # Ensure case-insensitive comparison
             return round(float(pool.get("usd_price")),4)
 
+def get_one_price(contract_address):
+    one_url = f"https://api.1inch.dev/price/v1.1/1/{contract_address}"
+
+    requestOptions = {
+        "headers": {
+        "Authorization": "Bearer Qzw77er7P6FNv2vtQWsyKb2X1gEPBo3Q"
+    },
+        "body": "",
+        "params": {
+        "currency": "USD"
+        }
+    }
+
+    # Prepare request components
+    headers = requestOptions.get("headers", {})
+    body = requestOptions.get("body", {})
+    params = requestOptions.get("params", {})
+
+    r = requests.get(one_url, headers=headers, params=params)
+    data = r.json()
+    return round(float(data[f"{contract_address}"]),4)
+
+def get_angle_price(token):
+    angle_url = "https://api.angle.money/v1/prices"
+    r = requests.get(angle_url)
+    data = r.json()
+    for stable in data:
+        if stable["token"].upper() == token.upper():
+            price = stable["rate"]
+            print(f"{token} - {price}")
 
 def create_instance(token, entity, supply_transformed, chain, pegged_against, price, info):
     with app.app_context():
@@ -234,8 +281,10 @@ def chain():
         supply = round(float(data.get("result")))
         supply_transformed = supply / decimal
         price = get_curve_price(stable["contract"])
+        if not price:  # This checks for None, empty string, empty list, 0, etc.
+            price = get_one_price(stable["contract"])
         info = stable["info"]
-        print(f"Added {token}")
+        print(f"Added {token} - {price}")
 
 
         create_instance(token, entity, supply_transformed, chain, pegged_against, price, info)
@@ -260,10 +309,12 @@ def tether():
             contract="0xc581b735a1688071a1746c968e0798d642ede491"
             pegged_against = "EUR"
 
+        else:
+            continue
+
         price = get_curve_price(contract)
         print(f"Added {token}")
         create_instance(token, entity, supply_transformed, chain, pegged_against, price, info)
-
 
 def circle():
     api_url = circle_info["url"]
@@ -300,9 +351,28 @@ def curve():
     print("Added crvUSD")
     create_instance("crvUSD", "Curve Finance", supply_transformed, "", "USD", price, info)
 
+def euroe():
+    api_url = "https://www.membrane.fi/api/totalsupply/euroe/all"
+    r = requests.get(api_url)
+    data = r.json()
+    token="EUROe"
+    entity="Membrane.Fi"
+    contract="0x820802fa8a99901f52e39acd21177b0be6ee2974"
+    chain = "ethereum"
+    supply = data
+    supply_transformed = round(float(supply))
+    info = "centralised"
+    pegged_against = "EUR"
+    price = get_curve_price(contract)
+    if not price:  # This checks for None, empty string, empty list, 0, etc.
+        price = get_one_price(contract)
+
+    create_instance(token, entity, supply_transformed, chain, pegged_against, price, info)
+
 
 if __name__ == '__main__':
-    circle()
-    tether()
+    euroe()
     chain()
     curve()
+    circle()
+    tether()

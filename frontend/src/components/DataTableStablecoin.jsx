@@ -18,74 +18,44 @@ const DataTableStablecoin = ({ rows }) => {
     sequentialId: index + 1,
   }));
 
-  const columns = isSmallScreen
-    ? [
-        { field: 'sequentialId', headerName: '#', width: 50 },
+  // Define all columns
+  const allColumns = [
+    { field: 'sequentialId', headerName: '#', width: 50 },
+    { field: 'token', headerName: 'Token', width: 110 },
+    { field: 'supply_formatted', headerName: 'Supply', width: 150 },
+    { field: 'price_usd_formatted', headerName: 'Price (USD)', type: 'number' },
+    { field: 'price_peg_formatted', headerName: 'Price (LCY)', type: 'number' },
+    {
+      field: 'off_peg',
+      headerName: 'Off Peg',
+      type: 'number',
+      sortable: true,
+      width: 130,
+    },
+    { field: 'pegged_against', headerName: 'Against', width: 120 },
+    { field: 'info', headerName: 'Decentralisation', width: 130 },
+  ];
 
-        {
-          field: 'token',
-          headerName: 'Token',
-          width: 110,
-        },
-        { field: 'supply_formatted', headerName: 'Supply', width: 120 },
+  // Define columns to display on small screens
+  const smallScreenColumns = [
+    { field: 'sequentialId', headerName: '#', width: 50 },
+    { field: 'token', headerName: 'Token', width: 110 },
+    { field: 'supply_formatted', headerName: 'Supply', width: 120 },
+    { field: 'price_usd_formatted', headerName: 'Price', type: 'number' },
+    { field: 'price_peg_formatted', headerName: 'Price (LCY)', type: 'number' },
+    {
+      field: 'off_peg',
+      headerName: 'Off Peg',
+      type: 'number',
+      sortable: true,
+      width: 130,
+    },
+    { field: 'pegged_against', headerName: 'Against', width: 120 },
+    { field: 'info', headerName: 'Decentralisation', width: 130 },
+  ];
 
-        { field: 'price', headerName: 'Price', type: 'number' },
-
-        {
-          field: 'off_peg',
-          headerName: 'Off Peg',
-          type: 'number',
-          sortable: true,
-          width: 130,
-        },
-
-        {
-          field: 'pegged_against',
-          headerName: 'Against',
-          width: 120,
-        },
-        {
-          field: 'info',
-          headerName: 'Type',
-          width: 130,
-        },
-      ]
-    : [
-        { field: 'sequentialId', headerName: '#', width: 50 },
-
-        {
-          field: 'token',
-          headerName: 'Token',
-          width: 110,
-        },
-        { field: 'supply_formatted', headerName: 'Supply', width: 150 },
-
-        { field: 'price_formatted', headerName: 'Price', type: 'number' },
-
-        {
-          field: 'off_peg',
-          headerName: 'Off Peg',
-          type: 'number',
-          sortable: true,
-          width: 130,
-        },
-
-        {
-          field: 'pegged_against',
-          headerName: 'Against',
-          width: 120,
-        },
-        {
-          field: 'info',
-          headerName: 'Type',
-          width: 130,
-        },
-        {
-          field: 'link',
-          headerName: 'LINK TO YIELD',
-          width: 150,
-        },
-      ];
+  // Determine columns based on screen size
+  const columns = isSmallScreen ? smallScreenColumns : allColumns;
 
   return (
     <Box
