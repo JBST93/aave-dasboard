@@ -43,7 +43,10 @@ const DataTable = ({ rows }) => {
           width: 120,
         },
         { field: 'chain', headerName: 'Chain', width: 120 },
-        { field: 'timestamp', headerName: 'Last Updated', width: 150 },
+        {
+          field: 'humanized_timestamp',
+          headerName: 'Last Updated',
+        },
       ]
     : [
         { field: 'sequentialId', headerName: '#', width: 50 },
@@ -59,6 +62,7 @@ const DataTable = ({ rows }) => {
           sortable: true,
           width: 150,
         },
+
         {
           field: 'information_formatted',
           headerName: 'Information',
