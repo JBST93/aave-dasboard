@@ -1,16 +1,15 @@
 from app import db
 from datetime import datetime
-from sqlalchemy.dialects.postgresql import JSONB
 
 class YieldRate(db.Model):
     __tablename__ = "yield_rate"
 
     id = db.Column(db.Integer, primary_key=True)
 
-    market = db.Column(db.String(50), nullable=False)
-    project = db.Column(db.String(50), nullable=False)
+    market = db.Column(db.String(100), nullable=False)
+    project = db.Column(db.String(100), nullable=False)
 
-    information = db.Column(JSONB, nullable=True)
+    information = db.Column(db.String(150), nullable=True)
 
     yield_rate_base = db.Column(db.Float, nullable=False)
 
@@ -20,7 +19,7 @@ class YieldRate(db.Model):
     tvl = db.Column(db.Float, nullable=False, default=0)
 
     chain = db.Column(db.String(20), nullable=False)
-    type = db.Column(db.String(100), nullable=False)
+    type = db.Column(db.String(150), nullable=False)
     smart_contract = db.Column(db.String(150), nullable=False)
 
     timestamp = db.Column(db.DateTime, default=datetime.now)
