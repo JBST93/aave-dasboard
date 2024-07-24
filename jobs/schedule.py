@@ -13,6 +13,7 @@ from compound.fetch_rates import fetch_store_rates as compound
 from morpho.fetch_data_morpho import fetch_data as morpho
 from scripts.stablecoin_fetch import get_stablecoin_data as stablecoin
 from yearn.get_yearn_data import fetch_yearn as yearn
+from pendle.fetch_data import fetch_data as pendle
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -67,6 +68,13 @@ def fetch_store_data():
         try:
             logger.info("Fetching Data for Yearn")
             yearn()
+            logger.info("Morpho Data fetched")
+        except Exception as e:
+            logger.error(f"Error fetching yearn data: {e}")
+
+        try:
+            logger.info("Fetching Data for Pendle")
+            pendle()
             logger.info("Morpho Data fetched")
         except Exception as e:
             logger.error(f"Error fetching yearn data: {e}")
