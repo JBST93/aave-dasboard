@@ -77,8 +77,8 @@ const DataTable = ({ rows }) => {
           width: 105,
         },
         {
-          field: 'type',
-          headerName: 'Type',
+          field: 'humanized_timestamp',
+          headerName: 'Last Updated',
         },
       ];
 
