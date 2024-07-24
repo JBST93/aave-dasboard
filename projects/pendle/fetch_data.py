@@ -70,18 +70,13 @@ def fetch_data():
             try:
                 token_pt = f"{token} (Buy PT) - {maturity} maturity"
                 token_lp = f"{token} (LP) - {maturity} maturity"
-                if len(token_pt) > 50:
-                    token_pt = token_pt[:47] + '...'
-                    token_pt = list(token_pt)
-                if len(token_lp) > 50:
-                    token_lp = token_lp[:47] + '...'
-                    token_lp = list(token_lp)
+
 
 
                 deposit = Data(
                     market=token,
                     project="Pendle",
-                    information="",
+                    information=token_pt,
                     yield_rate_base=float(apy_base)*100,
                     yield_rate_reward=None,
                     yield_token_reward=None,
@@ -96,7 +91,7 @@ def fetch_data():
                 lp = Data(
                     market=token,
                     project="Pendle",
-                    information="",
+                    information=token_lp,
                     yield_rate_base=float(apy_base)*100,
                     yield_rate_reward=apy_lp*100,
                     yield_token_reward=None,

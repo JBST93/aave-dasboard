@@ -32,9 +32,9 @@ const FetchData = () => {
             parseFloat(item.yield_rate_base) +
             (item.yield_rate_reward ? parseFloat(item.yield_rate_reward) : 0)
           ).toFixed(2),
-          information_formatted: item.information
+          information_formatted: Array.isArray(item.information)
             ? item.information.join(', ')
-            : '',
+            : item.information || '',
         }));
 
         setData(transformedData);

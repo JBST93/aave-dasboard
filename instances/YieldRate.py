@@ -29,7 +29,7 @@ class YieldRate(db.Model):
             'id': self.id,
             'market': self.market,
             'project': self.project,
-            'information': self.information if isinstance(self.information, list) else [self.information],
+            'information': self.information,
             'yield_rate_base': self.yield_rate_base,
             'yield_rate_base': getattr(self, 'liquidity_rate_formatted', None),
             'yield_rate_reward': self.yield_rate_reward,

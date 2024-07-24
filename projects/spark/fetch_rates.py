@@ -69,7 +69,7 @@ def fetch_store_sparklend():
                     yield_rate_reward=None,
                     yield_token_reward=None,
                     tvl=tvl_usd,
-                    chain=chain,
+                    chain=chain.capitalize(),
                     type=type,
                     smart_contract=contract,
                     timestamp=datetime.utcnow()
