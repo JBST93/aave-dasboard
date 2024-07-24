@@ -46,7 +46,7 @@ def get_stablecoin_rates():
                 'tvl_formatted': f"{rate.tvl:,.0f}" if rate.tvl is not None else 0,
                 'yield_rate_base': f"{rate.yield_rate_base:,.2f}" if rate.yield_rate_base is not None else 0,
                 'humanized_timestamp': humanize.naturaltime(datetime.utcnow() - rate.timestamp),
-                'information': rate.information if isinstance(rate.information, list) else [],
+                'information_transformed': rate.information if isinstance(rate.information, list) else [],
 
             }
             for rate in unique_rates.values()
