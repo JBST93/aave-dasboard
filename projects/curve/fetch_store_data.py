@@ -9,11 +9,11 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 # Ensure the root directory is in the Python path
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 sys.path.append(project_root)
 
 from app import app, db
-from instances.MoneyMarketRate import MoneyMarketRate
+from instances.YieldRate import YieldRate as Data
 
 def fetch_store_data():
     chains = {"arbitrum", "ethereum"}
@@ -38,6 +38,8 @@ def fetch_store_data():
                         token = dataset["assets"]["borrowed"]["symbol"]
                         collateral = dataset["assets"]["collateral"]["symbol"]
                         tvl = dataset["totalSupplied"]["usdTotal"]
+                        type = "Lending"
+                        contract = dataset["address"]
 
                         # Handle missing 'gaugeRewards'
                         if "gaugeRewards" in dataset and dataset["gaugeRewards"]:
@@ -47,20 +49,21 @@ def fetch_store_data():
                             liquidity_reward_rate = None
                             liquidity_reward_token = None
 
-                        rate = MoneyMarketRate(
-                            token=token,
-                            collateral=collateral,
-                            protocol="Curve Lend",
-                            liquidity_rate=lend_apy,
-                            liquidity_reward_rate=liquidity_reward_rate,
-                            liquidity_reward_token=liquidity_reward_token,
-                            chain=chain.capitalize(),
-                            borrow_rate=borrow_apy,
+                        data = Data(
+                            market=token,
+                            project="Curve",
+                            information=collateral,
+                            yield_rate_base=float(lend_apy),
+                            yield_rate_reward=liquidity_reward_rate,
+                            yield_token_reward=liquidity_reward_token,
                             tvl=tvl,
-                            timestamp=datetime.utcnow(),
+                            chain=chain.capitalize(),
+                            type=type,
+                            smart_contract=contract,
+                            timestamp=datetime.utcnow()
                         )
 
-                        db.session.add(rate)
+                        db.session.add(data)
 
                     except KeyError as e:
                         logging.error(f"KeyError: {e} in dataset {dataset}")

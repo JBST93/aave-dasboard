@@ -22,7 +22,7 @@ from scripts.stablecoin_yield import get_stablecoin_rates
 from scripts.stablecoin_info_render import get_stablecoin_info_render
 
 
-@app.route('/api/liquidity_rates', methods=['GET'])
+@app.route('/api/stablecoin_yield_rates', methods=['GET'])
 def liquidity_rates():
     return get_stablecoin_rates()
 

@@ -7,10 +7,6 @@ import '../App.css';
 const DataTable = ({ rows }) => {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
 
-  const handleImageError = (event) => {
-    event.target.style.display = 'none';
-  };
-
   // Add sequential ID to each row
   const rowsWithId = rows.map((row, index) => ({
     ...row,
@@ -19,14 +15,9 @@ const DataTable = ({ rows }) => {
 
   const columns = isSmallScreen
     ? [
-        {
-          field: 'token',
-          headerName: 'Market',
-          width: 110,
-        },
-        { field: 'protocol', headerName: 'Project', width: 120 },
+        { field: 'market', headerName: 'Market', width: 110 },
+        { field: 'project', headerName: 'Project', width: 120 },
         { field: 'apy_sum', headerName: 'APY', type: 'number' },
-
         {
           field: 'tvl_formatted2',
           headerName: 'Supplied',
@@ -34,53 +25,33 @@ const DataTable = ({ rows }) => {
           sortable: true,
           width: 130,
         },
-
         {
-          field: 'liquidity_rate_formatted',
+          field: 'yield_rate_base',
           headerName: 'Base APY',
           type: 'number',
           width: 120,
         },
         {
-          field: 'liquidity_reward_rate_formatted',
+          field: 'yield_rate_reward_formatted',
           headerName: 'Reward APY',
           type: 'number',
           width: 130,
         },
-
-        { field: 'collateral_formatted', headerName: 'Collateral', width: 120 },
-        { field: 'chain', headerName: 'Chain', width: 120 },
         {
-          field: 'humanized_timestamp',
-          headerName: 'Last Updated',
-          width: 150,
+          field: 'information_formatted',
+          headerName: 'Information',
+          width: 120,
         },
+        { field: 'chain', headerName: 'Chain', width: 120 },
+        { field: 'timestamp', headerName: 'Last Updated', width: 150 },
       ]
     : [
         { field: 'sequentialId', headerName: '#', width: 50 },
-        {
-          field: 'token',
-          headerName: 'Market',
-          width: 100,
-        },
-        { field: 'collateral_formatted', headerName: 'Collateral', width: 100 },
-        { field: 'protocol', headerName: 'Project', width: 130 },
+        { field: 'market', headerName: 'Market', width: 100 },
+
+        { field: 'project', headerName: 'Project', width: 130 },
         { field: 'apy_sum', headerName: 'APY', type: 'number', width: 90 },
-
         { field: 'chain', headerName: 'Chain', width: 100 },
-        {
-          field: 'liquidity_rate_formatted',
-          headerName: 'Base APY',
-          type: 'number',
-          width: 100,
-        },
-        {
-          field: 'liquidity_reward_rate_formatted',
-          headerName: 'Reward APY',
-          type: 'number',
-          width: 105,
-        },
-
         {
           field: 'tvl_formatted2',
           headerName: 'Amount Supplied',
@@ -89,9 +60,25 @@ const DataTable = ({ rows }) => {
           width: 150,
         },
         {
-          field: 'humanized_timestamp',
-          headerName: 'Last Updated',
-          width: 160,
+          field: 'information_formatted',
+          headerName: 'Information',
+          width: 100,
+        },
+        {
+          field: 'yield_rate_base',
+          headerName: 'Base APY',
+          type: 'number',
+          width: 100,
+        },
+        {
+          field: 'yield_rate_reward_formatted',
+          headerName: 'Reward APY',
+          type: 'number',
+          width: 105,
+        },
+        {
+          field: 'type',
+          headerName: 'Type',
         },
       ];
 

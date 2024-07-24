@@ -66,6 +66,7 @@ const DataTableStablecoin = ({ rows }) => {
     >
       <DataGrid
         autoHeight
+        autoWidth
         slotProps={{
           loadingOverlay: {
             variant: 'skeleton',

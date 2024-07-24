@@ -7,12 +7,12 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Ensure the app's directory is in the system path
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 sys.path.append(project_root)
 
 # Import Flask app and db from your application
 from app import app, db
-from instances.MoneyMarketRate import MoneyMarketRate
+from instances.YieldRate import YieldRate as Data
 
 # Define the chain_id dictionary
 chain_id = {
@@ -43,18 +43,21 @@ def fetch_yearn():
                         token_deposit = vault["token"]["symbol"]
                         contract_address = vault["address"]
                         chain = chain_name
+                        type = "Active Management"
 
                         if len(token_deposit) < 6 and tvl and tvl > 0:
-                            rate = MoneyMarketRate(
-                                token=token_deposit,
-                                protocol="Yearn",
-                                liquidity_rate=apy,
-                                liquidity_reward_rate=None,
-                                chain=chain,
-                                borrow_rate=0,
-                                collateral=name,
+                            rate = Data(
+                                market=token_deposit,
+                                project="Yearn",
+                                information="",
+                                yield_rate_base=apy,
+                                yield_rate_reward=None,
+                                yield_token_reward=None,
                                 tvl=tvl,
-                                timestamp=datetime.utcnow(),
+                                chain=chain.capitalize(),
+                                type=type,
+                                smart_contract=contract_address,
+                                timestamp=datetime.utcnow()
                             )
 
                             db.session.add(rate)

@@ -5,15 +5,16 @@ import logging
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from aave.fetch_data_aavev3 import fetch_store_rates as aave
-from curve.fetch_store_data import fetch_store_data as curve
-from gearbox.fetch_data import fetch_store_rates as gearbox
-from spark.fetch_rates import fetch_store_rates as maker_dsr
-from compound.fetch_rates import fetch_store_rates as compound
-from morpho.fetch_data_morpho import fetch_data as morpho
+from projects.aave.fetch_data import fetch_store_rates as aave
+from projects.compound.fetch_rates import fetch_store_rates as compound
+from projects.curve.fetch_store_data import fetch_store_data as curve
+from projects.gearbox.fetch_data import fetch_store_data as gearbox
+from projects.morpho.fetch_data_morpho import fetch_data_metamorpho as morpho
+from projects.pendle.fetch_data import fetch_data as pendle
+from projects.spark.fetch_rates import fetch_store_sparklend as spark
+from projects.yearn.get_yearn_data import fetch_yearn as yearn
+
 from scripts.stablecoin_fetch import get_stablecoin_data as stablecoin
-from yearn.get_yearn_data import fetch_yearn as yearn
-from pendle.fetch_data import fetch_data as pendle
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -46,7 +47,7 @@ def fetch_store_data():
 
         try:
             logger.info("Fetching Data for Maker DSR")
-            maker_dsr()
+            spark()
             logger.info("Maker DSR Data fetched")
         except Exception as e:
             logger.error(f"Error fetching Maker DSR data: {e}")

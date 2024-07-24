@@ -4,11 +4,11 @@ import sys, os
 import logging
 
 # Ensure the root directory is in the Python path
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 sys.path.append(project_root)
 
 from app import app, db
-from instances.MoneyMarketRate import MoneyMarketRate
+from instances.YieldRate import YieldRate as Data
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -65,41 +65,48 @@ def fetch_data():
             apy_swap = result.get("aggregatedApy", "0")
             apy_lp = float(apy_swap) + float(apy_base)
 
+            type="Interest Rate"
+
             try:
                 token_pt = f"{token} (Buy PT) - {maturity} maturity"
                 token_lp = f"{token} (LP) - {maturity} maturity"
                 if len(token_pt) > 50:
                     token_pt = token_pt[:47] + '...'
+                    token_pt = list(token_pt)
                 if len(token_lp) > 50:
                     token_lp = token_lp[:47] + '...'
+                    token_lp = list(token_lp)
 
 
-                deposit = MoneyMarketRate(
-                                token=token_pt,
-                                collateral=address,
-                                protocol="Pendle",
-                                liquidity_rate=float(apy_base) * 100,
-                                liquidity_reward_rate=0,
-                                liquidity_reward_token="Pendle",
-                                chain=chain,
-                                borrow_rate=0,
-                                tvl=tvl,
-                                timestamp=datetime.utcnow(),
-                                )
+                deposit = Data(
+                    market=token,
+                    project="Pendle",
+                    information="",
+                    yield_rate_base=float(apy_base)*100,
+                    yield_rate_reward=None,
+                    yield_token_reward=None,
+                    tvl=tvl,
+                    chain=chain,
+                    type=type,
+                    smart_contract=address,
+                    timestamp=datetime.utcnow()
+                )
                 db.session.add(deposit)
 
-                lp = MoneyMarketRate(
-                                token=token_lp,
-                                collateral=address,
-                                protocol="Pendle",
-                                liquidity_rate=float(apy_lp) * 100,
-                                liquidity_reward_rate=float(apy_reward) * 100,
-                                liquidity_reward_token="Pendle",
-                                chain=chain,
-                                borrow_rate=0,
-                                tvl=tvl,
-                                timestamp=datetime.utcnow(),
-                                )
+                lp = Data(
+                    market=token,
+                    project="Pendle",
+                    information="",
+                    yield_rate_base=float(apy_base)*100,
+                    yield_rate_reward=apy_lp*100,
+                    yield_token_reward=None,
+                    tvl=tvl,
+                    chain=chain,
+                    type=type,
+                    smart_contract=address,
+                    timestamp=datetime.utcnow()
+                )
+
                 db.session.add(lp)
 
                 db.session.commit()

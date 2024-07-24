@@ -7,11 +7,11 @@ from datetime import datetime
 
 
 # Ensure the root directory is in the Python path
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.append(project_root)
 
 from app import app,db
-from instances.MoneyMarketRate import MoneyMarketRate
+from instances.YieldRate import YieldRate as Data
 
 
 
@@ -44,18 +44,17 @@ with open(abi_path) as f:
         exit(1)
 
 
-def fetch_store_rates():
+def fetch_store_data():
     print("Starting to Fetch Data for Gearbox")
     with app.app_context():
         try:
-            for token,value in pool_contract_address.items():
-                pool_contract = web3.eth.contract(address=value, abi=provider_abi)
+            for token,address in pool_contract_address.items():
+                pool_contract = web3.eth.contract(address=address, abi=provider_abi)
 
-            # Fetch lending rates
-                supply_apy_raw = pool_contract.functions.supplyRate().call()
+                apy_base = pool_contract.functions.supplyRate().call()
 
             # Convert from Ray (scaled by 1e27) to a percentage
-                supply_apy = supply_apy_raw / 1e27 * 100
+                apy_base_formatted = apy_base / 1e27 * 100
 
                 total_supply_raw = pool_contract.functions.totalSupply().call()
                 if token == "USDC" or token =="USDT":
@@ -63,19 +62,25 @@ def fetch_store_rates():
                 else:
                     total_supply = total_supply_raw/1e18
 
+                chain = "Ethereum"
+                type="Lending"
 
 
-
-                rate = MoneyMarketRate(
-                    token=token,
-                    protocol="Gearbox",
-                    liquidity_rate=supply_apy,
-                    borrow_rate=0,
-                    chain='Ethereum',
+                data = Data(
+                    market=token,
+                    project="Gearbox",
+                    information="",
+                    yield_rate_base=float(apy_base_formatted),
+                    yield_rate_reward=None,
+                    yield_token_reward=None,
                     tvl=total_supply,
+                    chain=chain,
+                    type=type,
+                    smart_contract=address,
                     timestamp=datetime.utcnow()
                 )
-                db.session.add(rate)
+
+                db.session.add(data)
 
 
         except Exception as e:
@@ -84,5 +89,6 @@ def fetch_store_rates():
 
         db.session.commit()
 
-
-    # return "Fetched"
+if __name__ == '__main__':
+    with app.app_context():
+        fetch_store_data()

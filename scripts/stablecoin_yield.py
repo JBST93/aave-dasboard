@@ -10,7 +10,7 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
 
 from app import app, db
-from instances.MoneyMarketRate import MoneyMarketRate as Table
+from instances.YieldRate import YieldRate as Table
 
 stablecoins = [
     "USDC", "USDT", "DAI", "USDe", "USDD", "pyUSD",
@@ -18,7 +18,7 @@ stablecoins = [
     "sFrax", "FRAX", "eUSD"
 ]
 
-conditions = [Table.token.ilike(f"%{coin}%") for coin in stablecoins]
+conditions = [Table.market.ilike(f"%{coin}%") for coin in stablecoins]
 
 
 def get_stablecoin_rates():
@@ -27,21 +27,24 @@ def get_stablecoin_rates():
         records = db.session.query(Table).filter(
             Table.tvl > 1000,
             or_(*conditions)
-        ).order_by(Table.token, Table.chain, Table.protocol, Table.timestamp.desc()).all()
+        ).order_by(Table.market, Table.chain, Table.project, Table.timestamp.desc()).all()
 
         # Dictionary to hold the latest entry for each combination of (token, chain, collateral, protocol)
         unique_rates = {}
         for rate in records:
-            collateral_key = tuple(sorted(rate.collateral)) if isinstance(rate.collateral, list) else rate.collateral
-            key = (rate.token, rate.chain, collateral_key, rate.protocol)
-            if key not in unique_rates:
-                unique_rates[key] = rate
+            smart_contract = rate.smart_contract  # Assuming there is a `smart_contract` field
+            if smart_contract not in unique_rates:
+                unique_rates[smart_contract] = rate
+            else:
+                if rate.timestamp > unique_rates[smart_contract].timestamp:
+                    unique_rates[smart_contract] = rate
+
 
         rates_list = [
             {
                 **rate.to_dict(),
                 'tvl_formatted': f"{rate.tvl:,.0f}" if rate.tvl is not None else 0,
-                'liquidity_rate_formatted': f"{rate.liquidity_rate:,.2f}" if rate.liquidity_rate is not None else 0,
+                'yield_rate_base': f"{rate.yield_rate_base:,.2f}" if rate.yield_rate_base is not None else 0,
                 'humanized_timestamp': humanize.naturaltime(datetime.utcnow() - rate.timestamp)
             }
             for rate in unique_rates.values()

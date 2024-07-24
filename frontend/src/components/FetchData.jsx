@@ -4,6 +4,7 @@ import AverageYieldRate from '../components/AverageRate';
 
 const DataTable = React.lazy(() => import('./DataTable'));
 const Filter = React.lazy(() => import('./Filter'));
+
 const FetchData = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState('');
@@ -11,41 +12,29 @@ const FetchData = () => {
   const [avgRate, setAvgRate] = useState('');
   const [filteredAvgRate, setFilteredAvgRate] = useState('');
 
-  const transformCollateral = (collateral) => {
-    if (collateral === null) {
-      return '';
-    } else if (Array.isArray(collateral)) {
-      if (collateral.length === 1) {
-        return collateral[0];
-      } else {
-        return collateral.join(', ');
-      }
-    }
-    return collateral;
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/liquidity_rates');
+        const response = await axios.get('/api/stablecoin_yield_rates');
+        console.log(response);
+        console.log(data);
 
         const transformedData = response.data.map((item, index) => ({
           ...item,
           sequentialId: index + 1,
           id: item.id,
           tvl_formatted2: Math.round(item.tvl),
-          liquidity_reward_rate_formatted:
-            item.liquidity_reward_rate === null ||
-            item.liquidity_reward_rate === 0
+          yield_rate_reward_formatted:
+            item.yield_rate_reward === null || item.yield_rate_reward === 0
               ? ''
-              : item.liquidity_reward_rate.toFixed(2),
+              : item.yield_rate_reward.toFixed(2),
           apy_sum: (
-            parseFloat(item.liquidity_rate) +
-            (item.liquidity_reward_rate
-              ? parseFloat(item.liquidity_reward_rate)
-              : 0)
+            parseFloat(item.yield_rate_base) +
+            (item.yield_rate_reward ? parseFloat(item.yield_rate_reward) : 0)
           ).toFixed(2),
-          collateral_formatted: transformCollateral(item.collateral),
+          information_formatted: item.information
+            ? item.information.join(', ')
+            : '',
         }));
 
         setData(transformedData);
@@ -58,7 +47,7 @@ const FetchData = () => {
   }, []);
 
   const filteredData = data.filter((item) =>
-    item.token.toLowerCase().includes(filter.toLowerCase())
+    item.market.toLowerCase().includes(filter.toLowerCase())
   );
 
   useEffect(() => {
@@ -69,7 +58,7 @@ const FetchData = () => {
         );
         const totalSum = filteredData.reduce((sum, item) => {
           const rate =
-            typeof item.liquidity_rate === 'number' ? item.liquidity_rate : 0;
+            typeof item.yield_rate_base === 'number' ? item.yield_rate_base : 0;
           return sum + rate;
         }, 0);
 
@@ -89,7 +78,7 @@ const FetchData = () => {
       if (dataToProcess && dataToProcess.length > 0) {
         const totalSum = dataToProcess.reduce((sum, item) => {
           const rate =
-            typeof item.liquidity_rate === 'number' ? item.liquidity_rate : 0;
+            typeof item.yield_rate_base === 'number' ? item.yield_rate_base : 0;
           return sum + rate;
         }, 0);
 
@@ -105,7 +94,7 @@ const FetchData = () => {
   }, [filteredData]);
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       <div className="pb-0">
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 md:mb-0">
           <AverageYieldRate

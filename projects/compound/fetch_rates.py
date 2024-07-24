@@ -6,13 +6,13 @@ import json
 from datetime import datetime
 
 # Ensure the root directory is in the Python path
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.append(project_root)
 load_dotenv(os.path.join(project_root, '.env'))
 
 # Import app and db from the root directory
 from app import app, db
-from instances.MoneyMarketRate import MoneyMarketRate
+from instances.YieldRate import YieldRate as Data
 
 # Construct the absolute path to the aave_abi.json file
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -49,8 +49,12 @@ contracts= [
         "token":"USDT",
         "address":"0x2e44e174f7D53F0212823acC11C01A11d58c5bCB",
         "chain":"optimism"
+    },
+    {
+        "token":"wETH",
+        "address":"0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+        "chain":"ethereum"
     }
-
 ]
 
 
@@ -59,7 +63,7 @@ def fetch_store_rates():
     print("Starting Fetching Data for Compound V3")
     with app.app_context():
         for contract in contracts:
-            token = contract["token"]
+            market = contract["token"]
             address = contract["address"]
             chain = contract["chain"]
 
@@ -84,23 +88,28 @@ def fetch_store_rates():
                 # getSupplyRate(Utilization) / (10 ^ 18) * Seconds Per Year (3,154e+7) * 100
                 utilization = pool_contract.functions.getUtilization().call()
                 supply_rate = pool_contract.functions.getSupplyRate(utilization).call()
-                liquidity_rate = supply_rate / 1e18 * 60 * 60 * 24 * 365 * 100
+                apy_base_formatted = supply_rate / 1e18 * 60 * 60 * 24 * 365 * 100
 
                 # Total supply
                 tvl = pool_contract.functions.totalSupply().call()
                 tvl_transformed = tvl / 1e6
+                type = "Lending"
 
-                rate = MoneyMarketRate(
-                    token=token,
-                    protocol="Compound V3",
-                    liquidity_rate=liquidity_rate,
-                    borrow_rate=0,
-                    chain=chain.capitalize(),
+                data = Data(
+                    market=market,
+                    project="Compound v3",
+                    information="",
+                    yield_rate_base=float(apy_base_formatted),
+                    yield_rate_reward=None,
+                    yield_token_reward=None,
                     tvl=tvl_transformed,
+                    chain=chain.capitalize(),
+                    type=type,
+                    smart_contract=address,
                     timestamp=datetime.utcnow()
                 )
 
-                db.session.add(rate)
+                db.session.add(data)
             except Exception as e:
                 print(f"Error fetching data for {token}: {e}")
 
