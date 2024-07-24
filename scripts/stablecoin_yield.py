@@ -3,6 +3,8 @@ import sys, os
 import humanize
 from datetime import datetime
 from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy import or_
+
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
@@ -16,15 +18,16 @@ stablecoins = [
     "sFrax", "FRAX", "eUSD"
 ]
 
+conditions = [Table.token.ilike(f"%{coin}%") for coin in stablecoins]
+
+
 def get_stablecoin_rates():
     with app.app_context():
         # Fetch all records that match the conditions
         records = db.session.query(Table).filter(
             Table.tvl > 1000,
-            Table.token.in_(stablecoins)
+            or_(*conditions)
         ).order_by(Table.token, Table.chain, Table.protocol, Table.timestamp.desc()).all()
-
-        print(f"Found {len(records)} records")  # Debugging statement
 
         # Dictionary to hold the latest entry for each combination of (token, chain, collateral, protocol)
         unique_rates = {}
