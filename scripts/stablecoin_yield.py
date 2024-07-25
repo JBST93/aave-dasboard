@@ -33,18 +33,18 @@ def get_stablecoin_rates():
             Table.tvl > 1000,
             Table.timestamp > time_threshold,
             or_(*conditions)
-        ).order_by(Table.market, Table.chain, Table.project, Table.timestamp.desc()).all()
+        ).order_by(Table.tvl).all()
 
         # Dictionary to hold the latest entry for each combination of (token, chain, collateral, protocol)
         unique_rates = {}
         for rate in records:
-            smart_contract = rate.smart_contract  # Assuming there is a `smart_contract` field
-            if smart_contract not in unique_rates:
-                unique_rates[smart_contract] = rate
-            else:
-                if rate.timestamp > unique_rates[smart_contract].timestamp:
-                    unique_rates[smart_contract] = rate
+            key = (rate.project, rate.chain, rate.smart_contract)  # Combining project, chain, and smart_contract
 
+            if key not in unique_rates:
+                unique_rates[key] = rate
+            else:
+                if rate.timestamp > unique_rates[key].timestamp:
+                    unique_rates[key] = rate
 
         rates_list = [
             {

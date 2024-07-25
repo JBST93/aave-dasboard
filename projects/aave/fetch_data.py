@@ -92,14 +92,14 @@ def fetch_store_rates():
                 # Need to find TVL_USD
                 tvl_usd = tvl
                 information = ""
-                type = "lending market"
+                type = "Lending market"
 
                 print(f"Inserting data: {token}, {apy_base_formatted}, {tvl_usd}, {chain}, {contract}")
 
                 data = YieldRate(
                     market=token,
                     project="Aave v3",
-                    information=information,
+
                     yield_rate_base=float(apy_base_formatted),
                     yield_rate_reward=None,
                     yield_token_reward=None,
@@ -116,6 +116,7 @@ def fetch_store_rates():
                 print(f"Error fetching data for {token}: {e}")
 
             db.session.commit()
+            print(f"Commited dat for {chain}")
         print("Aave v3 data fetched and committed")
 
 if __name__ == '__main__':
