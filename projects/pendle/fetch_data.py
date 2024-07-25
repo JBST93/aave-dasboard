@@ -66,7 +66,7 @@ def fetch_data():
             apy_base = result.get("impliedApy", "0")
             apy_reward = result.get("pendleApy", "0")
             apy_swap = result.get("aggregatedApy", "0")
-            apy_lp = float(apy_swap) + float(apy_reward)
+            apy_lp = float(apy_swap) + float(apy_base)
 
             try:
                 token_pt = f"(Buy PT) - {formatted_maturity}"
@@ -87,13 +87,15 @@ def fetch_data():
                     timestamp=datetime.utcnow()
                 )
                 db.session.add(deposit)
+                db.session.commit()
+
 
                 lp = Data(
                     market=token,
                     project="Pendle",
                     information=token_lp,
-                    yield_rate_base=float(apy_base)*100,
-                    yield_rate_reward=apy_lp*100,
+                    yield_rate_base=float(apy_lp)*100,
+                    yield_rate_reward=apy_reward*100,
                     yield_token_reward=None,
                     tvl=tvl,
                     chain=chain,
