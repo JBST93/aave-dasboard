@@ -13,7 +13,7 @@ sys.path.append(project_root)
 from app import app, db
 from instances.YieldRate import YieldRate as Table
 
-coins = ["ETH"]
+coins = ["ETH", "wETH"]
 
 conditions = [Table.market.ilike(f"%{coin}%") for coin in coins]
 
@@ -26,7 +26,6 @@ def get_ethereum_yields():
 
         # Fetch all records that match the conditions
         records = db.session.query(Table).filter(
-            Table.tvl > 10,
             Table.timestamp > time_threshold,
             or_(*conditions)
         ).order_by(Table.market, Table.chain, Table.project, Table.timestamp.desc()).all()
@@ -58,4 +57,4 @@ def get_ethereum_yields():
 
 # Run the Flask app
 if __name__ == "__main__":
-    app.run()
+    get_ethereum_yields()

@@ -19,7 +19,7 @@ function EthereumYield() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/eth_yiel_rates');
+        const response = await axios.get('/api/eth_yields');
         const dataset = response.data.eth_yield;
         const summaryData = response.data.summary_info;
 
