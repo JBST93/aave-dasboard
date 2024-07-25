@@ -1,7 +1,8 @@
 from flask import Flask, jsonify
 import sys, os
 import humanize
-from datetime import datetime
+from datetime import datetime, timedelta
+
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy import or_
 
@@ -23,9 +24,14 @@ conditions = [Table.market.ilike(f"%{coin}%") for coin in stablecoins]
 
 def get_stablecoin_rates():
     with app.app_context():
+
+        # Calculate the time threshold for 3 hours ago
+        time_threshold = datetime.utcnow() - timedelta(hours=3)
+
         # Fetch all records that match the conditions
         records = db.session.query(Table).filter(
             Table.tvl > 1000,
+            Table.timestamp > time_threshold,
             or_(*conditions)
         ).order_by(Table.market, Table.chain, Table.project, Table.timestamp.desc()).all()
 
