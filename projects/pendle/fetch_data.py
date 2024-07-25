@@ -63,7 +63,7 @@ def fetch_data():
             apy_base = result.get("impliedApy", "0")
             apy_reward = result.get("pendleApy", "0")
             apy_swap = result.get("aggregatedApy", "0")
-            apy_lp = float(apy_swap) + float(apy_base)
+            apy_lp = float(apy_swap) + float(apy_reward)
 
             type="Interest Rate"
 
