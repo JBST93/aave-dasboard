@@ -19,12 +19,18 @@ migrate = Migrate(app, db)
 CORS(app)
 
 from scripts.stablecoin_yield import get_stablecoin_rates
+from scripts.eth_yield_api import get_ethereum_yields
+
 from scripts.stablecoin_info_render import get_stablecoin_info_render
 
 
 @app.route('/api/stablecoin_yield_rates', methods=['GET'])
 def liquidity_rates():
     return get_stablecoin_rates()
+
+@app.route('/api/eth_yield_rates', methods=['GET'])
+def liquidity_rates():
+    return get_ethereum_yields()
 
 @app.route('/api/stablecoin_info', methods=['GET'])
 def stablecoin_info():
