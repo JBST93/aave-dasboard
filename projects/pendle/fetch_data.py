@@ -90,21 +90,21 @@ def fetch_data():
                 db.session.commit()
 
 
-                lp = Data(
-                    market=token,
-                    project="Pendle",
-                    information=token_lp,
-                    yield_rate_base=float(apy_lp)*100,
-                    yield_rate_reward=apy_reward*100,
-                    yield_token_reward=None,
-                    tvl=tvl,
-                    chain=chain,
-                    type="LP - Liquidity Provision",
-                    smart_contract=address,
-                    timestamp=datetime.utcnow()
-                )
+                # lp = Data(
+                #     market=token,
+                #     project="Pendle",
+                #     information=token_lp,
+                #     yield_rate_base=float(apy_lp)*100,
+                #     yield_rate_reward=apy_reward*100,
+                #     yield_token_reward=None,
+                #     tvl=tvl,
+                #     chain=chain,
+                #     type="LP - Liquidity Provision",
+                #     smart_contract=address,
+                #     timestamp=datetime.utcnow()
+                # )
 
-                db.session.add(lp)
+                # db.session.add(lp)
 
                 db.session.commit()
 
