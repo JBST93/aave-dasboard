@@ -29,7 +29,7 @@ def liquidity_rates():
     return get_stablecoin_rates()
 
 @app.route('/api/eth_yield_rates', methods=['GET'])
-def liquidity_rates():
+def get_ethereum_yields():
     return get_ethereum_yields()
 
 @app.route('/api/stablecoin_info', methods=['GET'])
