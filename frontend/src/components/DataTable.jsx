@@ -40,7 +40,7 @@ const DataTable = ({ rows }) => {
         {
           field: 'information_formatted',
           headerName: 'Information',
-          width: 120,
+          width: 200,
         },
         { field: 'chain', headerName: 'Chain', width: 120 },
         {
@@ -66,7 +66,7 @@ const DataTable = ({ rows }) => {
         {
           field: 'information_formatted',
           headerName: 'Information',
-          width: 100,
+          width: 200,
         },
         {
           field: 'yield_rate_base',
