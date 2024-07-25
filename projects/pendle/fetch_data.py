@@ -56,6 +56,9 @@ def fetch_data():
 
             name = result.get('pt', {}).get('name', 'N/A')
             maturity = result.get("expiry", {})
+            datetime_obj = datetime.fromisoformat(maturity.replace("Z", "+00:00"))
+            formatted_maturity = datetime_obj.strftime("%Y-%m-%d")
+
             token = result.get("accountingAsset", {}).get("symbol", 'N/A')
             tvl = result.get('liquidity', {}).get('usd', "0")
             chain = chain_mapping.get(chain_id, "Unknown")
@@ -65,12 +68,9 @@ def fetch_data():
             apy_swap = result.get("aggregatedApy", "0")
             apy_lp = float(apy_swap) + float(apy_reward)
 
-            type="Interest Rate"
-
             try:
-                token_pt = f"{token} (Buy PT) - {maturity} maturity"
-                token_lp = f"{token} (LP) - {maturity} maturity"
-
+                token_pt = f"{token} (Buy PT) - {formatted_maturity}"
+                token_lp = f"{token} (LP) - {formatted_maturity}"
 
 
                 deposit = Data(
@@ -82,7 +82,7 @@ def fetch_data():
                     yield_token_reward=None,
                     tvl=tvl,
                     chain=chain,
-                    type=type,
+                    type="Interest Rate Derivative",
                     smart_contract=address,
                     timestamp=datetime.utcnow()
                 )
@@ -97,7 +97,7 @@ def fetch_data():
                     yield_token_reward=None,
                     tvl=tvl,
                     chain=chain,
-                    type=type,
+                    type="LP - Liquidity Provision",
                     smart_contract=address,
                     timestamp=datetime.utcnow()
                 )
