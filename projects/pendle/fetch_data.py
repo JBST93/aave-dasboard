@@ -69,8 +69,8 @@ def fetch_data():
             apy_lp = float(apy_swap) + float(apy_base)
 
             try:
-                token_pt = f"(Buy PT) - {formatted_maturity}"
-                token_lp = f"(LP) - {formatted_maturity}"
+                token_pt = f"Buy PT - {formatted_maturity}"
+                token_lp = f"LP - {formatted_maturity}"
 
 
                 deposit = Data(

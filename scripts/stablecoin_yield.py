@@ -21,6 +21,12 @@ stablecoins = [
 
 conditions = [Table.market.ilike(f"%{coin}%") for coin in stablecoins]
 
+def clean_information(info):
+    # Remove curly braces and split the string by commas
+    tokens = info.strip("{}").split(",")
+    # Remove any whitespace around tokens
+    return [token.strip() for token in tokens]
+
 
 def get_stablecoin_rates():
     with app.app_context():
@@ -52,7 +58,7 @@ def get_stablecoin_rates():
                 'tvl_formatted': f"{rate.tvl:,.0f}" if rate.tvl is not None else 0,
                 'yield_rate_base': f"{rate.yield_rate_base:,.2f}" if rate.yield_rate_base is not None else 0,
                 'humanized_timestamp': humanize.naturaltime(datetime.utcnow() - rate.timestamp),
-                'information_transformed': rate.information if isinstance(rate.information, list) else [],
+                'information_transformed': clean_information(rate.information) if rate.information else [],
 
             }
             for rate in unique_rates.values()
