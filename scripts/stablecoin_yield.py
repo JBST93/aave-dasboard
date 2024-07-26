@@ -4,7 +4,7 @@ import humanize
 from datetime import datetime, timedelta
 
 from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy import or_
+from sqlalchemy import or_, desc
 
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -39,7 +39,7 @@ def get_stablecoin_rates():
             Table.tvl > 1000,
             Table.timestamp > time_threshold,
             or_(*conditions)
-        ).order_by(Table.tvl).all()
+        ).order_by(desc(Table.tvl)).all()
 
         # Dictionary to hold the latest entry for each combination of (token, chain, collateral, protocol)
         unique_rates = {}

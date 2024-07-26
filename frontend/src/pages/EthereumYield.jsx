@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import axios from '../api/axios';
 
-import DataTable from '../components/DataTableStablecoin';
+// import DataTable from '../components/DataTableStablecoin';
 import AverageYieldRate from '../components/AverageRate';
 import FilterButton from '../components/FilterButton';
 
@@ -95,10 +95,11 @@ function EthereumYield() {
           onClick={() => setFilter('EUR')}
         />
       </div>
-
-      <Suspense fallback={<div>Loading data...</div>}>
-        <DataTable rows={filteredData} />
-      </Suspense>
+      <div className="container mx-auto py-10">
+        <Suspense fallback={<div>Loading data...</div>}>
+          <DataTable rows={filteredData} />
+        </Suspense>
+      </div>
     </>
   );
 }

@@ -5,10 +5,12 @@ import Box from '@mui/material/Box';
 import '../App.css';
 
 const DataTable = ({ rows }) => {
+  const validRows = Array.isArray(rows) ? rows : [];
+
   const isSmallScreen = useMediaQuery('(max-width:600px)');
 
   // Add sequential ID to each row
-  const rowsWithId = rows.map((row, index) => ({
+  const rowsWithId = validRows.map((row, index) => ({
     ...row,
     sequentialId: index + 1,
   }));

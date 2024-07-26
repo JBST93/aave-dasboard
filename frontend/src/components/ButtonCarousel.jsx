@@ -9,7 +9,6 @@ const ButtonCarousel = ({ onClick }) => {
   const carouselRef = useRef(null);
 
   const items = [
-    { token: '', label: 'ALL' },
     { token: 'USDC', label: 'USDC' },
     { token: 'USDT', label: 'USDT' },
     { token: 'DAI', label: 'DAI' },
@@ -71,16 +70,8 @@ const ButtonCarousel = ({ onClick }) => {
 
   return (
     <div className="relative flex items-center w-full mx-auto">
-      <button
-        onClick={handlePrev}
-        className="absolute left-0 z-10 text-basefocus:outline-none block md:hidden"
-        style={{ transform: 'translateX(-50%)' }}
-      >
-        <FaChevronLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-      </button>
-
       <div
-        className="w-full overflow-hidden m-3"
+        className="w-full overflow-hidden"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -100,13 +91,6 @@ const ButtonCarousel = ({ onClick }) => {
           ))}
         </div>
       </div>
-      <button
-        onClick={handleNext}
-        className="absolute right-0 z-10 p-2 text-base  focus:outline-none block md:hidden"
-        style={{ transform: 'translateX(50%)' }}
-      >
-        <FaChevronRight className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-      </button>
     </div>
   );
 };

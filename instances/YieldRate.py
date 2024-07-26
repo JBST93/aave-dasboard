@@ -9,7 +9,7 @@ class YieldRate(db.Model):
     market = db.Column(db.String(100), nullable=False)
     project = db.Column(db.String(100), nullable=False)
 
-    information = db.Column(db.String(150), nullable=True)
+    information = db.Column(db.String(200), nullable=True)
 
     yield_rate_base = db.Column(db.Float, nullable=False)
 

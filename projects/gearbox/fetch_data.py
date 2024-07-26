@@ -12,12 +12,10 @@ sys.path.append(project_root)
 
 from app import app,db
 from instances.YieldRate import YieldRate as Data
-
-
+from scripts.utils import load_abi, insert_yield_db
 
 # Load environment variables
 load_dotenv(os.path.join(project_root, '.env'))
-
 
 # Connect to an Ethereum node
 infura_url = os.getenv('INFURA_URL')
@@ -31,17 +29,7 @@ pool_contract_address = {
     "crvUSD":"0x8ef73f036feec873d0b2fd20892215df5b8bdd72",
 }
 
-
-script_dir = os.path.dirname(os.path.abspath(__file__))
-
-# Construct the absolute path to the aave_abi.json file
-abi_path = os.path.join(script_dir, 'gearbox_abi.json')
-
-with open(abi_path) as f:
-    try:
-        provider_abi = json.load(f)
-    except FileNotFoundError:
-        exit(1)
+provider_abi = load_abi("gearbox","gearbox_abi.json")
 
 
 def fetch_store_data():
@@ -54,37 +42,28 @@ def fetch_store_data():
                 apy_base = pool_contract.functions.supplyRate().call()
 
             # Convert from Ray (scaled by 1e27) to a percentage
-                apy_base_formatted = apy_base / 1e27 * 100
+                yield_rate_base = apy_base / 1e27 * 100
+                yield_rate_reward = None
+                yield_token_reward=None
 
                 total_supply_raw = pool_contract.functions.totalSupply().call()
                 if token == "USDC" or token =="USDT":
-                    total_supply = total_supply_raw/1e6
+                    tvl = total_supply_raw/1e6
                 else:
-                    total_supply = total_supply_raw/1e18
+                    tvl = total_supply_raw/1e18
 
+                project = "Gearbox"
                 chain = "Ethereum"
                 type="Lending"
+                information=None
 
+                insert_yield_db(token,project,information,yield_rate_base,yield_rate_reward,yield_token_reward,tvl,chain,type,address)
 
-                data = Data(
-                    market=token,
-                    project="Gearbox",
-                    information="",
-                    yield_rate_base=float(apy_base_formatted),
-                    yield_rate_reward=None,
-                    yield_token_reward=None,
-                    tvl=total_supply,
-                    chain=chain,
-                    type=type,
-                    smart_contract=address,
-                    timestamp=datetime.utcnow()
-                )
-
-                db.session.add(data)
 
 
         except Exception as e:
             print(f"Error fetching {token} Saving Rate: {e}", 500)
+
         print("Gearbox Fetched")
 
         db.session.commit()

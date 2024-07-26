@@ -32,7 +32,7 @@ const NavBar = () => {
       </button>
 
       <nav
-        className={`bg-gray-200 dark:bg-gray-800 text-black dark:text-white h-screen w-1/5 fixed top-0 left-0 p-4 flex flex-col justify-between transform ${
+        className={`bg-gray-200 dark:bg-gray-800 text-black dark:text-white h-full w-1/5 fixed top-0 left-0 p-4 flex flex-col justify-between transform ${
           isOpen
             ? '-translate-x-0 w-4/5 z-20'
             : '-translate-x-full w-0/5 overflow-hidden'
@@ -40,19 +40,19 @@ const NavBar = () => {
       >
         <div>
           <h1 className="text-2xl font-bold mb-4">Token Data View</h1>
-          <button className="text-gray-900 bg-white border dark:border-teal-700 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+          <div>
             <DarkModeToggle />
-          </button>
+          </div>
           <br></br>
           <ul className="space-y-4 text-white">
-            <li>
+            {/* <li>
               <Link
                 to="/stablecoin"
                 className="hover:text-yellow-500 text-black dark:text-white"
               >
                 Stablecoins
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 to="/"
