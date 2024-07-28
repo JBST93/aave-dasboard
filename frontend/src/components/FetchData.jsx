@@ -11,35 +11,6 @@ const FetchData = () => {
   const [filter, setFilter] = useState();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('/api/stablecoin_yield_rates');
-        console.log(response);
-
-        const transformedData = response.data.map((item, index) => ({
-          ...item,
-          sequentialId: index + 1,
-          id: item.id,
-          tvl_formatted2: Math.round(item.tvl),
-          yield_rate_reward_formatted:
-            item.yield_rate_reward === null || item.yield_rate_reward === 0
-              ? ''
-              : item.yield_rate_reward.toFixed(2),
-          apy_sum: (
-            parseFloat(item.yield_rate_base) +
-            (item.yield_rate_reward ? parseFloat(item.yield_rate_reward) : 0)
-          ).toFixed(2),
-          information_formatted: Array.isArray(item.information)
-            ? item.information.join(', ')
-            : item.information || '',
-        }));
-
-        setData(transformedData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
     fetchData();
   }, []);
 

@@ -11,7 +11,7 @@ const Filter = ({ filter, setFilter }) => {
 
   return (
     <>
-      <div className="px-2 flex flex-col md:flex-row md:items-center max-w-full mx-auto">
+      <div className="flex flex-col md:flex-row md:items-center">
         <div className="relative flex items-center md:flex-none md:w-1/3">
           <span className="absolute inset-y-0 left-0 flex items-center pl-3">
             <svg

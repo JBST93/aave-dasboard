@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
-const InputFilter = ({ data, setSelectedBlockchains }) => {
+const InputFilter = ({ data, setSelectedBlockchains, resetFilter }) => {
   // Create an array with all the item.chain values and get the distinct ones
   const uniqueChains = Array.from(new Set(data.map((item) => item.chain)));
 
@@ -58,7 +58,7 @@ const InputFilter = ({ data, setSelectedBlockchains }) => {
   };
 
   const placeholderStyles = 'text-gray-500 pl-1 py-0.5';
-  const selectInputStyles = 'pl-1 py-0.5 dark:bg-gray-800';
+  const selectInputStyles = 'dark:bg-gray-800';
   const valueContainerStyles = 'gap-1';
   const singleValueStyles = 'leading-7 ml-1';
   const multiValueStyles =
@@ -66,7 +66,7 @@ const InputFilter = ({ data, setSelectedBlockchains }) => {
   const multiValueLabelStyles = 'leading-6 py-0.5';
   const multiValueRemoveStyles =
     'border border-gray-200 bg-white hover:bg-red-50 hover:text-red-800 text-gray-500 hover:border-red-300 rounded-md';
-  const indicatorsContainerStyles = 'p-1 gap-1';
+  const indicatorsContainerStyles = 'gap-1';
   const clearIndicatorStyles =
     'text-gray-500 p-1 rounded-md hover:bg-red-50 hover:text-red-800';
   const indicatorSeparatorStyles = 'bg-gray-300 dark:bg-gray-500';
@@ -102,7 +102,7 @@ const InputFilter = ({ data, setSelectedBlockchains }) => {
       }}
       classNames={{
         control: () =>
-          'h-full overflow-hidden pl-10 border border-gray-300 text-sm dark:border-teal-600 bg-white dark:bg-gray-800 text-gray-400 dark:text-white focus:outline-none focus:ring-2',
+          'h-full overflow-hidden border border-gray-300 text-sm dark:border-teal-600 bg-white dark:bg-gray-800 text-gray-400 dark:text-white focus:outline-none focus:ring-2',
         placeholder: () => placeholderStyles,
         input: () => selectInputStyles,
         valueContainer: () => valueContainerStyles,

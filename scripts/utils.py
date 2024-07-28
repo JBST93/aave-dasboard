@@ -42,7 +42,9 @@ def insert_yield_db(market, project, information, yield_rate_base, yield_rate_re
             smart_contract=smart_contract,
             timestamp=datetime.utcnow()
         )
+
         db.session.add(data)
+
     except Exception as e:
         db.session.rollback()
         print(f"Error inserting data into DB: {e}")

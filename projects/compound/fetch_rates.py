@@ -17,7 +17,6 @@ from instances.YieldRate import YieldRate as Data
 # Construct the absolute path to the aave_abi.json file
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-
 #Compounds contracts
 contracts= [
     {
@@ -55,6 +54,8 @@ contracts= [
         "address":"0xA17581A9E3356d9A858b789D68B4d866e593aE94",
         "chain":"ethereum"
     }
+
+
 ]
 
 
