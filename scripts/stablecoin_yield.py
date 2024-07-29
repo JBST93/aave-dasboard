@@ -16,7 +16,7 @@ from instances.YieldRate import YieldRate as Table
 stablecoins = [
     "USDC", "USDT", "DAI", "USDe", "USDD", "pyUSD",
     "FRAX", "crvUSD", "GHO", "LUSD", "USDA", "sDai",
-    "sFrax", "FRAX", "eUSD"
+    "sFrax", "FRAX", "eUSD", "arUSD", "fxUSD", "btcUSD", "rUSD", "cvxUSD"
 ]
 
 conditions = [Table.market.ilike(f"%{coin}%") for coin in stablecoins]
