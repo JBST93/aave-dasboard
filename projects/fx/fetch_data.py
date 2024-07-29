@@ -43,7 +43,7 @@ def fetch_store_data():
                 print(f"{underlying} - {reward_apy} - {information} - {tvl}")
                 type = "Stability Pool"
 
-                insert_yield_db(underlying,project,information,None,reward_apy,reward,tvl,chain,type,contract_address)
+                insert_yield_db(underlying,project,information,0,reward_apy,reward,tvl,chain,type,contract_address)
 
 
         except Exception as e:
