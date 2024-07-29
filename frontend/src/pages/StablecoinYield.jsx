@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import fetchData from '../utils/fetch_data';
 import DataTable from '../components/DataTable';
 import Filter from '../components/Filter';
 import InputFilter from '../components/InputFilter';
-import ButtonCarousel from '../components/ButtonCarousel';
-import FilterButton from '../components/FilterButton';
 
 const StablecoinYield = () => {
   const [data, setData] = useState([]);

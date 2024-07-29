@@ -13,6 +13,8 @@ from projects.morpho.fetch_data_morpho import fetch_data_metamorpho as morpho
 from projects.pendle.fetch_data import fetch_data as pendle
 from projects.spark.fetch_rates import fetch_store_sparklend as spark
 from projects.yearn.get_yearn_data import fetch_yearn as yearn
+from projects.fx.fetch_data import fetch_store_data as fx
+
 
 from scripts.stablecoin_fetch import get_stablecoin_data as stablecoin
 
@@ -76,7 +78,14 @@ def fetch_store_data():
         try:
             logger.info("Fetching Data for Pendle")
             pendle()
-            logger.info("Morpho Data fetched")
+            logger.info("Pendle Data fetched")
+        except Exception as e:
+            logger.error(f"Error fetching yearn data: {e}")
+
+        try:
+            logger.info("Fetching Data for FX")
+            fx()
+            logger.info("FX Data fetched")
         except Exception as e:
             logger.error(f"Error fetching yearn data: {e}")
 
