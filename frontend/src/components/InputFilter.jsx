@@ -44,7 +44,7 @@ const InputFilter = ({ data, setSelectedBlockchains, resetFilter }) => {
     }),
     menu: (provided) => ({
       ...provided,
-      zIndex: 9999,
+      zIndex: 40,
     }),
     menuList: (provided) => ({
       ...provided,
@@ -53,7 +53,7 @@ const InputFilter = ({ data, setSelectedBlockchains, resetFilter }) => {
     }),
     placeholder: (provided) => ({
       ...provided,
-      zIndex: 333,
+      zIndex: 41,
     }),
   };
 
@@ -74,10 +74,12 @@ const InputFilter = ({ data, setSelectedBlockchains, resetFilter }) => {
     'p-1 hover:bg-gray-100 text-gray-500 rounded-md hover:text-black dark:bg-gray-800';
   const menuStyles =
     'p-1 mt-2 border border-gray-200 bg-white rounded-lg dark:bg-gray-800';
-  const groupHeadingStyles = 'ml-3 mt-2 mb-1 text-gray-500 text-sm';
+  const groupHeadingStyles =
+    'ml-3 mt-2 mb-1 text-gray-500 text-sm dark:bg-red-200';
   const optionStyles = {
     base: 'hover:cursor-pointer px-3 py-2 rounded',
-    focus: 'bg-gray-100 active:bg-gray-200',
+    focus:
+      'bg-gray-100 active:bg-gray-200 active: dark:bg-gray-200 dark:text-black',
     selected:
       "after:content-['✔'] after:ml-2 after:text-green-500 text-gray-500",
   };

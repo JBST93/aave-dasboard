@@ -34,7 +34,7 @@ const NavBar = () => {
       <nav
         className={`bg-gray-200 dark:bg-gray-800 text-black dark:text-white h-full w-1/5 fixed top-0 left-0 p-4 flex flex-col justify-between transform ${
           isOpen
-            ? '-translate-x-0 w-4/5 z-20'
+            ? '-translate-x-0 w-4/5 z-50'
             : '-translate-x-full w-0/5 overflow-hidden'
         } md:translate-x-0 transition-transform duration-300 ease-in-out`}
       >
