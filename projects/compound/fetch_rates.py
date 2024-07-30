@@ -63,8 +63,7 @@ def get_comp_price():
     r = requests.get("https://api.binance.com/api/v3/ticker/price?symbol=COMPUSDT")
     data = r.json()
     price = data.get("price")
-    price_transformed = float(price)
-    return price_transformed
+    return price
 
 def fetch_store_rates():
     print("Starting Fetching Data for Compound V3")
@@ -74,6 +73,8 @@ def fetch_store_rates():
             address = contract["address"]
             chain = contract["chain"]
             comp_price = get_comp_price()
+            print(comp_price)
+
 
 
             abi_path = os.path.join(script_dir, f'compound_abi_{chain}.json')
@@ -117,7 +118,7 @@ def fetch_store_rates():
                     project="Compound v3",
                     information="",
                     yield_rate_base=float(apy_base_formatted),
-                    yield_rate_reward=reward_apy,
+                    yield_rate_reward=float(reward_apy),
                     yield_token_reward="COMP",
                     tvl=tvl_transformed,
                     chain=chain.capitalize(),
