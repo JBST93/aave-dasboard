@@ -91,18 +91,18 @@ def fetch_store_data():
 
         logger.info("Data fetching completed")
 
-sched.add_job(fetch_store_data, 'interval', minutes=10)
+sched.add_job(fetch_store_data, 'interval', minutes=30)
 
-def get_stable_data():
-    with app.app_context():
-        try:
-            logger.info("Fetching Stablecoin Data")
-            stablecoin()
-            logger.info("Stablecoin Data fetched")
-        except Exception as e:
-            logger.error(f"Error fetching Stablecoin data: {e}")
+# def get_stable_data():
+#     with app.app_context():
+#         try:
+#             logger.info("Fetching Stablecoin Data")
+#             stablecoin()
+#             logger.info("Stablecoin Data fetched")
+#         except Exception as e:
+#             logger.error(f"Error fetching Stablecoin data: {e}")
 
-sched.add_job(get_stable_data, 'interval', minutes=60)
+# sched.add_job(get_stable_data, 'interval', minutes=60)
 
 if __name__ == '__main__':
     sched.start()

@@ -40,6 +40,7 @@ def fetch_store_data():
                         tvl = dataset["totalSupplied"]["usdTotal"]
                         type = "Lending"
                         contract = dataset["address"]
+                        information= f"Collateral: {collateral}"
 
                         # Handle missing 'gaugeRewards'
                         if "gaugeRewards" in dataset and dataset["gaugeRewards"]:
@@ -52,7 +53,7 @@ def fetch_store_data():
                         data = Data(
                             market=token,
                             project="Curve",
-                            information=collateral,
+                            information=information,
                             yield_rate_base=float(lend_apy),
                             yield_rate_reward=liquidity_reward_rate,
                             yield_token_reward=liquidity_reward_token,
