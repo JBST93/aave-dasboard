@@ -99,7 +99,7 @@ def fetch_store_rates():
                 # getSupplyRate(Utilization) / (10 ^ 18) * Seconds Per Year (3,154e+7) * 100
                 utilization = pool_contract.functions.getUtilization().call()
                 supply_rate = pool_contract.functions.getSupplyRate(utilization).call()
-                apy_base_formatted = supply_rate * 1e18 * 60 * 60 * 24 * 365 * 100
+                apy_base_formatted = supply_rate / 1e18 * 60 * 60 * 24 * 365 * 100
 
 
                 # Total supply
