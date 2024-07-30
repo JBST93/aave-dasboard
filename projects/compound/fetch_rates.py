@@ -62,8 +62,8 @@ contracts= [
 def get_comp_price():
     r = requests.get("https://api.binance.com/api/v3/ticker/price?symbol=COMPUSDT")
     data = r.json()
-    price = data.get("price")
-    return price
+    price = data.get("price",{})
+    return float(price)
 
 def fetch_store_rates():
     print("Starting Fetching Data for Compound V3")
@@ -73,8 +73,6 @@ def fetch_store_rates():
             address = contract["address"]
             chain = contract["chain"]
             comp_price = get_comp_price()
-            print(comp_price)
-
 
 
             abi_path = os.path.join(script_dir, f'compound_abi_{chain}.json')
@@ -100,17 +98,15 @@ def fetch_store_rates():
                 supply_rate = pool_contract.functions.getSupplyRate(utilization).call()
                 apy_base_formatted = supply_rate / 1e18 * 60 * 60 * 24 * 365 * 100
 
+
                 # Total supply
                 tvl = pool_contract.functions.totalSupply().call()
                 tvl_transformed = tvl / 1e6
-                type = "Lending"
 
-                baseTrackingSupplySpeed = pool_contract.functions.baseTrackingBorrowSpeed().call()
-                trackingIndexScale = pool_contract.functions.trackingIndexScale().call()
+                baseTrackingSupplySpeed = float(pool_contract.functions.baseTrackingBorrowSpeed().call())
+                trackingIndexScale = float(pool_contract.functions.trackingIndexScale().call())
 
                 reward_apy = (baseTrackingSupplySpeed/trackingIndexScale) * 60*60*24*365 * comp_price / tvl * 100
-
-                print(f"{market} - {reward_apy} & {comp_price}")
 
 
                 data = Data(
@@ -122,7 +118,7 @@ def fetch_store_rates():
                     yield_token_reward="COMP",
                     tvl=tvl_transformed,
                     chain=chain.capitalize(),
-                    type=type,
+                    type='',
                     smart_contract=address,
                     timestamp=datetime.utcnow()
                 )
@@ -132,7 +128,7 @@ def fetch_store_rates():
             except Exception as e:
                 print(f"Error fetching data for {market}: {e}")
 
-        # db.session.commit()
+        db.session.commit()
         print("Compound Data Fetched")
 
 
