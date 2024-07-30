@@ -62,9 +62,7 @@ contracts= [
 def get_comp_price():
     r = requests.get("https://api.exchange.coinbase.com/products/COMP-USD/ticker")
     data = r.json()
-    print(f"API response: {data}")
     price = data.get("price")
-    print(price)
     if price is not None:
             return float(price)
     else:
@@ -78,7 +76,6 @@ def fetch_store_rates():
             address = contract["address"]
             chain = contract["chain"]
             comp_price = get_comp_price()
-            print(comp_price)
 
 
             abi_path = os.path.join(script_dir, f'compound_abi_{chain}.json')
@@ -102,7 +99,7 @@ def fetch_store_rates():
                 # getSupplyRate(Utilization) / (10 ^ 18) * Seconds Per Year (3,154e+7) * 100
                 utilization = pool_contract.functions.getUtilization().call()
                 supply_rate = pool_contract.functions.getSupplyRate(utilization).call()
-                apy_base_formatted = supply_rate / 1e18 * 60 * 60 * 24 * 365 * 100
+                apy_base_formatted = supply_rate * 1e18 * 60 * 60 * 24 * 365 * 100
 
 
                 # Total supply
@@ -112,11 +109,9 @@ def fetch_store_rates():
                 baseTrackingSupplySpeed = float(pool_contract.functions.baseTrackingBorrowSpeed().call())
                 trackingIndexScale = float(pool_contract.functions.trackingIndexScale().call())
 
-                print(f" {baseTrackingSupplySpeed} - {trackingIndexScale}")
+                reward_apy = (baseTrackingSupplySpeed/trackingIndexScale) * 60*60*24*365 * comp_price / tvl_transformed * 100
 
-                reward_apy = (baseTrackingSupplySpeed/trackingIndexScale) * 60*60*24*365 * comp_price / tvl * 100
-
-                print(reward_apy)
+                print(f"{market} | {apy_base_formatted} | {reward_apy}")
 
 
                 data = Data(
@@ -124,7 +119,7 @@ def fetch_store_rates():
                     project="Compound v3",
                     information="",
                     yield_rate_base=float(apy_base_formatted),
-                    yield_rate_reward=float(reward_apy),
+                    yield_rate_reward=reward_apy,
                     yield_token_reward="COMP",
                     tvl=tvl_transformed,
                     chain=chain.capitalize(),
