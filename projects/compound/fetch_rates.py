@@ -4,6 +4,7 @@ import os
 import sys
 import json
 from datetime import datetime
+import requests
 
 # Ensure the root directory is in the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
@@ -58,7 +59,12 @@ contracts= [
 
 ]
 
-
+def get_comp_price():
+    r = requests.get("https://api.binance.com/api/v3/ticker/price?symbol=COMPUSDT")
+    data = r.json()
+    price = data.get("price")
+    price_transformed = float(price)
+    return price_transformed
 
 def fetch_store_rates():
     print("Starting Fetching Data for Compound V3")
@@ -67,6 +73,8 @@ def fetch_store_rates():
             market = contract["token"]
             address = contract["address"]
             chain = contract["chain"]
+            comp_price = get_comp_price()
+
 
             abi_path = os.path.join(script_dir, f'compound_abi_{chain}.json')
 
@@ -96,13 +104,21 @@ def fetch_store_rates():
                 tvl_transformed = tvl / 1e6
                 type = "Lending"
 
+                baseTrackingSupplySpeed = pool_contract.functions.baseTrackingBorrowSpeed().call()
+                trackingIndexScale = pool_contract.functions.trackingIndexScale().call()
+
+                reward_apy = (baseTrackingSupplySpeed/trackingIndexScale) * 60*60*24*365 * comp_price / tvl * 100
+
+                print(f"{market} - {reward_apy} & {comp_price}")
+
+
                 data = Data(
                     market=market,
                     project="Compound v3",
                     information="",
                     yield_rate_base=float(apy_base_formatted),
-                    yield_rate_reward=None,
-                    yield_token_reward=None,
+                    yield_rate_reward=reward_apy,
+                    yield_token_reward="COMP",
                     tvl=tvl_transformed,
                     chain=chain.capitalize(),
                     type=type,
@@ -111,12 +127,13 @@ def fetch_store_rates():
                 )
 
                 db.session.add(data)
-            except Exception as e:
-                print(f"Error fetching data for {token}: {e}")
 
-        db.session.commit()
+            except Exception as e:
+                print(f"Error fetching data for {market}: {e}")
+
+        # db.session.commit()
         print("Compound Data Fetched")
 
 
 if __name__ == '__main__':
-    fetch_store_rates()
+    get_comp_price()
