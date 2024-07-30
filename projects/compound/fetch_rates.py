@@ -63,7 +63,10 @@ def get_comp_price():
     r = requests.get("https://api.binance.com/api/v3/ticker/price?symbol=COMPUSDT")
     data = r.json()
     price = data.get("price",{})
-    return float(price)
+    if price is not None:
+            return float(price)
+    else:
+            return 0
 
 def fetch_store_rates():
     print("Starting Fetching Data for Compound V3")
