@@ -1,6 +1,6 @@
-import { useEffect, useState, useMemo } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import fetchData from '../utils/fetch_data';
-import DataTable from '../components/DataTable';
+const DataTable = lazy(() => import('../components/DataTable'));
 import Filter from '../components/Filter';
 import InputFilter from '../components/InputFilter';
 
@@ -181,7 +181,9 @@ const StablecoinYield = () => {
       </div>
       <div>
         <p>{dataCount} results found</p>
-        <DataTable rows={filteredData} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <DataTable rows={filteredData} />
+        </Suspense>
       </div>
     </>
   );
