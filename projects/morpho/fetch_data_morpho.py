@@ -117,6 +117,12 @@ def fetch_data_metamorpho():
                             if collateral_asset:
                                 collateral = collateral_asset.get("symbol")
                                 collaterals.append(collateral)
+                        if collaterals:
+                            formatted_collaterals = f"Collaterals for pool: {', '.join(collaterals)}"
+                        else:
+                            formatted_collaterals = ""
+
+
 
                         if market["state"].get("rewards"):
                             reward_rate = market["state"].get("rewards")[0].get("supplyApr")
@@ -128,7 +134,7 @@ def fetch_data_metamorpho():
                         data = Data(
                             market=supply_token,
                             project="Morpho",
-                            information=collaterals,
+                            information=formatted_collaterals,
                             yield_rate_base=supply_apy * 100,
                             yield_rate_reward=reward_rate * 100,
                             yield_token_reward=None,
