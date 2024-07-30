@@ -136,4 +136,4 @@ def fetch_store_rates():
 
 
 if __name__ == '__main__':
-    get_comp_price()
+    fetch_store_rates()
