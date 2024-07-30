@@ -33,6 +33,8 @@ const DataTable = ({ rows }) => {
           type: 'number',
           width: 120,
         },
+        { field: 'chain', headerName: 'Chain', width: 120 },
+        {
         {
           field: 'yield_rate_reward_formatted',
           headerName: 'Reward APY',
@@ -42,10 +44,9 @@ const DataTable = ({ rows }) => {
         {
           field: 'information_formatted',
           headerName: 'Information',
-          width: 200,
+          width: 300,
         },
-        { field: 'chain', headerName: 'Chain', width: 120 },
-        {
+
           field: 'humanized_timestamp',
           headerName: 'Last Updated',
         },

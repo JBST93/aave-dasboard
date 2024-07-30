@@ -59,8 +59,6 @@ def fetch_store_sparklend():
             information = ""
             type = "Lending market"
 
-            print(f"Inserting data: {token}, {apy_base_formatted}, {tvl_usd}, {chain}, {contract}")
-
             data = Data(
                     market=token,
                     project="Spark Lend",

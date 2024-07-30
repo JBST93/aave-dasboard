@@ -62,7 +62,8 @@ contracts= [
 def get_comp_price():
     r = requests.get("https://api.binance.com/api/v3/ticker/price?symbol=COMPUSDT")
     data = r.json()
-    price = data.get("price",{})
+    logger.info(f"API response: {data}")
+    price = data.get("price")
     if price is not None:
             return float(price)
     else:
