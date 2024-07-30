@@ -78,6 +78,7 @@ def fetch_store_rates():
             address = contract["address"]
             chain = contract["chain"]
             comp_price = get_comp_price()
+            print(comp_price)
 
 
             abi_path = os.path.join(script_dir, f'compound_abi_{chain}.json')
@@ -111,7 +112,11 @@ def fetch_store_rates():
                 baseTrackingSupplySpeed = float(pool_contract.functions.baseTrackingBorrowSpeed().call())
                 trackingIndexScale = float(pool_contract.functions.trackingIndexScale().call())
 
+                print(f" {baseTrackingSupplySpeed} - {trackingIndexScale}")
+
                 reward_apy = (baseTrackingSupplySpeed/trackingIndexScale) * 60*60*24*365 * comp_price / tvl * 100
+
+                print(reward_apy)
 
 
                 data = Data(
