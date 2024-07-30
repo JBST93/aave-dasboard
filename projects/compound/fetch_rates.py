@@ -60,7 +60,7 @@ contracts= [
 ]
 
 def get_comp_price():
-    r = requests.get("https://api.binance.com/api/v3/ticker/price?symbol=COMPUSDT")
+    r = requests.get("https://api.exchange.coinbase.com/products/COMP-USD/ticker")
     data = r.json()
     print(f"API response: {data}")
     price = data.get("price")
