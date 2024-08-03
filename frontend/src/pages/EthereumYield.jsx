@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import axios from '../api/axios';
 
 // import DataTable from '../components/DataTableStablecoin';
