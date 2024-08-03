@@ -1,6 +1,5 @@
-import React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { useMediaQuery } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid/DataGrid';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import '../App.css';
 

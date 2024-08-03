@@ -1,7 +1,6 @@
-import React, { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import axios from '../api/axios';
 
-import DataTable from '../components/DataTableStablecoin';
 import AverageYieldRate from '../components/AverageRate';
 import FilterButton from '../components/FilterButton';
 
@@ -64,8 +63,8 @@ function StablecoinInfo() {
         </p>
       </div>
 
-      <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 md:mb-0 pb-4">
-        <AverageYieldRate
+      {/* <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 md:mb-0 pb-4"> */}
+      {/* <AverageYieldRate
           title="# Stablecoin"
           data={summaryInfo.total_tokens}
           className="w-2/3 md:w-1/3"
@@ -85,9 +84,9 @@ function StablecoinInfo() {
           data={summaryInfo.centralised_dominance_percentage}
           className="w-2/3 md:w-1/3"
         />
-      </div>
+      </div> */}
 
-      <div className="flex flex-wrap justify-start md:mt-0">
+      {/* <div className="flex flex-wrap justify-start md:mt-0">
         <FilterButton onClick={() => setFilter('')} />
         <FilterButton
           token="USD"
@@ -97,11 +96,7 @@ function StablecoinInfo() {
           token="EUR"
           onClick={() => setFilter('EUR')}
         />
-      </div>
-
-      <Suspense fallback={<div>Loading data...</div>}>
-        <DataTable rows={filteredData} />
-      </Suspense>
+      </div> */}
     </>
   );
 }

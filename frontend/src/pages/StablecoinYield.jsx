@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import fetchData from '../utils/fetch_data';
 const DataTable = lazy(() => import('../components/DataTable'));
+
 import Filter from '../components/Filter';
 import InputFilter from '../components/InputFilter';
 
