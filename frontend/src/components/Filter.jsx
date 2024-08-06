@@ -1,6 +1,7 @@
+import { Proportions } from 'lucide-react';
 import React from 'react';
 
-const Filter = ({ filter, setFilter }) => {
+const Filter = ({ filter, setFilter, placeholder }) => {
   const handleButtonClick = (token) => {
     setFilter(token);
   };
@@ -32,7 +33,7 @@ const Filter = ({ filter, setFilter }) => {
           <input
             type="text"
             className="py-2 pl-10 pr-10 text-sm border border-gray-300 dark:border-teal-700 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-yellow-500 dark:focus:ring-teal-600"
-            placeholder="Search Token"
+            placeholder={placeholder}
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
           />

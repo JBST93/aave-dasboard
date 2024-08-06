@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useState } from 'react';
 import fetchData from '../utils/fetch_data';
 const DataTable = lazy(() => import('../components/DataTable'));
 
+import InfoCard from '../components/InfoCard';
 import Filter from '../components/Filter';
 import InputFilter from '../components/InputFilter';
 
@@ -87,49 +88,16 @@ const StablecoinYield = () => {
         </p>
       </div>
 
-      <div className="w-full md:max-w-sm p-4 my-2 bg-white border shadow dark:bg-gray-800 border-gray-300 dark:border-teal-700">
-        <div className="flex items-center gap-2">
-          <svg
-            className="w-7 h-7 text-gray-500 dark:text-gray-400"
-            height="64"
-            viewBox="0 0 64 64"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-          >
-            <circle
-              cx="16"
-              cy="16"
-              r="6"
-            />
-            <circle
-              cx="48"
-              cy="48"
-              r="6"
-            />
-            <line
-              x1="16"
-              y1="48"
-              x2="48"
-              y2="16"
-              stroke="currentColor"
-              strokeWidth="4"
-            />
-          </svg>
-          <h5 className="md:text-xl text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-            DeFi Base Rate
-          </h5>
-        </div>
-        <p className="text-2xl font-medium text-gray-900 dark:text-white py-2">
-          {avgRate}%
-        </p>
-        <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
-          Based on the average yields of USDC, USDT, and DAI across pools with
-          more than $500 million in TVL (Total Value Locked).
-        </p>
-      </div>
+      <InfoCard
+        title="DeFi Base Rate"
+        description="Based on the average yields of USDC, USDT, and DAI across pools with
+        more than $500 million in TVL (Total Value Locked)."
+        value={avgRate}
+      />
 
       <div className="flex flex-wrap md:flex-nowrap items-center py-2 space-y-2 md:space-y-0 md:space-x-2">
         <Filter
+          placeholder="Search Token"
           filter={filter}
           setFilter={setFilter}
           className="flex-grow py-2 border border-gray-300"
@@ -143,33 +111,12 @@ const StablecoinYield = () => {
           />
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-center max-w-full w-full md:w-2/5">
-          <div className="relative flex items-center md:flex-none md:w-1/3">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-              <svg
-                className="w-5 h-5 text-gray-500 dark:text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103.5 10.5a7.5 7.5 0 0013.65 6.15z"
-                ></path>
-              </svg>
-            </span>
-            <input
-              type="text"
-              className="py-2 pl-10 pr-10 text-sm border border-gray-300 dark:border-teal-700 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-yellow-500 dark:focus:ring-teal-600"
-              placeholder="Minimum APY"
-              value={numericalFilter}
-              onChange={(e) => setNumericalFilter(e.target.value)}
-            />
-          </div>
-        </div>
+        <Filter
+          placeholder="Minimum APY"
+          filter={numericalFilter}
+          setFilter={setNumericalFilter}
+          className="flex-grow py-2 border border-gray-300"
+        />
 
         <div className="w-full md:w-auto md:px-2">
           <button
