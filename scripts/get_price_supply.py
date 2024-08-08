@@ -53,48 +53,49 @@ def open_json():
             return []
 
 def get_price_supply():
-    tokens = open_json()
-    if not tokens:
-        logger.error("No tokens found in JSON file")
-        return
+    with app.app_context():
+        tokens = open_json()
+        if not tokens:
+            logger.error("No tokens found in JSON file")
+            return
 
-    for item in tokens:
-        token = item["token"]
-        address = item["address"]
-        chain = item["chain"]
-        supply = item.get("supply", {})
+        for item in tokens:
+            token = item["token"]
+            address = item["address"]
+            chain = item["chain"]
+            supply = item.get("supply", {})
 
-        logger.info(f"Fetching price for {token}")
-        price = get_price_kraken(token) or (address and chain and get_curve_price(address, chain))
-        item['price'] = price
+            logger.info(f"Fetching price for {token}")
+            price = get_price_kraken(token) or (address and chain and get_curve_price(address, chain))
+            item['price'] = price
 
-        if supply:
-            circ_supply = get_supply(supply)
-            item['circ_supply'] = circ_supply
+            if supply:
+                circ_supply = get_supply(supply)
+                item['circ_supply'] = circ_supply
 
-        logger.info(f"Processed token {token} with price {price} and supply {circ_supply}")
+            logger.info(f"Processed token {token} with price {price} and supply {circ_supply}")
 
-        del item["supply"]
-        del item["address"]
-        del item["chain"]
+            del item["supply"]
+            del item["address"]
+            del item["chain"]
+
+            try:
+                token_data = Data(
+                    token=token,
+                    price=price,
+                    circ_supply=circ_supply
+                )
+                db.session.add(token_data)
+            except Exception as e:
+                logger.error(f"Error adding token data to database: {e}")
 
         try:
-            token_data = Data(
-                token=token,
-                price=price,
-                circ_supply=circ_supply
-            )
-            db.session.add(token_data)
+            db.session.commit()
+            logger.info("Token data committed to database")
         except Exception as e:
-            logger.error(f"Error adding token data to database: {e}")
+            logger.error(f"Error committing token data to database: {e}")
 
-    try:
-        db.session.commit()
-        logger.info("Token data committed to database")
-    except Exception as e:
-        logger.error(f"Error committing token data to database: {e}")
-
-    return tokens
+        return tokens
 
 def get_price_kraken(token):
     ticker = f"{token}USD"
@@ -146,5 +147,4 @@ def get_supply(supply):
     return circ_supply
 
 if __name__ == '__main__':
-    with app.app_context():
         print("This script is intended to be run as a scheduled task.")
