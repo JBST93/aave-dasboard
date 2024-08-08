@@ -26,6 +26,14 @@ logger = logging.getLogger(__name__)
 
 sched = BlockingScheduler()
 
+def log_and_execute(func, func_name):
+    try:
+        logger.info(f"Fetching Data for {func_name}")
+        func()
+        logger.info(f"{func_name} Data fetched")
+    except Exception as e:
+        logger.error(f"Error fetching {func_name} data: {e}")
+
 def fetch_store_data():
     with app.app_context():
         try:
@@ -108,14 +116,9 @@ sched.add_job(fetch_store_data, 'interval', minutes=30)
 
 def get_price_supply():
     with app.app_context():
-        try:
-            logger.info("Fetching Token Info")
-            get_price_supply()
-            logger.info("Token Info fetched")
-        except Exception as e:
-            logger.error(f"Error fetching Stablecoin data: {e}")
+        log_and_execute(get_price_supply, "Token Info")
 
-sched.add_job(get_price_supply, 'interval', minutes=10)
+sched.add_job(get_price_supply, 'interval', minutes=2)
 
 if __name__ == '__main__':
     sched.start()
