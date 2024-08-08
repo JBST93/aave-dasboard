@@ -30,13 +30,12 @@ def get_projects():
                     token_data = get_latest_token_data(token)
 
                     if token_data:
-                        price = token_data.price
+                        price = token_data.price or 0
                         circ_supply = token_data.circ_supply or 0
                     else:
                         price = 0
                         circ_supply = 0
 
-                    circ_supply = float(result.get("circ_supply", 0))
                     marketCap = price * circ_supply
 
                     projects.append({
