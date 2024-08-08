@@ -146,4 +146,5 @@ def get_supply(supply):
     return circ_supply
 
 if __name__ == '__main__':
-    print("This script is intended to be run as a scheduled task.")
+    with app.app_context():
+        print("This script is intended to be run as a scheduled task.")
