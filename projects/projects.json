@@ -145,17 +145,5 @@
         "amount": 10000000
       }
     }
-  },
-  {
-    "project": "FX Protocol",
-    "description": "f(x) is a DeFi protocol that offers a decentralized stablecoin enabled by an amplified ETH token, both backed by staked ETH.",
-    "governance": "DAO",
-    "website": "https://fx.aladdin.club/assets/",
-    "token": "FXN",
-    "audited": "Yes",
-    "forum": "https://forum.aladdin.club/c/f-x-protocol-improvement-proposals/18",
-    "business": "To add",
-    "address": "0x365AccFCa291e7D3914637ABf1F7635dB165Bb09",
-    "chain": "ethereum"
   }
 ]
