@@ -114,9 +114,10 @@ sched.add_job(fetch_store_data, 'interval', minutes=30)
 
 # sched.add_job(get_stable_data, 'interval', minutes=60)
 
-def get_price_supply():
+def fetch_price_supply():
     with app.app_context():
         log_and_execute(get_price_supply, "Token Info")
+        print("DONE")
 
 sched.add_job(get_price_supply, 'interval', minutes=2)
 
