@@ -55,6 +55,14 @@ const NavBar = () => {
             </li> */}
             <li>
               <Link
+                to="/projects"
+                className="hover:text-yellow-500 text-black dark:text-white"
+              >
+                Projects
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/"
                 className="hover:text-yellow-500 text-black dark:text-white"
               >

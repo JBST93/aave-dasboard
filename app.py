@@ -20,9 +20,12 @@ CORS(app)
 
 from scripts.stablecoin_yield import get_stablecoin_rates
 from scripts.eth_yield_api import get_ethereum_yields as eth_yield
-
 from scripts.stablecoin_info_render import get_stablecoin_info_render
+from scripts.get_project_info import get_projects
 
+@app.route('/api/projects',methods=["GET"])
+def get_project_list():
+    return get_projects()
 
 @app.route('/api/stablecoin_yield_rates', methods=['GET'])
 def liquidity_rates():

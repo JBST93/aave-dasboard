@@ -1,0 +1,95 @@
+[
+  {
+    "project": "Aave",
+    "description": "Aave is a decentralized finance protocol that allows people to lend and borrow cryptocurrency. Users can earn interest on deposits and borrow assets.",
+    "governance": "DAO",
+    "business": "Lending Market",
+    "website": "https://aave.com",
+    "forum": "https://governance.aave.com/latest",
+    "native_token": "AAVE",
+    "audited": "Yes",
+    "logoUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYlfqDoCc8VLkOrtoPhyTyuwLzYeH1NSv2qw&s"
+  },
+  {
+    "project": "Curve Finance",
+    "description": "Curve Finance is a decentralized exchange liquidity pool designed for extremely efficient stablecoin trading.",
+    "governance": "DAO",
+    "business": "Decentralized Exchange",
+    "website": "https://curve.fi",
+    "forum": "https://gov.curve.fi/",
+    "native_token": "CRV",
+    "audited": "Yes"
+  },
+  {
+    "project": "Compound",
+    "description": "Compound is a decentralized finance protocol that allows users to lend and borrow cryptocurrencies. Users can earn interest on their crypto assets.",
+    "governance": "DAO",
+    "business": "Lending Market",
+    "website": "https://compound.finance",
+    "forum": "https://www.comp.xyz/latest",
+    "native_token": "COMP",
+    "audited": "Yes"
+  },
+  {
+    "project": "Morpho",
+    "description": "A decentralized lending protocol.",
+    "governance": "DAO",
+    "business": "Lending Market",
+    "website": "https://app.morpho.org/?network=mainnet",
+    "forum": "https://forum.morpho.org/",
+    "native_token": "MORPHO (not launched)",
+    "audited": "Yes"
+  },
+  {
+    "project": "Pendle",
+    "description": "Pendle is a yield trading protocol that allows users to tokenize and trade future yield.",
+    "governance": "DAO",
+    "business": "Yield Trading / Interest Rate Derivative",
+    "website": "https://pendle.finance",
+    "forum": "",
+    "native_token": "PENDLE",
+    "audited": "Yes"
+  },
+  {
+    "project": "Spark Lend",
+    "description": "Spark is a decentralized lending protocol part of the MakerDAO ecosystem",
+    "governance": "DAO",
+    "business": "Lending Market",
+    "website": "https://sparklend.finance",
+    "forum": "https://forum.sparklend.finance/",
+    "native_token": "SPARK (not launched)",
+    "audited": "Yes"
+  },
+  {
+    "project": "FRAX Finance",
+    "description": "FRAX Finance is a decentralized finance protocol that includes a unique fractional-algorithmic stablecoin (FRAX) and a governance token (FXS). It aims to provide a scalable and decentralized stable currency.",
+    "governance": "DAO",
+    "business": "Stablecoin and DeFi Protocol",
+    "website": "https://frax.finance",
+    "forum": "https://gov.frax.finance/",
+    "native_token": "FXS",
+    "audited": "Yes",
+    "logoUrl": "https://frax.finance/assets/img/logo.png"
+  },
+  {
+    "project": "Maple Finance",
+    "description": "Maple Finance is a decentralized institutional capital marketplace that provides undercollateralized loans for institutional borrowers and fixed income opportunities for lenders.",
+    "governance": "DAO",
+    "business": "Lending Market",
+    "website": "https://maple.finance",
+    "forum": "https://forum.maple.finance/",
+    "native_token": "MPL",
+    "audited": "Yes",
+    "logoUrl": "https://maple.finance/assets/img/logo.png"
+  },
+  {
+    "project": "FX Protocol",
+    "description": "f(x) is a DeFi protocol that offers a decentralized stablecoin enabled by an amplified ETH token, both backed by staked ETH.",
+    "governance": "DAO",
+    "website": "https://fx.aladdin.club/assets/",
+    "native_token": "FXN",
+    "audited": "Yes",
+    "forum": "https://forum.aladdin.club/c/f-x-protocol-improvement-proposals/18",
+    "business": "To add"
+  }
+]
