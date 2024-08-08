@@ -1,8 +1,7 @@
 from flask import Flask
 import sys, os, json
 import requests
-from app import app, db
-from instances.TokenData import TokenData as Data
+
 import logging
 
 # Configure logging
@@ -12,6 +11,9 @@ logger = logging.getLogger(__name__)
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
 json_file_path = os.path.join(project_root, 'projects', 'projects.json')
+
+from app import app, db
+from instances.TokenData import TokenData as Data
 
 def get_nested_value(data, path):
     keys = path.split('.')
