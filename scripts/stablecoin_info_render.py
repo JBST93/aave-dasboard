@@ -51,7 +51,7 @@ def get_stablecoin_info_render():
 
             stablecoin_info.append({
                 'id': result.id,
-                'token': result.token,
+                'token': result.project,
                 'supply': supply,
                 'supply_formatted': f"{supply:,.0f}",
                 'info': result.info,

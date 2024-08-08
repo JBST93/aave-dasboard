@@ -21,9 +21,7 @@ const ProjectList = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get(
-          'https:///www.tokendataview.com/api/projects'
-        );
+        const response = await axios.get('http://127.0.0.1:5000/api/projects');
         setProjects(response.data);
       } catch (error) {
         setError(error.message);
@@ -96,6 +94,12 @@ const ProjectList = () => {
                   Token
                 </TableCell>
                 <TableCell className="font-bold dark:text-white">
+                  Price
+                </TableCell>
+                <TableCell className="font-bold dark:text-white">
+                  MarketCap
+                </TableCell>
+                <TableCell className="font-bold dark:text-white">
                   Audited
                 </TableCell>
                 <TableCell className="font-bold dark:text-white">
@@ -123,10 +127,16 @@ const ProjectList = () => {
                     {project.governance}
                   </TableCell>
                   <TableCell className="dark:text-white">
-                    {project.business}
+                    {project.type}
                   </TableCell>
                   <TableCell className="dark:text-white">
-                    {project.native_token}
+                    {project.token}
+                  </TableCell>
+                  <TableCell className="dark:text-white">
+                    {project.price}
+                  </TableCell>
+                  <TableCell className="dark:text-white">
+                    {project.marketCap}
                   </TableCell>
                   <TableCell className="dark:text-white">
                     {project.audited}

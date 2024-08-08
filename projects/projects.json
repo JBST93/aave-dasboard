@@ -6,9 +6,21 @@
     "business": "Lending Market",
     "website": "https://aave.com",
     "forum": "https://governance.aave.com/latest",
-    "native_token": "AAVE",
+    "token": "AAVE",
     "audited": "Yes",
-    "logoUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYlfqDoCc8VLkOrtoPhyTyuwLzYeH1NSv2qw&s"
+    "logoUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYlfqDoCc8VLkOrtoPhyTyuwLzYeH1NSv2qw&s",
+    "decimals": 18,
+    "price": 80,
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 16000000
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 16000000
+      }
+    }
   },
   {
     "project": "Curve Finance",
@@ -17,8 +29,16 @@
     "business": "Decentralized Exchange",
     "website": "https://curve.fi",
     "forum": "https://gov.curve.fi/",
-    "native_token": "CRV",
-    "audited": "Yes"
+    "token": "CRV",
+    "audited": "Yes",
+    "supply": {
+      "circSupply": {
+        "method": "API",
+        "endpoint": "https://api.curve.fi/api/getCrvCircSupply",
+        "path": "data.crvCirculatingSupply"
+      },
+      "totSupply": {}
+    }
   },
   {
     "project": "Compound",
@@ -27,8 +47,18 @@
     "business": "Lending Market",
     "website": "https://compound.finance",
     "forum": "https://www.comp.xyz/latest",
-    "native_token": "COMP",
-    "audited": "Yes"
+    "token": "COMP",
+    "audited": "Yes",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 10000000
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 10000000
+      }
+    }
   },
   {
     "project": "Morpho",
@@ -37,7 +67,7 @@
     "business": "Lending Market",
     "website": "https://app.morpho.org/?network=mainnet",
     "forum": "https://forum.morpho.org/",
-    "native_token": "MORPHO (not launched)",
+    "token": "MORPHO",
     "audited": "Yes"
   },
   {
@@ -47,8 +77,20 @@
     "business": "Yield Trading / Interest Rate Derivative",
     "website": "https://pendle.finance",
     "forum": "",
-    "native_token": "PENDLE",
-    "audited": "Yes"
+    "token": "PENDLE",
+    "audited": "Yes",
+    "supply": {
+      "circSupply": {
+        "method": "API",
+        "endpoint": "https://api-v2.pendle.finance/core/v1/ve-pendle/pendle-token-supply",
+        "path": "totalPendleCirculating"
+      },
+      "totSupply": {
+        "method": "API",
+        "endpoint": "https://api-v2.pendle.finance/core/v1/ve-pendle/pendle-token-supply",
+        "path": "totalPendleSupply"
+      }
+    }
   },
   {
     "project": "Spark Lend",
@@ -57,7 +99,7 @@
     "business": "Lending Market",
     "website": "https://sparklend.finance",
     "forum": "https://forum.sparklend.finance/",
-    "native_token": "SPARK (not launched)",
+    "token": "SPARK",
     "audited": "Yes"
   },
   {
@@ -67,9 +109,21 @@
     "business": "Stablecoin and DeFi Protocol",
     "website": "https://frax.finance",
     "forum": "https://gov.frax.finance/",
-    "native_token": "FXS",
+    "token": "FXS",
     "audited": "Yes",
-    "logoUrl": "https://frax.finance/assets/img/logo.png"
+    "logoUrl": "https://frax.finance/assets/img/logo.png",
+    "supply": {
+      "circSupply": {
+        "method": "API",
+        "endpoint": "https://api.frax.finance/priceitems/circulating-fxs-details",
+        "path": "circulatingSupply"
+      },
+      "totSupply": {
+        "method": "API",
+        "endpoint": "https://api.frax.finance/priceitems/circulating-fxs-details",
+        "path": "supply"
+      }
+    }
   },
   {
     "project": "Maple Finance",
@@ -78,18 +132,30 @@
     "business": "Lending Market",
     "website": "https://maple.finance",
     "forum": "https://forum.maple.finance/",
-    "native_token": "MPL",
+    "token": "MPL",
     "audited": "Yes",
-    "logoUrl": "https://maple.finance/assets/img/logo.png"
+    "logoUrl": "https://maple.finance/assets/img/logo.png",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 10000000
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 10000000
+      }
+    }
   },
   {
     "project": "FX Protocol",
     "description": "f(x) is a DeFi protocol that offers a decentralized stablecoin enabled by an amplified ETH token, both backed by staked ETH.",
     "governance": "DAO",
     "website": "https://fx.aladdin.club/assets/",
-    "native_token": "FXN",
+    "token": "FXN",
     "audited": "Yes",
     "forum": "https://forum.aladdin.club/c/f-x-protocol-improvement-proposals/18",
-    "business": "To add"
+    "business": "To add",
+    "address": "0x365AccFCa291e7D3914637ABf1F7635dB165Bb09",
+    "chain": "ethereum"
   }
 ]

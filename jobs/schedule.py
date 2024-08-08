@@ -15,6 +15,8 @@ from projects.spark.fetch_rates import fetch_store_sparklend as spark
 from projects.yearn.get_yearn_data import fetch_yearn as yearn
 from projects.fx.fetch_data import fetch_store_data as fx
 
+from scripts.get_price_supply import get_price_supply
+
 
 from scripts.stablecoin_fetch import get_stablecoin_data as stablecoin
 
@@ -103,6 +105,17 @@ sched.add_job(fetch_store_data, 'interval', minutes=30)
 #             logger.error(f"Error fetching Stablecoin data: {e}")
 
 # sched.add_job(get_stable_data, 'interval', minutes=60)
+
+def get_price_supply():
+    with app.app_context():
+        try:
+            logger.info("Fetching Token Info")
+            stablecoin()
+            logger.info("Token Info fetched")
+        except Exception as e:
+            logger.error(f"Error fetching Stablecoin data: {e}")
+
+sched.add_job(get_price_supply, 'interval', minutes=10)
 
 if __name__ == '__main__':
     sched.start()

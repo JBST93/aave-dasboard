@@ -4,3 +4,7 @@ smart_contracts = {
     "Optimism":"0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
     "Polygon":"0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
 }
+
+# GetAllAToken - Returns the list of the existing ATokens in the pool.
+# GetAllReservesToken - Returns the list of the existing reserves in the pool.
+# GetReserveData - Returns the reserve data
