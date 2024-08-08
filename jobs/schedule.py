@@ -110,7 +110,7 @@ def get_price_supply():
     with app.app_context():
         try:
             logger.info("Fetching Token Info")
-            stablecoin()
+            get_price_supply()
             logger.info("Token Info fetched")
         except Exception as e:
             logger.error(f"Error fetching Stablecoin data: {e}")
