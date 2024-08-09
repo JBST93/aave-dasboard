@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory, Response
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dotenv import load_dotenv
@@ -22,6 +22,14 @@ from scripts.stablecoin_yield import get_stablecoin_rates
 from scripts.eth_yield_api import get_ethereum_yields as eth_yield
 from scripts.stablecoin_info_render import get_stablecoin_info_render
 from scripts.get_project_info import get_projects
+
+@app.route('/robot.txt')
+def render_robot():
+    robots_content = """# robots.txt file for TokenDataView
+            User-agent: *
+            Disallow: /api/
+            """
+    return Response(robots_content, mimetype='text/plain')
 
 @app.route('/api/projects',methods=["GET"])
 def get_project_list():
