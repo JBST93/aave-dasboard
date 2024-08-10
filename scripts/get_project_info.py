@@ -53,7 +53,7 @@ def get_projects():
 
                         if token_data_24h_ago:
                             price_24h_ago = token_data_24h_ago.price or 0
-                            price_day_delta = price - price_24h_ago
+                            price_day_delta = (price - price_24h_ago)/price*100
                         else:
                             price_day_delta = 0
 
