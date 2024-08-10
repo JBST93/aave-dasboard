@@ -145,5 +145,47 @@
         "amount": 10000000
       }
     }
+  },
+  {
+    "project": "Yearn Finance",
+    "description": "Yearn Finance is a decentralized finance (DeFi) platform that offers a suite of products like vaults and yield farming strategies for users to maximize their returns on digital assets.",
+    "governance": "DAO",
+    "business": "Yield Aggregator",
+    "website": "https://yearn.finance",
+    "forum": "https://gov.yearn.finance/",
+    "token": "YFI",
+    "audited": "Yes",
+    "logoUrl": "https://yearn.finance/static/media/logo.7238837c.svg",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 36666
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 36666
+      }
+    }
+  },
+  {
+    "project": "Uniswap",
+    "description": "Uniswap is a decentralized exchange (DEX) protocol built on Ethereum, allowing users to trade ERC-20 tokens directly from their wallets without the need for a centralized intermediary.",
+    "governance": "DAO",
+    "business": "Decentralized Exchange (DEX)",
+    "website": "https://uniswap.org",
+    "forum": "https://gov.uniswap.org/",
+    "token": "UNI",
+    "audited": "Yes",
+    "logoUrl": "https://uniswap.org/images/logo.svg",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 753766667
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 1000000000
+      }
+    }
   }
 ]

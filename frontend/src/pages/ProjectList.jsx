@@ -99,6 +99,9 @@ const ProjectList = () => {
                   Price
                 </TableCell>
                 <TableCell className="font-bold dark:text-white">
+                  24H Price
+                </TableCell>
+                <TableCell className="font-bold dark:text-white">
                   MarketCap
                 </TableCell>
                 <TableCell className="font-bold dark:text-white">
@@ -136,6 +139,9 @@ const ProjectList = () => {
                   </TableCell>
                   <TableCell className="dark:text-white">
                     {project.price}
+                  </TableCell>
+                  <TableCell className="dark:text-white">
+                    {project.price_day_delta}
                   </TableCell>
                   <TableCell className="dark:text-white">
                     {project.marketCap}

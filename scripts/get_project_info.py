@@ -1,8 +1,10 @@
 from flask import Flask, jsonify
 import sys, os, json
 import requests
-from sqlalchemy import desc
+from sqlalchemy import desc, and_
 from app import app
+from datetime import datetime, timedelta
+
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
@@ -15,6 +17,16 @@ from instances.TokenData import TokenData
 def get_latest_token_data(token):
     """Fetch the latest token data from the database based on timestamp."""
     return TokenData.query.filter_by(token=token).order_by(desc(TokenData.timestamp)).first()
+
+def get_token_data_at_time(token, target_time):
+    """Fetch the token data closest to a specific time."""
+    return TokenData.query.filter(
+        and_(
+            TokenData.token == token,
+            TokenData.timestamp <= target_time
+        )
+    ).order_by(desc(TokenData.timestamp)).first()
+
 
 def get_projects():
     with app.app_context():
@@ -29,12 +41,27 @@ def get_projects():
                     # Fetch the latest data from the database
                     token_data = get_latest_token_data(token)
 
+
+
+
                     if token_data:
                         price = token_data.price or 0
                         circ_supply = token_data.circ_supply or 0
+
+                        time_24h_ago = token_data.timestamp - timedelta(hours=24)
+                        token_data_24h_ago = get_token_data_at_time(token, time_24h_ago)
+
+                        if token_data_24h_ago:
+                            price_24h_ago = token_data_24h_ago.price or 0
+                            price_day_delta = price - price_24h_ago
+                        else:
+                            price_day_delta = 0
+
                     else:
                         price = 0
                         circ_supply = 0
+                        price_day_delta = 0
+
 
                     marketCap = price * circ_supply
 
@@ -44,6 +71,7 @@ def get_projects():
                         'token': result["token"],
                         'supply_formatted': circ_supply,
                         'price': price,
+                        'price_day_delta': price_day_delta,
                         'marketCap': f"{marketCap:,.0f}",
                         'website': result["website"],
                         'forum': result["forum"],
