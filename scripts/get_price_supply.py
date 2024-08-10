@@ -16,17 +16,20 @@ from app import app, db
 from instances.TokenData import TokenData as Data
 
 def get_nested_value(data, path):
-    for key in path:
-        if isinstance(data, dict):
-            data = data.get(key, {})
-        elif isinstance(data, list):
-            # Example: you may want to loop through each item or just pick the first one
-            data = [item.get(key, {}) for item in data if isinstance(item, dict)]
-            # If you only want the first result, for instance:
-            data = data[0] if data else {}
+    keys = path.split('.')
+    for key in keys:
+        if isinstance(data, list) and key.isdigit():
+            index = int(key)
+            if 0 <= index < len(data):
+                data = data[index]
+            else:
+                return None  # Index out of range
+        elif isinstance(data, dict):
+            data = data.get(key, None)
         else:
-            return None
+            return None  # Invalid access path
     return data
+
 
 def open_json():
     with app.app_context():

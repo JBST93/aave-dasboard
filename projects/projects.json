@@ -354,12 +354,12 @@
       "circSupply": {
         "method": "API",
         "endpoint": "https://api.circle.com/v1/stablecoins",
-        "path": "data_formatted.total_liabilities"
+        "path": "data.1.totalAmount"
       },
       "totSupply": {
         "method": "API",
         "endpoint": "https://api.circle.com/v1/stablecoins",
-        "path": "data[1].totalAmount"
+        "path": "data.1.totalAmount"
       }
     }
   },
@@ -377,12 +377,12 @@
       "circSupply": {
         "method": "API",
         "endpoint": "https://app.tether.to/transparency.json",
-        "path": "data_formatted.total_liabilities"
+        "path": "data_formatted.0.total_liabilities"
       },
       "totSupply": {
         "method": "API",
         "endpoint": "https://app.tether.to/transparency.json",
-        "path": "data_formatted.total_liabilities"
+        "path": "data_formatted.0.total_liabilities"
       }
     }
   }
