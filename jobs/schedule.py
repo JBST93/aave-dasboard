@@ -119,7 +119,7 @@ def fetch_price_supply():
         log_and_execute(get_price_supply, "Token Info")
         print("DONE")
 
-sched.add_job(get_price_supply, 'interval', minutes=5)
+sched.add_job(get_price_supply, 'interval', minutes=30)
 
 if __name__ == '__main__':
     sched.start()

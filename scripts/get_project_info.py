@@ -67,7 +67,7 @@ def get_projects():
                         'description': result["description"],
                         'token': result["token"],
                         'supply_formatted': circ_supply,
-                        'price': price,
+                        'price': f"{price:,.2f}",
                         'price_day_delta': f"{price_day_delta:,.2f}",
                         'marketCapSorting': marketCap,
                         'marketCap': f"{marketCap:,.0f}",
