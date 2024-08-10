@@ -51,7 +51,7 @@ def get_projects():
                         time_24h_ago = token_data.timestamp - timedelta(hours=24)
                         token_data_24h_ago = get_token_data_at_time(token, time_24h_ago)
 
-                        if token_data_24h_ago:
+                        if token_data_24h_ago and price != 0:
                             price_24h_ago = token_data_24h_ago.price or 0
                             price_day_delta = (price - price_24h_ago)/price*100
                         else:
