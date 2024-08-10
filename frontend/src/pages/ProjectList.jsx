@@ -140,8 +140,18 @@ const ProjectList = () => {
                   <TableCell className="dark:text-white">
                     {project.price}
                   </TableCell>
-                  <TableCell className="dark:text-white">
-                    {project.price_day_delta}
+                  <TableCell
+                    className="dark:text-white"
+                    style={{
+                      color:
+                        project.price_day_delta > 0
+                          ? 'green'
+                          : project.price_day_delta < 0
+                          ? 'red'
+                          : 'inherit',
+                    }}
+                  >
+                    {project.price_day_delta}%
                   </TableCell>
                   <TableCell className="dark:text-white">
                     {project.marketCap}

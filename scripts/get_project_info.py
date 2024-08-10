@@ -71,7 +71,7 @@ def get_projects():
                         'token': result["token"],
                         'supply_formatted': circ_supply,
                         'price': price,
-                        'price_day_delta': price_day_delta,
+                        'price_day_delta': f"{price_day_delta:,.2f}",
                         'marketCap': f"{marketCap:,.0f}",
                         'website': result["website"],
                         'forum': result["forum"],
