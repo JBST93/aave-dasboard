@@ -41,9 +41,6 @@ def get_projects():
                     # Fetch the latest data from the database
                     token_data = get_latest_token_data(token)
 
-
-
-
                     if token_data:
                         price = token_data.price or 0
                         circ_supply = token_data.circ_supply or 0
@@ -72,11 +69,19 @@ def get_projects():
                         'supply_formatted': circ_supply,
                         'price': price,
                         'price_day_delta': f"{price_day_delta:,.2f}",
+                        'marketCapSorting': marketCap,
                         'marketCap': f"{marketCap:,.0f}",
                         'website': result["website"],
                         'forum': result["forum"],
                         'type': result["business"]
                     })
+
+                projects.sort(key=lambda x: x['marketCapSorting'], reverse=True)
+
+                # Remove the 'marketCap' field used for sorting
+                for project in projects:
+                    del project['marketCapSorting']
+
 
                 return jsonify(projects)
 

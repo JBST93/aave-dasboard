@@ -233,5 +233,48 @@
         "path": "mkr_total_supply"
       }
     }
+  },
+  {
+    "project": "Lido",
+    "description": "Lido is a liquid staking solution for Ethereum and other proof-of-stake (PoS) blockchains, allowing users to stake their assets while maintaining liquidity by receiving staking derivatives.",
+    "governance": "DAO",
+    "business": "Liquid Staking",
+    "website": "https://lido.fi/",
+    "forum": "https://research.lido.fi/",
+    "token": "LDO",
+    "audited": "Yes",
+    "logoUrl": "https://lido.fi/static/images/logo.svg",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 890645020
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 1000000000
+      }
+    }
+  },
+  {
+    "project": "Ethena",
+    "description": "Ethena is a decentralized finance protocol that offers synthetic assets on the Ethereum blockchain, enabling users to gain exposure to real-world assets without needing to hold the underlying assets.",
+    "governance": "DAO",
+    "business": "Synthetic Assets",
+    "website": "https://ethena.io/",
+    "forum": "https://forum.ethena.io/",
+    "token": "ETHA",
+    "audited": "Yes",
+    "logoUrl": "https://ethena.io/static/images/logo.svg",
+    "supply": {
+      "circSupply": {
+        "method": "API",
+        "endpoint": "http://vesting.ethena.fi/api/data?period=latest",
+        "path": "circulating_supply"
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 1000000000
+      }
+    }
   }
 ]
