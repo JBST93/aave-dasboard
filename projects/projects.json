@@ -187,5 +187,51 @@
         "amount": 1000000000
       }
     }
+  },
+  {
+    "project": "DAI",
+    "description": "DAI is a decentralized stablecoin running on Ethereum, soft-pegged to the US Dollar and backed by a mix of other cryptocurrencies. It is part of the MakerDAO ecosystem.",
+    "governance": "MakerDAO",
+    "business": "Stablecoin",
+    "website": "https://makerdao.com/en/",
+    "forum": "https://forum.makerdao.com/",
+    "token": "DAI",
+    "audited": "Yes",
+    "logoUrl": "https://makerdao.com/icons/makerdao/logo.svg",
+    "supply": {
+      "circSupply": {
+        "method": "API",
+        "endpoint": "https://cortex.blockanalitica.com/api/v1/maker/",
+        "path": "dai_total_supply"
+      },
+      "totSupply": {
+        "method": "API",
+        "endpoint": "https://cortex.blockanalitica.com/api/v1/maker/",
+        "path": "dai_total_supply"
+      }
+    }
+  },
+  {
+    "project": "Maker",
+    "description": "Maker is a decentralized finance (DeFi) platform on Ethereum, allowing users to generate DAI stablecoins by locking up collateral in a smart contract. MakerDAO governs the system.",
+    "governance": "MakerDAO",
+    "business": "Decentralized Finance (DeFi)",
+    "website": "https://makerdao.com/en/",
+    "forum": "https://forum.makerdao.com/",
+    "token": "MKR",
+    "audited": "Yes",
+    "logoUrl": "https://makerdao.com/icons/makerdao/logo.svg",
+    "supply": {
+      "circSupply": {
+        "method": "API",
+        "endpoint": "https://cortex.blockanalitica.com/api/v1/maker/",
+        "path": "mkr_circulating_supply"
+      },
+      "totSupply": {
+        "method": "API",
+        "endpoint": "https://cortex.blockanalitica.com/api/v1/maker/",
+        "path": "mkr_total_supply"
+      }
+    }
   }
 ]
