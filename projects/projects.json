@@ -339,5 +339,61 @@
         "amount": 2463852
       }
     }
+  },
+  {
+    "project": "USD Coin",
+    "description": "USD Coin (USDC) is a stablecoin that is pegged to the U.S. dollar, ensuring its value remains stable. It is fully backed by U.S. dollar assets held in reserve.",
+    "governance": "Centralized",
+    "business": "Stablecoin",
+    "website": "https://www.centre.io/usdc",
+    "forum": "https://community.centre.io/",
+    "token": "USDC",
+    "audited": "Yes",
+    "logoUrl": "https://www.circle.com/hubfs/usdc%20icon.svg",
+   "supply": {
+    "circSupply": {
+      "method": "API",
+      "endpoint": "https://api.circle.com/v1/stablecoins",
+      "path": "data_formatted.total_liabilities"
+    },
+    "totSupply": {
+      "method": "API",
+      "endpoint": "https://api.circle.com/v1/stablecoins",
+      "path": "data[1].totalAmount"
+    }
   }
+},{
+  "project": "Tether",
+  "description": "Tether (USDT) is a stablecoin that is pegged to the U.S. dollar and is one of the most widely used stablecoins in the cryptocurrency market.",
+  "governance": "Centralized",
+  "business": "Stablecoin",
+  "website": "https://tether.to",
+  "forum": "https://tether.to/community/",
+  "token": "USDT",
+  "audited": "Yes",
+  "logoUrl": "https://tether.to/wp-content/uploads/2021/01/usdt-icon-green.svg",
+  "supply": {
+    "circSupply": {
+      "method": "API",
+      "endpoint": "https://app.tether.to/transparency.json",
+      "path": "data_formatted.total_liabilities"
+    },
+    "totSupply": {
+      "method": "API",
+      "endpoint": "https://app.tether.to/transparency.json",
+      "path": "data_formatted.total_liabilities"
+    }
+  }
+}
+
+
+
 ]
+
+
+circle_info = {
+  "company": "Circle",
+  "token":"USDC",
+  "url": "https://api.circle.com/v1/stablecoins",
+  "query":"api"
+  }
