@@ -76,7 +76,10 @@ def get_price_supply():
 
             if supply:
                 circ_supply = get_supply(supply)
-                item['circ_supply'] = circ_supply
+                if isinstance(circ_supply, float):
+                    item['circ_supply'] = circ_supply
+                else:
+                    item['circ_supply'] = 0
 
             logger.info(f"Processed token {token} with price {price} and supply {circ_supply}")
 
