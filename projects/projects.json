@@ -262,7 +262,7 @@
     "business": "Synthetic Assets",
     "website": "https://ethena.io/",
     "forum": "https://forum.ethena.io/",
-    "token": "ETHA",
+    "token": "ENA",
     "audited": "Yes",
     "logoUrl": "https://ethena.io/static/images/logo.svg",
     "supply": {
@@ -274,6 +274,69 @@
       "totSupply": {
         "method": "hardcoded",
         "amount": 1000000000
+      }
+    }
+  },
+  {
+    "project": "Rocket Pool",
+    "description": "Rocket Pool is a decentralized Ethereum staking protocol that allows users to stake their ETH and earn rewards without needing to manage their own validator.",
+    "governance": "DAO",
+    "business": "Staking Protocol",
+    "website": "https://rocketpool.net",
+    "forum": "https://dao.rocketpool.net/",
+    "token": "RPL",
+    "audited": "Yes",
+    "logoUrl": "https://rocketpool.net/static/media/rocket-pool-logo.9bc89d56.svg",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 20599081
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 20599081
+      }
+    }
+  },
+  {
+    "project": "Gearbox",
+    "description": "Gearbox is a generalized leverage protocol that allows users to take leverage and utilize it across various DeFi protocols in a composable way.",
+    "governance": "DAO",
+    "business": "Leverage Protocol",
+    "website": "https://gearbox.fi",
+    "forum": "https://gov.gearbox.fi/",
+    "token": "GEAR",
+    "audited": "Yes",
+    "logoUrl": "https://gearbox.fi/logo.png",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 1000000000
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 1000000000
+      }
+    }
+  },
+  {
+    "project": "Alchemix",
+    "description": "Alchemix is a DeFi protocol that allows users to create self-repaying loans by using their deposited assets as collateral.",
+    "governance": "DAO",
+    "business": "Lending Protocol",
+    "website": "https://alchemix.fi",
+    "forum": "https://forum.alchemix.fi/",
+    "token": "ALCX",
+    "audited": "Yes",
+    "logoUrl": "https://alchemix.fi/logo.png",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 2295991
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 2463852
       }
     }
   }
