@@ -170,15 +170,19 @@ const ProjectList = () => {
                     </Button>
                   </TableCell>
                   <TableCell>
-                    <Button
-                      variant="outlined"
-                      href={project.forum}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-green-500 hover:bg-green-700 text-white"
-                    >
-                      Forum
-                    </Button>
+                    {project.forum !== '' ? (
+                      <Button
+                        variant="outlined"
+                        href={project.forum}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-green-500 hover:bg-green-700 text-white"
+                      >
+                        Forum
+                      </Button>
+                    ) : (
+                      ''
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
