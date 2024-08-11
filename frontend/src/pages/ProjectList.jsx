@@ -15,7 +15,7 @@ import Box from '@mui/material/Box';
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
-  const [filter, setFilter] = useState();
+  const [filter, setFilter] = useState('');
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -32,6 +32,15 @@ const ProjectList = () => {
 
     fetchProjects();
   }, []);
+
+  const filteredProjects = projects.filter((project) => {
+    const searchTerm = filter.toLocaleLowerCase();
+    return (
+      project.token.toLocaleLowerCase().includes(searchTerm) ||
+      project.project.toLocaleLowerCase().includes(searchTerm) ||
+      project.type.toLocaleLowerCase().includes(searchTerm)
+    );
+  });
 
   if (error) {
     return (
@@ -65,7 +74,7 @@ const ProjectList = () => {
 
       <div className="py-2">
         <Filter
-          placeholder="Search Project or Token"
+          placeholder="Search by Project or Token Name"
           filter={filter}
           setFilter={setFilter}
           className="flex-grow py-2 border border-gray-300"
@@ -84,7 +93,7 @@ const ProjectList = () => {
                   Token
                 </TableCell>
 
-                <TableCell className="font-bold dark:text-white">
+                <TableCell className="font-bold dark:text-white w-1/2">
                   Description
                 </TableCell>
                 <TableCell className="font-bold dark:text-white">
@@ -103,9 +112,7 @@ const ProjectList = () => {
                 <TableCell className="font-bold dark:text-white">
                   MarketCap
                 </TableCell>
-                <TableCell className="font-bold dark:text-white">
-                  Audited
-                </TableCell>
+
                 <TableCell className="font-bold dark:text-white">
                   Website
                 </TableCell>
@@ -115,7 +122,7 @@ const ProjectList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {projects.map((project, index) => (
+              {filteredProjects.map((project, index) => (
                 <TableRow
                   key={index}
                   className="hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white"
@@ -125,7 +132,7 @@ const ProjectList = () => {
                     {project.token}
                   </TableCell>
 
-                  <TableCell className="dark:text-white">
+                  <TableCell className="dark:text-white w-1/4">
                     {project.description}
                   </TableCell>
                   <TableCell className="dark:text-white">
@@ -155,9 +162,7 @@ const ProjectList = () => {
                   <TableCell className="dark:text-white">
                     {project.marketCap}
                   </TableCell>
-                  <TableCell className="dark:text-white">
-                    {project.audited}
-                  </TableCell>
+
                   <TableCell>
                     <Button
                       variant="outlined"
