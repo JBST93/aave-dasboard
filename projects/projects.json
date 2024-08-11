@@ -1,5 +1,28 @@
 [
   {
+    "project": "Ethereum",
+    "description": "Ethereum is a decentralized, open-source blockchain platform that enables the creation of smart contracts and decentralized applications (DApps). It supports a wide range of applications from finance to gaming and beyond.",
+    "governance": "DAO",
+    "business": "Blockchain Platform",
+    "website": "https://ethereum.org",
+    "forum": "https://forum.ethereum.org",
+    "token": "ETH",
+    "audited": "Yes",
+    "logoUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROvIAPF4XH6JKbTbkBzPsEKb0ZTli1mU5PFA&s",
+    "decimals": 18,
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 120267845
+      },
+      "totSupply": {
+        "method": "dynamic",
+        "amount": null
+      }
+    }
+  },
+
+  {
     "project": "Aave",
     "description": "Aave is a decentralized finance protocol that allows people to lend and borrow cryptocurrency. Users can earn interest on deposits and borrow assets.",
     "governance": "DAO",
@@ -10,7 +33,6 @@
     "audited": "Yes",
     "logoUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYlfqDoCc8VLkOrtoPhyTyuwLzYeH1NSv2qw&s",
     "decimals": 18,
-    "price": 80,
     "supply": {
       "circSupply": {
         "method": "hardcoded",
@@ -76,7 +98,6 @@
     "governance": "DAO",
     "business": "Yield Trading / Interest Rate Derivative",
     "website": "https://pendle.finance",
-    "forum": "",
     "token": "PENDLE",
     "audited": "Yes",
     "supply": {
@@ -131,7 +152,7 @@
     "governance": "DAO",
     "business": "Lending Market",
     "website": "https://maple.finance",
-    "forum": "https://forum.maple.finance/",
+    "forum": "https://community.maple.finance/latest",
     "token": "MPL",
     "audited": "Yes",
     "logoUrl": "https://maple.finance/assets/img/logo.png",
@@ -152,7 +173,7 @@
     "governance": "DAO",
     "business": "Yield Aggregator",
     "website": "https://yearn.finance",
-    "forum": "https://gov.yearn.finance/",
+    "forum": "https://gov.yearn.fi/latest",
     "token": "YFI",
     "audited": "Yes",
     "logoUrl": "https://yearn.finance/static/media/logo.7238837c.svg",
@@ -261,7 +282,7 @@
     "governance": "DAO",
     "business": "Synthetic Assets",
     "website": "https://ethena.io/",
-    "forum": "https://forum.ethena.io/",
+    "forum": "https://gov.ethenafoundation.com/latest?order=created",
     "token": "ENA",
     "audited": "Yes",
     "logoUrl": "https://ethena.io/static/images/logo.svg",
@@ -308,6 +329,8 @@
     "token": "GEAR",
     "audited": "Yes",
     "logoUrl": "https://gearbox.fi/logo.png",
+    "chain": "ethereum",
+    "address": "0xba3335588d9403515223f109edc4eb7269a9ab5d",
     "supply": {
       "circSupply": {
         "method": "hardcoded",
@@ -325,7 +348,7 @@
     "governance": "DAO",
     "business": "Lending Protocol",
     "website": "https://alchemix.fi",
-    "forum": "https://forum.alchemix.fi/",
+    "forum": "https://forum.alchemix.fi/public/",
     "token": "ALCX",
     "audited": "Yes",
     "logoUrl": "https://alchemix.fi/logo.png",
@@ -346,7 +369,6 @@
     "governance": "Centralized",
     "business": "Stablecoin",
     "website": "https://www.centre.io/usdc",
-    "forum": "https://community.centre.io/",
     "token": "USDC",
     "audited": "Yes",
     "logoUrl": "https://www.circle.com/hubfs/usdc%20icon.svg",
@@ -364,12 +386,11 @@
     }
   },
   {
-    "project": "Tether",
+    "project": "USD Tether",
     "description": "Tether (USDT) is a stablecoin that is pegged to the U.S. dollar and is one of the most widely used stablecoins in the cryptocurrency market.",
     "governance": "Centralized",
     "business": "Stablecoin",
     "website": "https://tether.to",
-    "forum": "https://tether.to/community/",
     "token": "USDT",
     "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
     "chain": "ethereum",
