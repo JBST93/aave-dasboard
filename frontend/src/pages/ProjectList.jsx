@@ -81,20 +81,19 @@ const ProjectList = () => {
               <TableRow>
                 <TableCell className="font-bold dark:text-white">#</TableCell>
                 <TableCell className="font-bold dark:text-white">
-                  Project
+                  Token
                 </TableCell>
+
                 <TableCell className="font-bold dark:text-white">
                   Description
                 </TableCell>
                 <TableCell className="font-bold dark:text-white">
-                  Governance
+                  Project
                 </TableCell>
                 <TableCell className="font-bold dark:text-white">
                   Type
                 </TableCell>
-                <TableCell className="font-bold dark:text-white">
-                  Token
-                </TableCell>
+
                 <TableCell className="font-bold dark:text-white">
                   Price
                 </TableCell>
@@ -123,20 +122,20 @@ const ProjectList = () => {
                 >
                   <TableCell className="dark:text-white">{index + 1}</TableCell>
                   <TableCell className="dark:text-white">
-                    {project.project}
+                    {project.token}
                   </TableCell>
+
                   <TableCell className="dark:text-white">
                     {project.description}
                   </TableCell>
                   <TableCell className="dark:text-white">
-                    {project.governance}
+                    {project.project}
                   </TableCell>
+
                   <TableCell className="dark:text-white">
                     {project.type}
                   </TableCell>
-                  <TableCell className="dark:text-white">
-                    {project.token}
-                  </TableCell>
+
                   <TableCell className="dark:text-white">
                     {project.price}
                   </TableCell>

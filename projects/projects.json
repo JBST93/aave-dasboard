@@ -98,6 +98,8 @@
     "governance": "DAO",
     "business": "Yield Trading / Interest Rate Derivative",
     "website": "https://pendle.finance",
+    "forum": "",
+
     "token": "PENDLE",
     "audited": "Yes",
     "supply": {
@@ -370,6 +372,8 @@
     "business": "Stablecoin",
     "website": "https://www.centre.io/usdc",
     "token": "USDC",
+    "forum": "",
+
     "audited": "Yes",
     "logoUrl": "https://www.circle.com/hubfs/usdc%20icon.svg",
     "supply": {
@@ -390,6 +394,8 @@
     "description": "Tether (USDT) is a stablecoin that is pegged to the U.S. dollar and is one of the most widely used stablecoins in the cryptocurrency market.",
     "governance": "Centralized",
     "business": "Stablecoin",
+    "forum": "",
+
     "website": "https://tether.to",
     "token": "USDT",
     "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
