@@ -336,11 +336,11 @@
     "supply": {
       "circSupply": {
         "method": "hardcoded",
-        "amount": 1000000000
+        "amount": 10000000000
       },
       "totSupply": {
         "method": "hardcoded",
-        "amount": 1000000000
+        "amount": 10000000000
       }
     }
   },

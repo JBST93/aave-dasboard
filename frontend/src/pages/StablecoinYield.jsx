@@ -1,4 +1,6 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
 import fetchData from '../utils/fetch_data';
 const DataTable = lazy(() => import('../components/DataTable'));
 
@@ -13,6 +15,7 @@ const StablecoinYield = () => {
   const [dataCount, setDataCount] = useState(0);
   const [selectedBlockchains, setSelectedBlockchains] = useState([]);
   const [avgRate, setAvgRate] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const getData = async () => {
@@ -22,6 +25,14 @@ const StablecoinYield = () => {
     getData();
   }, []);
 
+  useEffect(() => {
+    // On component mount, check if there's a token query param and set the filter
+    const token = searchParams.get('token');
+    if (token) {
+      setFilter(token);
+    }
+  }, [searchParams]);
+
   const filteredData = data.filter((item) => {
     const yieldRateBase = parseFloat(item.yield_rate_base);
     const filterValue = parseFloat(numericalFilter);
@@ -29,8 +40,10 @@ const StablecoinYield = () => {
     const matchesTextFilter = item.market
       .toLowerCase()
       .includes(filter.toLowerCase());
+
     const matchesNumericalFilter =
       isNaN(filterValue) || yieldRateBase >= filterValue;
+
     const matchesBlockchainFilter =
       selectedBlockchains.length === 0 ||
       selectedBlockchains.includes(item.chain);
@@ -42,6 +55,7 @@ const StablecoinYield = () => {
 
   const clearFilter = () => {
     setFilter('');
+    setSearchParams('');
     setNumericalFilter('');
     setSelectedBlockchains([]);
   };
@@ -51,7 +65,7 @@ const StablecoinYield = () => {
   }, [filteredData]);
 
   useEffect(() => {
-    const filteredYieldData = filteredData.filter(
+    const filteredYieldData = data.filter(
       (item) =>
         (item.market === 'USDC' ||
           item.market === 'DAI' ||
@@ -101,6 +115,7 @@ const StablecoinYield = () => {
           filter={filter}
           setFilter={setFilter}
           className="flex-grow py-2 border border-gray-300"
+          setSearchParams={setSearchParams}
         />
 
         <div className="w-full md:flex-grow md:px-2 focus:outline-none focus:ring-1 focus:ring-yellow-500 dark:focus:ring-teal-600">

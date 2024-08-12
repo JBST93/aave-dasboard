@@ -1,11 +1,14 @@
-import { Proportions } from 'lucide-react';
-import React from 'react';
+import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-const Filter = ({ filter, setFilter, placeholder }) => {
-  const handleButtonClick = (token) => {
-    setFilter(token);
+const Filter = ({ filter, setFilter, placeholder, setSearchParams }) => {
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setFilter(value);
+
+    // Update the URL with the new search parameter
+    setSearchParams({ token: value });
   };
-
   const handleClear = () => {
     setFilter('');
   };
@@ -35,7 +38,7 @@ const Filter = ({ filter, setFilter, placeholder }) => {
             className="py-2 pl-10 pr-10 text-sm border border-gray-300 dark:border-teal-700 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-yellow-500 dark:focus:ring-teal-600"
             placeholder={placeholder}
             value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+            onChange={handleInputChange}
           />
         </div>
       </div>
