@@ -438,5 +438,28 @@
         "amount": 1000000000
       }
     }
+  },
+  {
+    "project": "Clearpool",
+    "description": "Decentralized marketplace for unsecured institutional capital, allowing institutions to borrow funds without collateral from liquidity providers.",
+    "governance": "Decentralized",
+    "business": "Lending Market",
+    "forum": "",
+    "website": "https://clearpool.finance/",
+    "token": "CPOOL",
+    "address": "0x66761Fa41377003622aEE3c7675Fc7b5c1C2FaC5",
+    "chain": "ethereum",
+    "audited": "Yes",
+    "logoUrl": "https://clearpool.finance/assets/images/CPOOL-logo.png",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 1000000000
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 1000000000
+      }
+    }
   }
 ]

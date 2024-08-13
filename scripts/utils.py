@@ -15,7 +15,6 @@ from instances.YieldRate import YieldRate as Data
 def load_abi(project, abi_filename):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     abi_path = os.path.join(script_dir, '..', "projects", project ,abi_filename)  # Adjust this line
-    print(abi_path)
     with open(abi_path) as f:
         try:
             return json.load(f)

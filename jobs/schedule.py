@@ -14,6 +14,8 @@ from projects.pendle.fetch_data import fetch_data as pendle
 from projects.spark.fetch_rates import fetch_store_sparklend as spark
 from projects.yearn.get_yearn_data import fetch_yearn as yearn
 from projects.fx.fetch_data import fetch_store_data as fx
+from projects.clearpool.fetch_data import fetch_store_rates as clearpool
+
 
 from scripts.get_price_supply import get_price_supply
 
@@ -97,7 +99,14 @@ def fetch_store_data():
             fx()
             logger.info("FX Data fetched")
         except Exception as e:
-            logger.error(f"Error fetching yearn data: {e}")
+            logger.error(f"Error fetching FX data: {e}")
+
+        try:
+            logger.info("Fetching Data for Clearpool")
+            clearpool()
+            logger.info("Clearpool Data fetched")
+        except Exception as e:
+            logger.error(f"Error fetching Clearpool data: {e}")
 
         logger.info("Data fetching completed")
 
