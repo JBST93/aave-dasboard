@@ -14,9 +14,8 @@ const InfoCard = (props) => {
       </p>
       {props.link ? (
         <a
-          className="text-xs"
           href={props.link}
-          className="text-blue-600 hover:text-blue-800"
+          className="text-blue-600 hover:text-blue-800 text-xs"
         >
           Click Here To Learn More
         </a>
