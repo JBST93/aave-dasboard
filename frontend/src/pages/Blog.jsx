@@ -16,10 +16,17 @@ const Blog = () => {
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
       <Helmet>
-        <title>Our Blog | Token Data View</title>
+        <title>
+          {' '}
+          Blog: Your Guide to DeFi & Yield Farming | Token Data View
+        </title>
         <meta
           name="description"
           content="Explore our blog for the latest insights on DeFi, stablecoin yield farming, and more. Stay informed with our in-depth guides and articles."
+        />
+        <meta
+          name="keywords"
+          content="DeFi, Yield Farming, Stablecoin, Cryptocurrency, Blockchain, Token Data View, Guides, Articles"
         />
       </Helmet>
 
@@ -36,9 +43,9 @@ const Blog = () => {
         {posts.map((post, index) => (
           <div
             key={index}
-            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
+            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
           >
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
               <Link
                 to={post.link}
                 className="hover:text-blue-500"
@@ -46,13 +53,19 @@ const Blog = () => {
                 {post.title}
               </Link>
             </h2>
-            <p className="text-gray-600 mb-4">{post.excerpt}</p>
-            <p className="text-sm text-gray-500">{post.date}</p>
+            <p className="text-sm text-gray-500 flex">{post.date}</p>
+
+            <p className="text-gray-600 dark:text-gray-200 mb-4">
+              {post.excerpt}
+            </p>
+
             <Link
               to={post.link}
-              className="text-blue-500 hover:text-blue-700"
+              className="text-blue-500 hover:text-blue-700 flex mt-2"
             >
-              Read more →
+              <div className="border border-yellow-500 dark:border-teal-700 text-black dark:text-white px-3 py-2">
+                Read more →
+              </div>
             </Link>
           </div>
         ))}

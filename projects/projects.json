@@ -117,7 +117,7 @@
   },
   {
     "project": "Spark Lend",
-    "description": "Spark is a decentralized lending protocol part of the MakerDAO ecosystem",
+    "description": "Decentralized lending protocol part of the MakerDAO ecosystem",
     "governance": "DAO",
     "business": "Lending Market",
     "website": "https://sparklend.finance",
@@ -213,7 +213,7 @@
   },
   {
     "project": "DAI",
-    "description": "DAI is a decentralized stablecoin running on Ethereum, soft-pegged to the US Dollar and backed by a mix of other cryptocurrencies. It is part of the MakerDAO ecosystem.",
+    "description": "Decentralized stablecoin, pegged to the US Dollar and backed by a mix of other cryptocurrencies. It is part of the MakerDAO ecosystem.",
     "governance": "MakerDAO",
     "business": "Stablecoin",
     "website": "https://makerdao.com/en/",
@@ -236,7 +236,7 @@
   },
   {
     "project": "Maker",
-    "description": "Maker is a decentralized finance (DeFi) platform on Ethereum, allowing users to generate DAI stablecoins by locking up collateral in a smart contract. MakerDAO governs the system.",
+    "description": "Maker is a decentralized finance (DeFi) platform on Ethereum, allowing users to generate DAI stablecoins by locking up collateral in a smart contract.",
     "governance": "MakerDAO",
     "business": "Decentralized Finance (DeFi)",
     "website": "https://makerdao.com/en/",
@@ -323,7 +323,7 @@
   },
   {
     "project": "Gearbox",
-    "description": "Gearbox is a generalized leverage protocol that allows users to take leverage and utilize it across various DeFi protocols in a composable way.",
+    "description": "Leverage protocol that allows users to take leverage and utilize it across various DeFi protocols.",
     "governance": "DAO",
     "business": "Leverage Protocol",
     "website": "https://gearbox.fi",
@@ -346,7 +346,7 @@
   },
   {
     "project": "Alchemix",
-    "description": "Alchemix is a DeFi protocol that allows users to create self-repaying loans by using their deposited assets as collateral.",
+    "description": "DeFi protocol that allows users to create self-repaying loans by using their deposited assets as collateral.",
     "governance": "DAO",
     "business": "Lending Protocol",
     "website": "https://alchemix.fi",
