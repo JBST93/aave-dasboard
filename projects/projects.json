@@ -414,5 +414,29 @@
         "path": "data_formatted.0.total_liabilities"
       }
     }
+  },
+  {
+    "project": "ChainLink",
+    "description": "Decentralized oracle network enabling smart contracts on blockchains to securely interact with external data feeds, events, and payment methods.",
+    "governance": "Centralized",
+    "business": "Oracle & Infrastructure",
+    "forum": "",
+
+    "website": "https://chain.link/",
+    "token": "LINK",
+    "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+    "chain": "ethereum",
+    "audited": "Yes",
+    "logoUrl": "https://chain.link/logo.png",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 1000000000
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 1000000000
+      }
+    }
   }
 ]
