@@ -65,6 +65,7 @@ def fetch_store_rates():
 
 
                     borrow_amount = pool_data.functions.poolSize().call()
+                    borrow_amount_transformed = borrow_amount/1e6
 
                     supply_rate = pool_data.functions.getSupplyRate().call()
                     supply_rate_annualised = round(float(supply_rate)/1e18*31536000 * 100,2)
@@ -77,7 +78,7 @@ def fetch_store_rates():
                     smart_contract = item
                     business = "Lending"
                     project = "ClearPool"
-                    chain = "ethereum"
+                    chain = chain
 
                     insert_yield_db(market, project, information, supply_rate_annualised,reward_rate_transformed,reward_token,borrow_amount,chain, business, smart_contract)
 
