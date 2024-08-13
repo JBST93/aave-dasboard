@@ -26,9 +26,10 @@ smart_contracts = {
     "Ethereum":"0xdE204e5a060bA5d3B63C7A4099712959114c2D48",
     "Optimism":"0x99C10A7aBd93b2db6d1a2271e69F268a2c356b80"}
 
-infura_url ={
+infura_url = {
     "Ethereum":"https://mainnet.infura.io/v3/",
-    "Optimism":"https://optimism-mainnet.infura.io/v3/"}
+    "Optimism":"https://optimism-mainnet.infura.io/v3/",
+}
 
 infura_key = os.getenv('INFURA_KEY')
 if not infura_key:
@@ -78,7 +79,7 @@ def fetch_store_rates():
                     project = "ClearPool"
                     chain = "ethereum"
 
-                    insert_yield_db(market, project, information, supply_rate_annualised ,None,None,borrow_amount,chain, type, smart_contract)
+                    insert_yield_db(market, project, information, supply_rate_annualised,reward_rate_transformed,reward_token,borrow_amount,chain, business, smart_contract)
 
                     print(f"{information} - {market} - {supply_rate_annualised} - {borrow_amount} - {reward_rate_transformed} {smart_contract}")
 
