@@ -24,7 +24,7 @@
 
   {
     "project": "Aave",
-    "description": "Aave is a decentralized finance protocol that allows people to lend and borrow cryptocurrency. Users can earn interest on deposits and borrow assets.",
+    "description": "Decentralised protocol allowing people to lend and borrow cryptocurrency. Users can earn interest on deposits and borrow assets.",
     "governance": "DAO",
     "business": "Lending Market",
     "website": "https://aave.com",
@@ -367,7 +367,7 @@
   },
   {
     "project": "USD Coin",
-    "description": "USD Coin (USDC) is a stablecoin that is pegged to the U.S. dollar, ensuring its value remains stable. It is fully backed by U.S. dollar assets held in reserve.",
+    "description": "Centralised stablecoin pegged to the U.S. dollar, emitted by Circle",
     "governance": "Centralized",
     "business": "Stablecoin",
     "website": "https://www.centre.io/usdc",
@@ -391,7 +391,7 @@
   },
   {
     "project": "USD Tether",
-    "description": "Tether (USDT) is a stablecoin that is pegged to the U.S. dollar and is one of the most widely used stablecoins in the cryptocurrency market.",
+    "description": "Centralised stablecoin pegged to the U.S. dollar, emitted by Tether",
     "governance": "Centralized",
     "business": "Stablecoin",
     "forum": "",

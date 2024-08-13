@@ -69,6 +69,14 @@ const NavBar = () => {
                 Stablecoin Yields
               </Link>
             </li>
+            <li>
+              <Link
+                to="/blog"
+                className="hover:text-yellow-500 text-black dark:text-white"
+              >
+                Blog
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>

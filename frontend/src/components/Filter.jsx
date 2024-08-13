@@ -5,12 +5,7 @@ const Filter = ({ filter, setFilter, placeholder, setSearchParams }) => {
   const handleInputChange = (e) => {
     const value = e.target.value;
     setFilter(value);
-
-    // Update the URL with the new search parameter
     setSearchParams({ token: value });
-  };
-  const handleClear = () => {
-    setFilter('');
   };
 
   return (
@@ -38,7 +33,15 @@ const Filter = ({ filter, setFilter, placeholder, setSearchParams }) => {
             className="py-2 pl-10 pr-10 text-sm border border-gray-300 dark:border-teal-700 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-yellow-500 dark:focus:ring-teal-600"
             placeholder={placeholder}
             value={filter}
-            onChange={handleInputChange}
+            onChange={(e) => {
+              setSearchParams(
+                (prev) => {
+                  prev.set('token', e.target.value);
+                  return prev;
+                },
+                { replace: true }
+              );
+            }}
           />
         </div>
       </div>

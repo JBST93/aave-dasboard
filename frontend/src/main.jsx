@@ -1,55 +1,55 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async'; // Import HelmetProvider
 
+import App from './App.jsx';
 import './index.css';
 
 import ProjectList from './pages/ProjectList.jsx';
 import StablecoinYield from './pages/StablecoinYield';
 import StablecoinInfo from './pages/StablecoinInfo';
-// import NotFound from './components/NotFound';
+import Blog from './pages/Blog';
+import StablecoinYieldFarming from './pages/blog/StablecoinYieldFarming';
 
 const router = createBrowserRouter([
-  {
-    path: '/projects',
-    element: <App />, // Use App as the main layout component
-    children: [
-      {
-        path: '/projects',
-        element: <ProjectList />, // Nested route
-      },
-    ],
-  },
   {
     path: '/',
     element: <App />, // Use App as the main layout component
     children: [
       {
         path: '/',
-        element: <StablecoinYield />, // Nested route
+        element: <StablecoinYield />, // Default route when visiting '/'
       },
-    ],
-  },
-  {
-    path: '/stablecoin',
-    element: <App />, // Use App as the main layout component
-    children: [
       {
-        path: '/stablecoin',
-        element: <StablecoinInfo />, // Nested route
+        path: 'projects',
+        element: <ProjectList />, // Nested route for '/projects'
+      },
+      {
+        path: 'blog',
+        element: <Blog />, // This route renders the Blog component for '/blog'
+      },
+      {
+        path: 'blog/stablecoin-yield-farming',
+        element: <StablecoinYieldFarming />, // This renders the specific blog post without the Blog component
+      },
+      {
+        path: 'stablecoin',
+        element: <StablecoinInfo />, // Nested route for '/stablecoin'
       },
     ],
-    // Add more nested routes as needed
-    // {
-    //   path: '*',
-    //   element: <NotFound />,
-    // },
   },
+  // You can add a wildcard route for handling 404 not found pages if needed
+  // {
+  //   path: '*',
+  //   element: <NotFound />, // Catch-all route for 404 pages
+  // },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <HelmetProvider>
+      <RouterProvider router={router} />
+    </HelmetProvider>
   </React.StrictMode>
 );

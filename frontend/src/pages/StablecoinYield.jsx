@@ -88,7 +88,9 @@ const StablecoinYield = () => {
   return (
     <>
       <div className="flex justify-between items-center flex-wrap">
-        <h1 className="md:text-4xl text-xl font-bold">Stablecoin Rates</h1>
+        <h1 className="md:text-2xl text-xl font-bold">
+          Earn Yield on Stablecoins
+        </h1>
       </div>
       <div className="mb-4 text-center md:text-left">
         <p className="md:text-lg text-base text-left pt-1">
@@ -101,13 +103,20 @@ const StablecoinYield = () => {
           conduct your own due diligence before making any investment decisions.
         </p>
       </div>
-
-      <InfoCard
-        title="DeFi Base Rate"
-        description="Based on the average yields of USDC, USDT, and DAI across pools with
+      <div className="md:flex gap-2">
+        <InfoCard
+          title="DeFi Base Rate"
+          description="Based on the average yields of USDC, USDT, and DAI across pools with
         more than $500 million in TVL (Total Value Locked)."
-        value={avgRate}
-      />
+          value={avgRate}
+        />
+
+        <InfoCard
+          title="What is Yield Farming?"
+          description="Yield farming is a strategy in the decentralized finance (DeFi) space where you can earn rewards by lending or staking your cryptocurrency in DeFi platforms. By participating, you put your crypto to work and generate passive income through interest, fees, or other incentives."
+          link="https://www.tokendataview.com/blog/stablecoin-yield-farming"
+        />
+      </div>
 
       <div className="flex flex-wrap md:flex-nowrap items-center py-2 space-y-2 md:space-y-0 md:space-x-2">
         <Filter
@@ -125,13 +134,6 @@ const StablecoinYield = () => {
             resetFilter={clearFilter}
           />
         </div>
-
-        <Filter
-          placeholder="Minimum APY"
-          filter={numericalFilter}
-          setFilter={setNumericalFilter}
-          className="flex-grow py-2 border border-gray-300"
-        />
 
         <div className="w-full md:w-auto md:px-2">
           <button
