@@ -110,7 +110,7 @@ def fetch_store_data():
 
         logger.info("Data fetching completed")
 
-sched.add_job(fetch_store_data, 'interval', minutes=30)
+sched.add_job(fetch_store_data, 'interval', minutes=5)
 
 # def get_stable_data():
 #     with app.app_context():

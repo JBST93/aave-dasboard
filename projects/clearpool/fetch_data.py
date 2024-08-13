@@ -23,10 +23,12 @@ pool_abi = load_abi("clearpool",'getpool_abi.json')
 
 
 smart_contracts = {
-    "Ethereum":"0xdE204e5a060bA5d3B63C7A4099712959114c2D48"}
+    "Ethereum":"0xdE204e5a060bA5d3B63C7A4099712959114c2D48",
+    "Optimism":"0x99C10A7aBd93b2db6d1a2271e69F268a2c356b80"}
 
 infura_url ={
-    "Ethereum":"https://mainnet.infura.io/v3/"}
+    "Ethereum":"https://mainnet.infura.io/v3/",
+    "Optimism":"https://optimism-mainnet.infura.io/v3/"}
 
 infura_key = os.getenv('INFURA_KEY')
 if not infura_key:
@@ -44,7 +46,6 @@ def fetch_store_rates():
 
     print("Starting Fetching Data for Clearpool")
     for chain, contract_address in smart_contracts.items():
-
         web3 = Web3(Web3.HTTPProvider(infura_url[chain] + infura_key))
         pool_contract = web3.eth.contract(address=contract_address, abi=pool_abi)
 
