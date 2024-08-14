@@ -72,6 +72,20 @@ const ProjectList = () => {
         </p>
       </div>
 
+      {/* <div>
+        Top 3 gainers / top 3 Losers
+        // Table with 2 sides
+        // 1 top component
+        // 2 table inside the component
+        // List inside each side of the component
+              - Logo
+              - Coin Name
+              - % Change
+
+        ⬆
+        ⬇
+      </div> */}
+
       <div className="py-2">
         <Filter
           placeholder="Search by Project or Token Name"
@@ -129,6 +143,13 @@ const ProjectList = () => {
                 >
                   <TableCell className="dark:text-white">{index + 1}</TableCell>
                   <TableCell className="dark:text-white">
+                    {project.logoUrl && (
+                      <img
+                        src={project.logoUrl}
+                        alt={`${project.token} logo`}
+                      />
+                    )}
+
                     {project.token}
                   </TableCell>
 
