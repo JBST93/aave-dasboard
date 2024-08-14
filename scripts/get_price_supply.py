@@ -71,7 +71,7 @@ def get_price_supply():
             supply = item.get("supply", {})
 
             logger.info(f"Fetching price for {token}")
-            price = get_price_kraken(token) or get_price_bitstamp(token) or (address and chain and get_curve_price(address, chain))
+            price = get_price_kraken(token) or get_price_bitstamp(token) or (address and chain and get_curve_price(address, chain) or 0)
             item['price'] = price
 
             if supply:
