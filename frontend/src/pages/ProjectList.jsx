@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Filter from '../components/Filter';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import ProjectDataTable from '../components/ProjectDataTable';
 
 import { Typography, Button } from '@mui/material';
 
@@ -87,135 +81,15 @@ const ProjectList = () => {
       </div> */}
 
       <div className="py-2">
-        <Filter
+        {/* <Filter
           placeholder="Search by Project or Token Name"
           filter={filter}
           setFilter={setFilter}
           className="flex-grow py-2 border border-gray-300"
-        />
+        /> */}
       </div>
-      <Box className=" dark:text-white">
-        <TableContainer
-          component={Paper}
-          className="bg-red-100 dark:bg-gray-900 shadow-md rounded-lg"
-        >
-          <Table className="dark:text-white">
-            <TableHead className="bg-grey-500 dark:bg-gray-800  dark:text-white">
-              <TableRow>
-                <TableCell className="font-bold dark:text-white">#</TableCell>
-                <TableCell className="font-bold dark:text-white">
-                  Token
-                </TableCell>
 
-                <TableCell className="font-bold dark:text-white w-1/2">
-                  Description
-                </TableCell>
-                <TableCell className="font-bold dark:text-white">
-                  Project
-                </TableCell>
-                <TableCell className="font-bold dark:text-white">
-                  Type
-                </TableCell>
-
-                <TableCell className="font-bold dark:text-white">
-                  Price
-                </TableCell>
-                <TableCell className="font-bold dark:text-white">
-                  24H Price
-                </TableCell>
-                <TableCell className="font-bold dark:text-white">
-                  MarketCap
-                </TableCell>
-
-                <TableCell className="font-bold dark:text-white">
-                  Website
-                </TableCell>
-                <TableCell className="font-bold dark:text-white">
-                  Forum
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredProjects.map((project, index) => (
-                <TableRow
-                  key={index}
-                  className="hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white"
-                >
-                  <TableCell className="dark:text-white">{index + 1}</TableCell>
-                  <TableCell className="dark:text-white">
-                    {project.logoUrl && (
-                      <img
-                        src={project.logoUrl}
-                        alt={`${project.token} logo`}
-                      />
-                    )}
-
-                    {project.token}
-                  </TableCell>
-
-                  <TableCell className="dark:text-white w-1/4">
-                    {project.description}
-                  </TableCell>
-                  <TableCell className="dark:text-white">
-                    {project.project}
-                  </TableCell>
-
-                  <TableCell className="dark:text-white">
-                    {project.type}
-                  </TableCell>
-
-                  <TableCell className="dark:text-white">
-                    {project.price}
-                  </TableCell>
-                  <TableCell
-                    className="dark:text-white"
-                    style={{
-                      color:
-                        project.price_day_delta > 0
-                          ? 'green'
-                          : project.price_day_delta < 0
-                          ? 'red'
-                          : 'inherit',
-                    }}
-                  >
-                    {project.price_day_delta}%
-                  </TableCell>
-                  <TableCell className="dark:text-white">
-                    {project.marketCap}
-                  </TableCell>
-
-                  <TableCell>
-                    <Button
-                      variant="outlined"
-                      href={project.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-teal-500 hover:bg-blue-700 text-white"
-                    >
-                      Website
-                    </Button>
-                  </TableCell>
-                  <TableCell>
-                    {project.forum !== '' ? (
-                      <Button
-                        variant="outlined"
-                        href={project.forum}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-green-500 hover:bg-green-700 text-white"
-                      >
-                        Forum
-                      </Button>
-                    ) : (
-                      ''
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
+      <ProjectDataTable rows={projects} />
     </>
   );
 };
