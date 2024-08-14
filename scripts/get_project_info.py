@@ -73,7 +73,9 @@ def get_projects():
                         'marketCap': f"{marketCap:,.0f}",
                         'website': result["website"],
                         'forum': result["forum"],
-                        'type': result["business"]
+                        'type': result["business"],
+                        'logo': result.get("logoUrl","")
+
                     })
 
                 projects.sort(key=lambda x: x['marketCapSorting'], reverse=True)
