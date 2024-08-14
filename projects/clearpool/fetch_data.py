@@ -80,7 +80,7 @@ def fetch_store_rates():
                     project = "ClearPool"
                     chain = chain
 
-                    insert_yield_db(market, project, information, supply_rate_annualised,reward_rate_transformed,reward_token,borrow_amount,chain, business, smart_contract)
+                    insert_yield_db(market, project, information, supply_rate_annualised,None,reward_token,borrow_amount_transformed,chain, business, smart_contract)
 
                     print(f"{information} - {market} - {supply_rate_annualised} - {borrow_amount} - {reward_rate_transformed} {smart_contract}")
 
