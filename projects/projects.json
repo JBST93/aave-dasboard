@@ -8,7 +8,7 @@
     "forum": "https://forum.ethereum.org",
     "token": "ETH",
     "audited": "Yes",
-    "logoUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROvIAPF4XH6JKbTbkBzPsEKb0ZTli1mU5PFA&s",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/1257px-Ethereum_logo_2014.svg.png",
     "decimals": 18,
     "supply": {
       "circSupply": {
@@ -51,6 +51,7 @@
     "business": "Decentralized Exchange",
     "website": "https://curve.fi",
     "forum": "https://gov.curve.fi/",
+    "logoUrl": "https://cdn.jsdelivr.net/gh/curvefi/curve-assets/images/assets/0xd533a949740bb3306d119cc777fa900ba034cd52.png",
     "token": "CRV",
     "audited": "Yes",
     "supply": {
@@ -70,6 +71,7 @@
     "website": "https://compound.finance",
     "forum": "https://www.comp.xyz/latest",
     "token": "COMP",
+    "logoUrl": "https://cryptologos.cc/logos/compound-comp-logo.png",
     "audited": "Yes",
     "supply": {
       "circSupply": {
@@ -90,7 +92,8 @@
     "website": "https://app.morpho.org/?network=mainnet",
     "forum": "https://forum.morpho.org/",
     "token": "MORPHO",
-    "audited": "Yes"
+    "audited": "Yes",
+    "logoUrl": "https://avatars.githubusercontent.com/u/130973927?s=280&v=4"
   },
   {
     "project": "Pendle",
@@ -99,6 +102,7 @@
     "business": "Yield Trading / Interest Rate Derivative",
     "website": "https://pendle.finance",
     "forum": "",
+    "logoUrl": "https://cryptologos.cc/logos/pendle-pendle-logo.png",
 
     "token": "PENDLE",
     "audited": "Yes",
@@ -123,7 +127,8 @@
     "website": "https://sparklend.finance",
     "forum": "https://forum.sparklend.finance/",
     "token": "SPARK",
-    "audited": "Yes"
+    "audited": "Yes",
+    "logoUrl": "https://1827921443-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FjvdfbhgN5UCpMtP1l8r5%2Ficon%2FLWIAhXvZg1gNH00ojY9q%2Fspark%20logo.svg?alt=media&token=61274f9c-2f5c-46b6-ab06-528601021500"
   },
   {
     "project": "FRAX Finance",
@@ -134,7 +139,7 @@
     "forum": "https://gov.frax.finance/",
     "token": "FXS",
     "audited": "Yes",
-    "logoUrl": "https://frax.finance/assets/img/logo.png",
+    "logoUrl": "https://cryptologos.cc/logos/frax-frax-logo.png",
     "supply": {
       "circSupply": {
         "method": "API",
@@ -157,7 +162,7 @@
     "forum": "https://community.maple.finance/latest",
     "token": "MPL",
     "audited": "Yes",
-    "logoUrl": "https://maple.finance/assets/img/logo.png",
+    "logoUrl": "https://downloads.eth.maple.finance/images/maple.webp",
     "supply": {
       "circSupply": {
         "method": "hardcoded",
@@ -178,7 +183,7 @@
     "forum": "https://gov.yearn.fi/latest",
     "token": "YFI",
     "audited": "Yes",
-    "logoUrl": "https://yearn.finance/static/media/logo.7238837c.svg",
+    "logoUrl": "https://cryptologos.cc/logos/yearn-finance-yfi-logo.png?v=032",
     "supply": {
       "circSupply": {
         "method": "hardcoded",
@@ -199,7 +204,7 @@
     "forum": "https://gov.uniswap.org/",
     "token": "UNI",
     "audited": "Yes",
-    "logoUrl": "https://uniswap.org/images/logo.svg",
+    "logoUrl": "https://cryptologos.cc/logos/uniswap-uni-logo.png?v=032",
     "supply": {
       "circSupply": {
         "method": "hardcoded",
@@ -220,7 +225,7 @@
     "forum": "https://forum.makerdao.com/",
     "token": "DAI",
     "audited": "Yes",
-    "logoUrl": "https://makerdao.com/icons/makerdao/logo.svg",
+    "logoUrl": "https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.svg?v=032",
     "supply": {
       "circSupply": {
         "method": "API",
@@ -243,7 +248,7 @@
     "forum": "https://forum.makerdao.com/",
     "token": "MKR",
     "audited": "Yes",
-    "logoUrl": "https://makerdao.com/icons/makerdao/logo.svg",
+    "logoUrl": "https://cryptologos.cc/logos/maker-mkr-logo.svg?v=032",
     "supply": {
       "circSupply": {
         "method": "API",
@@ -266,7 +271,7 @@
     "forum": "https://research.lido.fi/",
     "token": "LDO",
     "audited": "Yes",
-    "logoUrl": "https://lido.fi/static/images/logo.svg",
+    "logoUrl": "https://cryptologos.cc/logos/lido-dao-ldo-logo.svg?v=032",
     "supply": {
       "circSupply": {
         "method": "hardcoded",
@@ -287,7 +292,7 @@
     "forum": "https://gov.ethenafoundation.com/latest?order=created",
     "token": "ENA",
     "audited": "Yes",
-    "logoUrl": "https://ethena.io/static/images/logo.svg",
+    "logoUrl": "https://cryptologos.cc/logos/ethena-ena-logo.svg?v=032",
     "supply": {
       "circSupply": {
         "method": "API",
@@ -309,7 +314,7 @@
     "forum": "https://dao.rocketpool.net/",
     "token": "RPL",
     "audited": "Yes",
-    "logoUrl": "https://rocketpool.net/static/media/rocket-pool-logo.9bc89d56.svg",
+    "logoUrl": "https://cryptologos.cc/logos/rocket-pool-eth-reth-logo.svg?v=032",
     "supply": {
       "circSupply": {
         "method": "hardcoded",
@@ -330,7 +335,7 @@
     "forum": "https://gov.gearbox.fi/",
     "token": "GEAR",
     "audited": "Yes",
-    "logoUrl": "https://gearbox.fi/logo.png",
+    "logoUrl": "https://redstone.finance/assets/img/marquee/gearbox.png",
     "chain": "ethereum",
     "address": "0xba3335588d9403515223f109edc4eb7269a9ab5d",
     "supply": {
@@ -353,7 +358,7 @@
     "forum": "https://forum.alchemix.fi/public/",
     "token": "ALCX",
     "audited": "Yes",
-    "logoUrl": "https://alchemix.fi/logo.png",
+    "logoUrl": "https://avatars.githubusercontent.com/u/71799463?s=280&v=4",
     "supply": {
       "circSupply": {
         "method": "hardcoded",
@@ -375,7 +380,7 @@
     "forum": "",
 
     "audited": "Yes",
-    "logoUrl": "https://www.circle.com/hubfs/usdc%20icon.svg",
+    "logoUrl": "https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=032",
     "supply": {
       "circSupply": {
         "method": "API",
@@ -401,7 +406,7 @@
     "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
     "chain": "ethereum",
     "audited": "Yes",
-    "logoUrl": "https://tether.to/wp-content/uploads/2021/01/usdt-icon-green.svg",
+    "logoUrl": "https://cryptologos.cc/logos/tether-usdt-logo.svg?v=032",
     "supply": {
       "circSupply": {
         "method": "API",
@@ -427,7 +432,7 @@
     "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
     "chain": "ethereum",
     "audited": "Yes",
-    "logoUrl": "https://chain.link/logo.png",
+    "logoUrl": "https://cryptologos.cc/logos/chainlink-link-logo.svg?v=032",
     "supply": {
       "circSupply": {
         "method": "hardcoded",
@@ -450,7 +455,7 @@
     "address": "0x66761Fa41377003622aEE3c7675Fc7b5c1C2FaC5",
     "chain": "ethereum",
     "audited": "Yes",
-    "logoUrl": "https://clearpool.finance/assets/images/CPOOL-logo.png",
+    "logoUrl": "https://avatars.githubusercontent.com/u/84125554?s=280&v=4",
     "supply": {
       "circSupply": {
         "method": "hardcoded",
