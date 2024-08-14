@@ -71,7 +71,7 @@ def get_price_supply():
             supply = item.get("supply", {})
 
             logger.info(f"Fetching price for {token}")
-            price = get_price_kraken(token) or (address and chain and get_curve_price(address, chain))
+            price = get_price_kraken(token) or get_price_bitstamp(token) or (address and chain and get_curve_price(address, chain))
             item['price'] = price
 
             if supply:
@@ -119,6 +119,14 @@ def get_price_kraken(token):
     except requests.RequestException as e:
         logger.error(f"Error fetching price from Kraken: {e}")
     return None
+
+def get_price_bitstamp(token):
+    pair = f"{token.lower()}usd"
+    endpoint = f"https://www.bitstamp.net/api/v2/ticker/{pair}"
+    r = requests.get(endpoint)
+    data = r.json()
+    return data.get("last")
+
 
 def get_curve_price(address, chain):
     endpoint = f"https://prices.curve.fi/v1/usd_price/{chain}/{address}"
