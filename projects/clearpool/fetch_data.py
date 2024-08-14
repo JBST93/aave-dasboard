@@ -19,8 +19,6 @@ from scripts.utils import load_abi, insert_yield_db
 
 pool_abi = load_abi("clearpool",'getpool_abi.json')
 
-# 0xdE204e5a060bA5d3B63C7A4099712959114c2D48 -> To get pool getPools
-
 
 smart_contracts = {
     "Ethereum":"0xdE204e5a060bA5d3B63C7A4099712959114c2D48",
@@ -29,9 +27,9 @@ smart_contracts = {
     }
 
 infura_url = {
-    "Ethereum":"https://mainnet.infura.io/v3/",
-    "Optimism":"https://optimism-mainnet.infura.io/v3/",
-    "Mantle":"https://mantle-mainnet.infura.io/v3/"
+    "Ethereum": "https://mainnet.infura.io/v3/",
+    "Optimism": "https://optimism-mainnet.infura.io/v3/",
+    "Mantle": "https://mantle-mainnet.infura.io/v3/"
     }
 
 infura_key = os.getenv('INFURA_KEY')
@@ -44,7 +42,6 @@ def token_price():
     return record.price if record is not None else 0.1
 
 
-
 def fetch_store_rates():
     price = token_price()
 
@@ -55,7 +52,6 @@ def fetch_store_rates():
 
         data = pool_contract.functions.getPools().call()
         with app.app_context():
-
             for item in data:
                 clearpool_abi = load_abi("clearpool",'pool_abi.json')
                 try:
@@ -65,16 +61,18 @@ def fetch_store_rates():
                     market = pool_data.functions.symbol().call().partition("-")[2]
                     information = pool_data.functions.name().call()
 
-
+                    print(market)
+                    print(information)
 
                     borrow_amount = pool_data.functions.poolSize().call()
                     borrow_amount_transformed = borrow_amount/1e6
+                    print(borrow_amount)
 
                     supply_rate = pool_data.functions.getSupplyRate().call()
                     supply_rate_annualised = round(float(supply_rate)/1e18*31536000 * 100,2)
 
                     reward_rate = pool_data.functions.rewardPerSecond().call()
-                    reward_rate_transformed = round(float(reward_rate) * 31536000 / 1e18 * price / borrow_amount * 100,2)
+                    reward_rate_transformed = round(float(reward_rate * 31536000 / 1e12 * price) / borrow_amount * 100,2)
 
                     reward_token = "CPOOL"
 
@@ -85,7 +83,7 @@ def fetch_store_rates():
 
                     insert_yield_db(market, project, information, supply_rate_annualised,reward_rate_transformed,reward_token,borrow_amount_transformed,chain, business, smart_contract)
 
-                    print(f"{information} - {market} - {supply_rate_annualised} - {borrow_amount} - {reward_rate_transformed} {smart_contract}")
+                    print(f"{information} - {market} - {borrow_amount_transformed} - {supply_rate_annualised} - {borrow_amount} - {reward_rate_transformed} - {smart_contract}")
 
                 except Exception as e:
                     print(f"Error fetching data for {item}: {e}")
@@ -95,4 +93,5 @@ def fetch_store_rates():
 
 
 if __name__ == '__main__':
-        fetch_store_rates()
+        with app.app_context():
+            fetch_store_rates()
