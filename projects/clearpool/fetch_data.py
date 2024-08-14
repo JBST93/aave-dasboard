@@ -24,12 +24,15 @@ pool_abi = load_abi("clearpool",'getpool_abi.json')
 
 smart_contracts = {
     "Ethereum":"0xdE204e5a060bA5d3B63C7A4099712959114c2D48",
-    "Optimism":"0x99C10A7aBd93b2db6d1a2271e69F268a2c356b80"}
+    "Optimism":"0x99C10A7aBd93b2db6d1a2271e69F268a2c356b80",
+    "Mantle":"0xB217D93a8f6A4b7861bB2C865a8C22105FbCdE41"
+    }
 
 infura_url = {
     "Ethereum":"https://mainnet.infura.io/v3/",
     "Optimism":"https://optimism-mainnet.infura.io/v3/",
-}
+    "Mantle":"https://mantle-mainnet.infura.io/v3/"
+    }
 
 infura_key = os.getenv('INFURA_KEY')
 if not infura_key:
@@ -37,7 +40,7 @@ if not infura_key:
 
 def token_price():
     record = db.session.query(Price).filter(
-            Price.token == 'COMP').order_by(desc(Price.timestamp)).first()
+            Price.token == 'CPOOL').order_by(desc(Price.timestamp)).first()
     return record.price if record is not None else 0.1
 
 
@@ -71,7 +74,7 @@ def fetch_store_rates():
                     supply_rate_annualised = round(float(supply_rate)/1e18*31536000 * 100,2)
 
                     reward_rate = pool_data.functions.rewardPerSecond().call()
-                    reward_rate_transformed = round(float(reward_rate) * 31536000 / 1e12 * price / borrow_amount * 100,2)
+                    reward_rate_transformed = round(float(reward_rate) * 31536000 / 1e18 * price / borrow_amount * 100,2)
 
                     reward_token = "CPOOL"
 
@@ -80,7 +83,7 @@ def fetch_store_rates():
                     project = "ClearPool"
                     chain = chain
 
-                    insert_yield_db(market, project, information, supply_rate_annualised,None,reward_token,borrow_amount_transformed,chain, business, smart_contract)
+                    insert_yield_db(market, project, information, supply_rate_annualised,reward_rate_transformed,reward_token,borrow_amount_transformed,chain, business, smart_contract)
 
                     print(f"{information} - {market} - {supply_rate_annualised} - {borrow_amount} - {reward_rate_transformed} {smart_contract}")
 
