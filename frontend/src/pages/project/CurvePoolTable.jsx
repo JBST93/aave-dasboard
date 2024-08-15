@@ -111,6 +111,7 @@ const CurvePoolTable = ({ rows }) => {
         disableSelectionOnClick
         disableColumnResize={true}
         disableColumnMenu={true}
+        getRowHeight={() => 'auto'}
         getRowClassName={() => 'DataGrid-row'}
         sx={{ m: 2, border: 'black' }}
         classes={{
