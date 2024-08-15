@@ -103,7 +103,7 @@ const CurvePoolTable = ({ rows }) => {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 200,
+              pageSize: 100,
             },
           },
         }}
