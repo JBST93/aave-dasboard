@@ -150,6 +150,7 @@ const DataTable = ({ rows }) => {
         disableColumnResize={true}
         disableColumnMenu={true}
         getRowClassName={() => 'DataGrid-row'}
+        sx={{ m: 2, border: 'black' }}
         classes={{
           root: 'bg-white dark:bg-gray-800 text-black dark:text-white',
           columnHeader: 'text-black dark:text-white bg-white dark:bg-gray-800',

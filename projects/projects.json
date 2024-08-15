@@ -8,7 +8,7 @@
     "forum": "https://forum.ethereum.org",
     "token": "ETH",
     "audited": "Yes",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/1257px-Ethereum_logo_2014.svg.png",
+    "logoUrl": "https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=032",
     "decimals": 18,
     "supply": {
       "circSupply": {
@@ -31,7 +31,7 @@
     "forum": "https://governance.aave.com/latest",
     "token": "AAVE",
     "audited": "Yes",
-    "logoUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYlfqDoCc8VLkOrtoPhyTyuwLzYeH1NSv2qw&s",
+    "logoUrl": "https://cryptologos.cc/logos/aave-aave-logo.svg?v=032",
     "decimals": 18,
     "supply": {
       "circSupply": {

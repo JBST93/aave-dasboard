@@ -22,6 +22,7 @@ from scripts.stablecoin_yield import get_stablecoin_rates
 from scripts.eth_yield_api import get_ethereum_yields as eth_yield
 from scripts.stablecoin_info_render import get_stablecoin_info_render
 from scripts.get_project_info import get_projects
+from projects.curve.pool_data import get_pools
 
 @app.route('/robot.txt')
 def render_robot():
@@ -47,6 +48,9 @@ def eth_rate():
 def stablecoin_info():
     return get_stablecoin_info_render()
 
+@app.route('/api/curve-pools', methods=['GET'])
+def pools_route():
+    return get_pools()
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
