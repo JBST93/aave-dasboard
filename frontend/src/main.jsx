@@ -11,7 +11,7 @@ import StablecoinYield from './pages/StablecoinYield';
 import StablecoinInfo from './pages/StablecoinInfo';
 import Blog from './pages/Blog';
 import StablecoinYieldFarming from './pages/blog/StablecoinYieldFarming';
-import CurvePools from './pages/project/CurvePools';
+import CurvePools from './pages/Project/CurvePools.jsx';
 
 const router = createBrowserRouter([
   {
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
         element: <StablecoinInfo />, // Nested route for '/stablecoin'
       },
       {
-        path: 'curve-pool',
+        path: 'curve-pools',
         element: <CurvePools />, // Nested route for '/stablecoin'
       },
     ],

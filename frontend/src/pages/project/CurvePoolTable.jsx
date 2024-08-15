@@ -22,19 +22,43 @@ const CurvePoolTable = ({ rows }) => {
     },
     {
       field: 'symbol',
-      headerName: 'symbol',
+      headerName: 'Name',
       width: 150,
       headerClassName: 'font-bold dark:text-white',
     },
     {
+      field: 'coins',
+      headerName: 'Coins',
+      width: 250,
+      headerClassName: 'font-bold dark:text-white',
+      renderCell: (params) => {
+        const coins = params.value; // array of coins
+        return (
+          <div>
+            {coins.map((coin, index) => (
+              <div key={index}>
+                {coin[0]} ({coin[2]}%)
+              </div>
+            ))}
+          </div>
+        );
+      },
+    },
+    {
       field: 'tvl',
-      headerName: 'tvl',
+      headerName: 'TVL (in $)',
       width: 300,
       headerClassName: 'font-bold dark:text-white',
     },
     {
       field: 'volume',
-      headerName: 'Volume',
+      headerName: 'Volume (in $)',
+      width: 150,
+      headerClassName: 'font-bold dark:text-white',
+    },
+    {
+      field: 'chain',
+      headerName: 'Chain',
       width: 150,
       headerClassName: 'font-bold dark:text-white',
     },
@@ -46,7 +70,19 @@ const CurvePoolTable = ({ rows }) => {
     },
     {
       field: 'apy',
-      headerName: 'apy',
+      headerName: 'APY',
+      width: 100,
+      headerClassName: 'font-bold dark:text-white',
+    },
+    {
+      field: 'base_apy',
+      headerName: 'base APY',
+      width: 100,
+      headerClassName: 'font-bold dark:text-white',
+    },
+    {
+      field: 'reward_apy',
+      headerName: 'reward APY',
       width: 100,
       headerClassName: 'font-bold dark:text-white',
     },
@@ -67,7 +103,7 @@ const CurvePoolTable = ({ rows }) => {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 50,
+              pageSize: 200,
             },
           },
         }}
@@ -75,7 +111,6 @@ const CurvePoolTable = ({ rows }) => {
         disableSelectionOnClick
         disableColumnResize={true}
         disableColumnMenu={true}
-        getRowHeight={() => 'auto'}
         getRowClassName={() => 'DataGrid-row'}
         sx={{ m: 2, border: 'black' }}
         classes={{

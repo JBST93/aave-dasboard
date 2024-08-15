@@ -74,6 +74,7 @@ def get_pools():
                     "volume":volume,
                     "address":address,
                     "chain":chain,
+                    "type":type,
                     "base_apy":base_apy,
                     "reward_apy":reward_apy
                 }
