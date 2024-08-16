@@ -35,7 +35,7 @@ def get_pools():
             address = pool.get("address")
             name = pool.get("name")
             symbol = pool.get("symbol")
-            tvl1 = pool.get("totalSupply")
+            tvl_with_basepool = pool.get("totalSupply")
             tvl = pool.get("usdTotalExcludingBasePool")
             total_tvl += tvl
             coins_info = pool.get("coins")
@@ -67,7 +67,7 @@ def get_pools():
 
                     balance_normalised = balance / 10**(decimals)
                     balance_normalised_usd = balance_normalised * usd_price
-                    percent = round(float(balance_normalised_usd)/float(tvl)*100,2)
+                    percent = round(float(balance_normalised_usd)/float(tvl_with_basepool)*100,2)
                     coins.append([token,balance_normalised_usd, percent])
 
             if tvl > 1:
@@ -86,7 +86,7 @@ def get_pools():
                     "apy":apy,
                     "volume":volume,
                     "address":address,
-                    "chain":chain,
+                    "chain":chain.capitalize(),
                     "type":type,
                     "base_apy":base_apy,
                     "reward_apy":reward_apy
@@ -94,8 +94,9 @@ def get_pools():
 
                 data_list.append(data)
 
+    sorted_data_list = sorted(data_list, key=lambda x: x['tvl'], reverse=True)
 
-    return jsonify(data_list)
+    return jsonify(sorted_data_list)
 
 
 
