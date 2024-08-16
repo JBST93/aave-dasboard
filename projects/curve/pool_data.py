@@ -36,6 +36,8 @@ def get_pools():
             name = pool.get("name")
             symbol = pool.get("symbol")
             tvl_with_basepool = pool.get("totalSupply")
+            tvl_with_basepool = float(tvl_with_basepool or 0)
+
             tvl = pool.get("usdTotalExcludingBasePool")
             total_tvl += tvl
             coins_info = pool.get("coins")
