@@ -60,10 +60,12 @@ def get_pools():
             if tvl > 1:
                 for coin in coins_info:
                     token = coin.get("symbol")
-                    usd_price = float(coin.get("usdPrice"))
-                    balance = coin.get("poolBalance")
-                    decimals = coin.get("decimals")
-                    balance_normalised = float(balance) / 10**float(decimals)
+
+                    usd_price = float(coin.get("usdPrice", 0))
+                    balance = float(coin.get("poolBalance", 0))
+                    decimals = float(coin.get("decimals", 18))
+
+                    balance_normalised = balance / 10**(decimals)
                     balance_normalised_usd = balance_normalised * usd_price
                     percent = round(float(balance_normalised_usd)/float(tvl)*100,2)
                     coins.append([token,balance_normalised_usd, percent])
