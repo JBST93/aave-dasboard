@@ -33,6 +33,7 @@ const CurvePoolTable = ({ rows }) => {
       headerName: 'Coins',
       width: 170,
       headerClassName: 'font-bold dark:text-white',
+      cellClassName: 'text-center',
       renderCell: (params) => {
         const coins = params.value; // array of coins
         return (
@@ -58,30 +59,38 @@ const CurvePoolTable = ({ rows }) => {
       headerName: 'APY',
       width: 100,
       headerClassName: 'font-bold dark:text-white',
+      type: 'number',
+      cellClassName: 'text-center',
     },
     {
       field: 'tvl',
       headerName: 'TVL (in $)',
       width: 170,
       headerClassName: 'font-bold dark:text-white',
+      type: 'number',
+      cellClassName: 'text-center',
     },
     {
       field: 'volume',
       headerName: 'Volume (in $)',
       width: 150,
       headerClassName: 'font-bold dark:text-white',
+      type: 'number',
+      cellClassName: 'text-center',
     },
     {
       field: 'chain',
       headerName: 'Chain',
       width: 150,
       headerClassName: 'font-bold dark:text-white',
+      cellClassName: 'text-center',
     },
     {
       field: 'type',
       headerName: 'Type',
       width: 100,
       headerClassName: 'font-bold dark:text-white',
+      cellClassName: 'text-center',
     },
 
     {
@@ -89,12 +98,16 @@ const CurvePoolTable = ({ rows }) => {
       headerName: 'base APY',
       width: 100,
       headerClassName: 'font-bold dark:text-white',
+      type: 'number',
+      cellClassName: 'text-center',
     },
     {
       field: 'reward_apy',
       headerName: 'reward APY',
       width: 100,
       headerClassName: 'font-bold dark:text-white',
+      type: 'number',
+      cellClassName: 'text-center',
     },
   ];
 
