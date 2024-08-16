@@ -90,7 +90,15 @@ def get_pools():
 
                 data_list.append(data)
 
-    return jsonify(data_list)
+
+    def myFunc(e):
+        return e['tvl']
+
+    sorted_list = data_list.sort(key=myFunc)
+
+    return jsonify(sorted_list)
+
+
 
 # Run the Flask app
 if __name__ == "__main__":
