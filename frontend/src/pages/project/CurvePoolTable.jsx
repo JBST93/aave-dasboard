@@ -19,22 +19,31 @@ const CurvePoolTable = ({ rows }) => {
       headerName: '#',
       width: 50,
       headerClassName: 'font-bold dark:text-white',
+      cellClassName: 'text-center',
     },
     {
       field: 'symbol',
       headerName: 'Name',
       width: 150,
       headerClassName: 'font-bold dark:text-white',
+      cellClassName: 'text-center',
     },
     {
       field: 'coins',
       headerName: 'Coins',
-      width: 250,
+      width: 170,
       headerClassName: 'font-bold dark:text-white',
       renderCell: (params) => {
         const coins = params.value; // array of coins
         return (
-          <div>
+          <div
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop: '10px',
+              paddingBottom: '10px',
+            }}
+          >
             {coins.map((coin, index) => (
               <div key={index}>
                 {coin[0]} ({coin[2]}%)
@@ -45,9 +54,15 @@ const CurvePoolTable = ({ rows }) => {
       },
     },
     {
+      field: 'apy',
+      headerName: 'APY',
+      width: 100,
+      headerClassName: 'font-bold dark:text-white',
+    },
+    {
       field: 'tvl',
       headerName: 'TVL (in $)',
-      width: 300,
+      width: 170,
       headerClassName: 'font-bold dark:text-white',
     },
     {
@@ -68,12 +83,7 @@ const CurvePoolTable = ({ rows }) => {
       width: 100,
       headerClassName: 'font-bold dark:text-white',
     },
-    {
-      field: 'apy',
-      headerName: 'APY',
-      width: 100,
-      headerClassName: 'font-bold dark:text-white',
-    },
+
     {
       field: 'base_apy',
       headerName: 'base APY',
@@ -92,6 +102,18 @@ const CurvePoolTable = ({ rows }) => {
     <Box
       sx={{
         backgroundColor: 'inherit',
+        '& .MuiDataGrid-root': {
+          '& .MuiDataGrid-cell': {
+            display: 'flex',
+            justifyContent: 'left',
+            alignItems: 'center',
+            textAlign: 'left',
+          },
+          '& .MuiDataGrid-columnHeader': {
+            justifyContent: 'center',
+            textAlign: 'center',
+          },
+        },
       }}
       className="bg-white dark:bg-gray-800 text-black dark:text-white"
     >
@@ -113,11 +135,14 @@ const CurvePoolTable = ({ rows }) => {
         disableColumnMenu={true}
         getRowHeight={() => 'auto'}
         getRowClassName={() => 'DataGrid-row'}
-        sx={{ m: 2, border: 'black' }}
+        sx={{
+          m: 2,
+          border: 'black',
+        }}
         classes={{
           root: 'bg-white dark:bg-gray-800 text-black dark:text-white',
           columnHeader: 'text-black dark:text-white bg-white dark:bg-gray-800',
-          cell: 'text-black dark:text-white',
+          cell: 'text-black dark:text-white item-center',
           row: 'bg-white dark:bg-gray-800',
           footerContainer:
             'text-white dark:text-white bg-white dark:bg-gray-800',

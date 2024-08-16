@@ -69,9 +69,9 @@ def get_pools():
                 data = {
                     "symbol":symbol,
                     "coins":coins,
-                    "tvl":tvl,
+                    "tvl":f"{volume:,.2f}",
                     "apy":apy,
-                    "volume":volume,
+                    "volume":f"{volume:,.2f}",
                     "address":address,
                     "chain":chain,
                     "type":type,
