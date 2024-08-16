@@ -41,6 +41,15 @@ def get_pools():
             coins_info = pool.get("coins")
             chain = pool.get("blockchainId")
             type = pool.get("assetTypeName")
+            if type == "usd":
+                type = "Stable Pool"
+            elif type =="eth":
+                type="ETH Pool"
+            elif type =="btc":
+                type ="BTC Pool"
+            else:
+                type ="Unknown"
+
             gaugeCrvApy = pool.get("gaugeCrvApy",[]) or []
             if isinstance(gaugeCrvApy, list) and len(gaugeCrvApy) > 0 and gaugeCrvApy[0] is not None:
                 reward_apy = round(float(gaugeCrvApy[0]),2)
@@ -69,9 +78,9 @@ def get_pools():
                 data = {
                     "symbol":symbol,
                     "coins":coins,
-                    "tvl":f"{volume:,.2f}",
+                    "tvl":f"{tvl:,.0f}",
                     "apy":apy,
-                    "volume":f"{volume:,.2f}",
+                    "volume":f"{volume:,.0f}",
                     "address":address,
                     "chain":chain,
                     "type":type,
