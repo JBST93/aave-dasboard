@@ -91,12 +91,7 @@ def get_pools():
                 data_list.append(data)
 
 
-    def myFunc(e):
-        return e['tvl']
-
-    sorted_list = data_list.sort(key=myFunc)
-
-    return jsonify(sorted_list)
+    return jsonify(data_list)
 
 
 
