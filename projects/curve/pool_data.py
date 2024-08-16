@@ -60,11 +60,13 @@ def get_pools():
             if tvl > 1:
                 for coin in coins_info:
                     token = coin.get("symbol")
+                    usd_price = float(coin.get("usdPrice"))
                     balance = coin.get("poolBalance")
                     decimals = coin.get("decimals")
                     balance_normalised = float(balance) / 10**float(decimals)
-                    percent = round(float(balance_normalised)/float(tvl)*100,2)
-                    coins.append([token,balance_normalised, percent])
+                    balance_normalised_usd = balance_normalised * usd_price
+                    percent = round(float(balance_normalised_usd)/float(tvl)*100,2)
+                    coins.append([token,balance_normalised_usd, percent])
 
             if tvl > 1:
                 for volume_data in volumes:
