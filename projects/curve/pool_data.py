@@ -61,7 +61,7 @@ def get_pools():
                 for coin in coins_info:
                     token = coin.get("symbol")
 
-                    usd_price = float(coin.get("usdPrice", 0))
+                    usd_price = float(coin.get("usdPrice") or 0)
                     balance = float(coin.get("poolBalance", 0))
                     decimals = float(coin.get("decimals", 18))
 
