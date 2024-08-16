@@ -67,7 +67,10 @@ def get_pools():
 
                     balance_normalised = balance / 10**(decimals)
                     balance_normalised_usd = balance_normalised * usd_price
-                    percent = round(float(balance_normalised_usd)/float(tvl_with_basepool)*100,2)
+                    if tvl_with_basepool > 0:
+                        percent = round(float(balance_normalised_usd) / float(tvl_with_basepool) * 100, 2)
+                    else:
+                        percent = 0
                     coins.append([token,balance_normalised_usd, percent])
 
             if tvl > 1:
