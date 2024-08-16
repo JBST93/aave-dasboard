@@ -36,8 +36,6 @@ def get_pools():
             name = pool.get("name")
             symbol = pool.get("symbol")
             tvl_with_basepool = pool.get("totalSupply")
-            tvl_with_basepool = float(tvl_with_basepool or 0)
-
             tvl = pool.get("usdTotalExcludingBasePool")
             total_tvl += tvl
             coins_info = pool.get("coins")
@@ -69,8 +67,8 @@ def get_pools():
 
                     balance_normalised = balance / 10**(decimals)
                     balance_normalised_usd = balance_normalised * usd_price
-                    if tvl_with_basepool > 0:
-                        percent = round(float(balance_normalised_usd) / float(tvl_with_basepool) * 100, 2)
+                    if tvl > 0:
+                        percent = round(float(balance_normalised_usd) / float(tvl) * 100, 2)
                     else:
                         percent = 0
                     coins.append([token,balance_normalised_usd, percent])
