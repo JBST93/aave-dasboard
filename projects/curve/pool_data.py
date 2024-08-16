@@ -76,15 +76,15 @@ def get_pools():
                         volume = volume_data.get("volumeUSD", 0)
                         base_apy = volume_data.get("latestDailyApyPcent",0)
                         break
-            apy = base_apy + reward_apy
+            apy = round((base_apy + reward_apy),2)
 
             if tvl > 1 and volume > 1:
                 data = {
                     "symbol":symbol,
                     "coins":coins,
-                    "tvl":f"{tvl:,.0f}",
+                    "tvl":tvl,
                     "apy":apy,
-                    "volume":f"{volume:,.0f}",
+                    "volume":volume,
                     "address":address,
                     "chain":chain,
                     "type":type,
