@@ -466,5 +466,28 @@
         "amount": 1000000000
       }
     }
+  },
+  {
+    "project": "Convex Finance",
+    "description": "A platform built on top of Curve Finance that allows Curve liquidity providers to earn higher returns without locking their tokens. Convex simplifies staking and yield farming for Curve users.",
+    "governance": "Decentralized",
+    "business": "Yield Aggregation",
+    "forum": "https://gov.convexfinance.com/",
+    "website": "https://www.convexfinance.com/",
+    "token": "CVX",
+    "address": "0x4e3Fbd56CD56c3e2fD2d56a94AeBF09b5B4Dfc4e",
+    "chain": "ethereum",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/convex-finance-cvx-logo.svg?v=033",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 100000000
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 100000000
+      }
+    }
   }
 ]

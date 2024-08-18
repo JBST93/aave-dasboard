@@ -7,7 +7,7 @@ const InfoCard = (props) => {
         </h5>
       </div>
       <p className="text-2xl font-medium text-gray-900 dark:text-white py-2">
-        {props.value} {props.value ? '%' : ''}
+        {props.value} {props.scale}
       </p>
       <p className="text-sm md:text-sm text-gray-500 dark:text-gray-400">
         {props.description}

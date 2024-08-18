@@ -71,6 +71,14 @@ const NavBar = () => {
             </li>
             <li>
               <Link
+                to="/curve-pools"
+                className="hover:text-yellow-500 text-black dark:text-white"
+              >
+                Curve Finance Pools
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/blog"
                 className="hover:text-yellow-500 text-black dark:text-white"
               >

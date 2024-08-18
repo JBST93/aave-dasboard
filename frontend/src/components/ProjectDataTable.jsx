@@ -2,6 +2,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import '../App.css';
 
 const DataTable = ({ rows }) => {
   const validRows = Array.isArray(rows) ? rows : [];
@@ -148,6 +149,7 @@ const DataTable = ({ rows }) => {
         disableSelectionOnClick
         disableColumnResize={true}
         disableColumnMenu={true}
+        getRowHeight={() => 'auto'}
         getRowClassName={() => 'DataGrid-row'}
         sx={{ m: 2, border: 'black' }}
         classes={{

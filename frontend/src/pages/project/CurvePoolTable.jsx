@@ -59,8 +59,7 @@ const CurvePoolTable = ({ rows }) => {
       headerName: 'APY',
       width: 100,
       headerClassName: 'font-bold dark:text-white',
-      type: 'number',
-      cellClassName: 'text-center',
+      cellClassName: 'text-left',
     },
     {
       field: 'tvl',
@@ -68,7 +67,7 @@ const CurvePoolTable = ({ rows }) => {
       width: 170,
       headerClassName: 'font-bold dark:text-white',
       type: 'number',
-      cellClassName: 'text-center',
+      cellClassName: 'text-left',
     },
     {
       field: 'volume',
@@ -76,7 +75,7 @@ const CurvePoolTable = ({ rows }) => {
       width: 150,
       headerClassName: 'font-bold dark:text-white',
       type: 'number',
-      cellClassName: 'text-center',
+      cellClassName: 'text-left',
     },
     {
       field: 'chain',
@@ -95,19 +94,19 @@ const CurvePoolTable = ({ rows }) => {
 
     {
       field: 'base_apy',
-      headerName: 'base APY',
+      headerName: 'Base APY',
       width: 100,
       headerClassName: 'font-bold dark:text-white',
       type: 'number',
-      cellClassName: 'text-center',
+      cellClassName: 'text-left',
     },
     {
       field: 'reward_apy',
-      headerName: 'reward APY',
+      headerName: 'Reward APY',
       width: 100,
       headerClassName: 'font-bold dark:text-white',
       type: 'number',
-      cellClassName: 'text-center',
+      cellClassName: 'text-left',
     },
   ];
 
