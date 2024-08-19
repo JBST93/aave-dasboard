@@ -94,6 +94,7 @@ def get_price_supply():
                     circ_supply=circ_supply
                 )
                 db.session.add(token_data)
+                print(token_data)
             except Exception as e:
                 logger.error(f"Error adding token data to database: {e}")
 
@@ -122,10 +123,20 @@ def get_price_kraken(token):
 
 def get_price_bitstamp(token):
     pair = f"{token.lower()}usd"
+
     endpoint = f"https://www.bitstamp.net/api/v2/ticker/{pair}"
     r = requests.get(endpoint)
-    data = r.json()
-    return data.get("last")
+    if r.status_code == 200:
+        try:
+           data = r.json()
+        except requests.RequestException as e:
+            logger.error(f"Error fetching price from Kraken: {e}")
+            return None
+        return data.get("last")
+    else:
+        return None
+
+
 
 
 def get_curve_price(address, chain):
@@ -163,4 +174,5 @@ def get_supply(supply):
     return circ_supply
 
 if __name__ == '__main__':
+        get_price_supply()
         print("This script is intended to be run as a scheduled task.")
