@@ -9,6 +9,9 @@ import Socials from '../../components/Socials';
 
 const ProjectList = () => {
   const [pools, setPools] = useState([]);
+  const [price, setPrice] = useState(0);
+  const [mktCap, setMktCap] = useState(0);
+
   const [filter, setFilter] = useState([]);
 
   const [totalTvl, setTotalTvl] = useState(0);
@@ -20,7 +23,9 @@ const ProjectList = () => {
         const response = await axios.get(
           'https://www.tokendataview.com/api/curve-pools'
         );
-        const fetchedPools = response.data;
+        const fetchedPools = response.data.pools;
+        const fetchedPrice = response.data.price;
+        const fetchedMktCap = response.data.supply;
 
         const totalTvlAmount = fetchedPools.reduce(
           (sum, pool) => sum + pool.tvl,
@@ -33,6 +38,8 @@ const ProjectList = () => {
         );
 
         setPools(fetchedPools);
+        setMktCap(fetchedMktCap);
+        setPrice(fetchedPrice);
         setTotalTvl(totalTvlAmount);
         setTotalVolume(totalVolume);
       } catch (error) {
@@ -57,6 +64,7 @@ const ProjectList = () => {
 
   const formattedTvl = formattedNumber(totalTvl);
   const formattedVolume = formattedNumber(totalVolume);
+  const formattedMktCap = formattedNumber(mktCap);
 
   const clearFilter = () => {
     setFilter('');
@@ -123,7 +131,12 @@ const ProjectList = () => {
 
         <InfoCard
           title="CRV Price "
-          value="0.3"
+          value={price}
+          scale="USD"
+        />
+        <InfoCard
+          title="Market Cap "
+          value={formattedMktCap}
           scale="USD"
         />
       </div>
@@ -136,14 +149,14 @@ const ProjectList = () => {
         <CurvePoolTable rows={pools} />
       </div>
 
-      {/* <div>
+      <div>
         CRV is the governance token of Curve Finance, one of the leading
         decentralized exchange (DEX) in the DeFi ecosystem. With a current price
-        of 0.3, CRV has a market capitalization of 0.2billion. Curve has a Total
-        Value Locked of {totalTvl} and a Total Volume of {totalVolume}, with a
-        utilization ratio of
+        of $ {price}, CRV has a market capitalization of {mktCap}. Curve has a
+        Total Value Locked of {totalTvl} and a Total Volume of {totalVolume},
+        with a utilization ratio of
         {totalVolume / totalTvl} %.
-      </div> */}
+      </div>
     </>
   );
 };

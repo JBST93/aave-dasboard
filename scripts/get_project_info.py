@@ -62,12 +62,18 @@ def get_projects():
 
                     marketCap = price * circ_supply
 
+                    if price < 0:
+                        price = round(price,6)
+
+                    elif price > 0:
+                        price = round(price,2)
+
                     projects.append({
                         'project': result["project"],
                         'description': result["description"],
                         'token': result["token"],
                         'supply_formatted': circ_supply,
-                        'price': f"{price:,.2f}",
+                        'price': price,
                         'price_day_delta': f"{price_day_delta:,.2f}",
                         'marketCapSorting': marketCap,
                         'marketCap': f"{marketCap:,.0f}",
