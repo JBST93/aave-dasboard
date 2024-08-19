@@ -143,6 +143,44 @@ const DataTable = ({ rows }) => {
         ),
       headerClassName: 'font-bold dark:text-white',
     },
+    {
+      field: 'update_status',
+      headerName: 'Update Status',
+      width: 150,
+      renderCell: (params) => {
+        const timestamp = params.row.timestamp;
+        const currentTime = new Date();
+        let circleColor = '';
+        let displayText = '';
+
+        if (timestamp === 'NEW') {
+          displayText = 'Recently added';
+        } else {
+          const dataTime = new Date(timestamp);
+          const timeDifference = (currentTime - dataTime) / (1000 * 60 * 60); // Time difference in hours
+
+          if (timeDifference < 1) {
+            circleColor = 'bg-green-500';
+          } else if (timeDifference <= 24) {
+            circleColor = 'bg-yellow-500';
+          } else {
+            circleColor = 'bg-red-500';
+          }
+        }
+
+        return (
+          <div className="flex items-center">
+            {circleColor && (
+              <span
+                className={`w-3 h-3 rounded-full mr-2 ${circleColor}`}
+              ></span>
+            )}
+            <span>{displayText}</span>
+          </div>
+        );
+      },
+      headerClassName: 'font-bold dark:text-white',
+    },
   ];
 
   return (
