@@ -51,9 +51,13 @@ const ProjectList = () => {
   }, []);
 
   const filteredPools = pools.filter((pool) =>
-    pool.coins.some((coin) =>
-      coin[0].toLowerCase().includes(filter.toLowerCase())
-    )
+    pool.coins.some((coin) => {
+      const symbol = coin[0];
+      return (
+        typeof symbol === 'string' &&
+        symbol.toLowerCase().includes(filter.toLowerCase())
+      );
+    })
   );
 
   const formattedNumber = (base) => {
