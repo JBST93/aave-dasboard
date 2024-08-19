@@ -2,12 +2,23 @@ from flask import jsonify
 import sys, os
 import requests
 
-chains = ["ethereum"]
+import functools
+import time
+
+chains = ["ethereum","arbitrum"]
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 sys.path.append(project_root)
 
 from app import app
+
+def get_crvusd():
+    endpoint_crvusd="https://api.curve.fi/v1/getCrvusdTotalSupply"
+    r = requests.get(endpoint_crvusd)
+    data = r.json()
+    supply_crv_usd = data.get("data",{}).get("crvusdTotalSupply")
+    print(supply_crv_usd)
+
 
 
 def get_volumes(chain):
@@ -16,6 +27,8 @@ def get_volumes(chain):
     data = r.json()
     return data.get("data",{}).get("pools",{})
 
+
+@functools.cache
 def get_pools():
     data_list = []
 
@@ -98,6 +111,8 @@ def get_pools():
                 data_list.append(data)
 
     sorted_data_list = sorted(data_list, key=lambda x: x['tvl'], reverse=True)
+    crv_usd_supply = get_crvusd()
+    print(crv_usd_supply)
 
     return jsonify(sorted_data_list)
 
@@ -106,4 +121,4 @@ def get_pools():
 # Run the Flask app
 if __name__ == "__main__":
     with app.app_context():
-        print(get_pools())
+        print(get_crvusd)
