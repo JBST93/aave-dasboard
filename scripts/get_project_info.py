@@ -86,7 +86,7 @@ def get_projects():
                         'forum': result["forum"],
                         'type': result["business"],
                         'logo': result.get("logoUrl",""),
-                        'timestamp':timestamp
+                        'timestamp':timestamp or None
                     })
 
                 projects.sort(key=lambda x: x['marketCapSorting'], reverse=True)
