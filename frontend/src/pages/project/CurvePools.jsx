@@ -50,6 +50,12 @@ const ProjectList = () => {
     fetchPools();
   }, []);
 
+  const filteredPools = pools.filter((pool) =>
+    pool.coins.some((coin) =>
+      coin[0].toLowerCase().includes(filter.toLowerCase())
+    )
+  );
+
   const formattedNumber = (base) => {
     if (base >= 1e9) {
       return (base / 1e9).toFixed(2) + ' Billion';
@@ -146,7 +152,25 @@ const ProjectList = () => {
           Detailed Curve Pools Data
         </h2>
 
-        <CurvePoolTable rows={pools} />
+        <div className="flex flex-row gap-4">
+          <Filter
+            placeholder="Search Token"
+            filter={filter}
+            setFilter={setFilter}
+            className="flex-grow py-2 border border-gray-300"
+          />
+
+          <div className="w-full md:w-auto md:px-2">
+            <button
+              className="w-1/4 md:w-full h-full px-4 text-sm dark:bg-teal-700 text-black dark:text-white focus:outline-none focus:ring-2 bg-yellow-500"
+              onClick={clearFilter}
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+
+        <CurvePoolTable rows={filteredPools} />
       </div>
 
       <div>

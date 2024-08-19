@@ -63,8 +63,6 @@ def get_pools():
 
         for pool in pools:
             address = pool.get("address")
-            name = pool.get("name")
-            symbol = pool.get("symbol")
             tvl_with_basepool = pool.get("totalSupply")
             tvl = pool.get("usdTotalExcludingBasePool")
             total_tvl += tvl
@@ -112,6 +110,8 @@ def get_pools():
             apy = round((base_apy + reward_apy),2)
 
             if tvl > 1 and volume > 1:
+                symbol = " / ".join([coin[0] for coin in coins])
+
                 data = {
                     "symbol":symbol,
                     "coins":coins,

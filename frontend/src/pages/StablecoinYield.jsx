@@ -26,7 +26,6 @@ const StablecoinYield = () => {
   }, []);
 
   useEffect(() => {
-    // On component mount, check if there's a token query param and set the filter
     const token = searchParams.get('token');
     if (token) {
       setFilter(token);
