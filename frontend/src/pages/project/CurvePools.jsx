@@ -12,7 +12,7 @@ const ProjectList = () => {
   const [price, setPrice] = useState(0);
   const [mktCap, setMktCap] = useState(0);
 
-  const [filter, setFilter] = useState([]);
+  const [filter, setFilter] = useState();
 
   const [totalTvl, setTotalTvl] = useState(0);
   const [totalVolume, setTotalVolume] = useState(0);
@@ -51,12 +51,15 @@ const ProjectList = () => {
   }, []);
 
   const filteredPools = pools.filter((pool) => {
+    // If the filter is empty, return all pools
     if (!filter) {
-      return true;
+      return pools;
     }
 
+    // Otherwise, filter based on the provided filter
     return pool.coins.some((coin) => {
       const symbol = coin[0];
+      // Ensure symbol is a string before calling toLowerCase
       return (
         typeof symbol === 'string' &&
         symbol.toLowerCase().includes(filter.toLowerCase())
