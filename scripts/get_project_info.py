@@ -62,11 +62,15 @@ def get_projects():
 
                     marketCap = price * circ_supply
 
-                    if price < 0:
+                    if price < 1:
                         price = round(price,6)
 
-                    elif price > 0:
+                    elif price <= 10:
+                        price = round(price,4)
+
+                    else:
                         price = round(price,2)
+
 
                     projects.append({
                         'project': result["project"],
