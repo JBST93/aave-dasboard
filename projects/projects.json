@@ -1,5 +1,226 @@
 [
   {
+    "project": "Bitcoin",
+    "description": "Bitcoin is the first decentralized digital currency, operating on a peer-to-peer network without the need for a central authority. It allows for secure and transparent transactions over a distributed ledger known as the blockchain.",
+    "governance": "Decentralized",
+    "business": "Cryptocurrency",
+    "website": "https://bitcoin.org",
+    "forum": "https://bitcointalk.org",
+    "token": "BTC",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=032",
+    "decimals": 8,
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 19452487
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 21000000
+      }
+    }
+  },
+  {
+    "project": "Wrapped Bitcoin",
+    "description": "Wrapped Bitcoin (WBTC) is an ERC-20 token that represents Bitcoin (BTC) on the Ethereum blockchain. It enables Bitcoin holders to participate in the Ethereum ecosystem, including decentralized finance (DeFi) applications, while maintaining the value and backing of BTC.",
+    "governance": "Decentralized",
+    "business": "Tokenized Bitcoin",
+    "website": "https://wbtc.network",
+    "forum": "https://governance.wbtc.network",
+    "token": "WBTC",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.svg?v=032",
+    "decimals": 8,
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 162358
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 162358
+      }
+    }
+  },
+  {
+    "project": "Polygon",
+    "description": "Polygon (formerly Matic Network) is a Layer 2 scaling solution for Ethereum that aims to improve the speed, reduce the cost, and enhance the scalability of transactions on Ethereum by utilizing sidechains. It is designed to support a multi-chain Ethereum ecosystem, allowing developers to build and connect decentralized applications (DApps) and blockchain networks.",
+    "governance": "Delegated Proof of Stake (DPoS)",
+    "business": "Blockchain Platform",
+    "website": "https://polygon.technology",
+    "forum": "https://forum.polygon.technology",
+    "token": "MATIC",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/polygon-matic-logo.svg?v=032",
+    "decimals": 18,
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 9319469069
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 10000000000
+      }
+    }
+  },
+  {
+    "project": "Ethena USD",
+    "description": "Ethena USD (USDe) is a decentralized stablecoin designed to maintain a 1:1 peg with the US Dollar. It operates on the Ethereum blockchain and is backed by a combination of algorithmic mechanisms and collateral assets. Ethena USD aims to provide a stable and secure medium of exchange within the decentralized finance (DeFi) ecosystem.",
+    "governance": "Decentralized",
+    "business": "Stablecoin",
+    "website": "https://ethena.fi",
+    "forum": "https://forum.ethena.fi",
+    "token": "USDe",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/usd-coin-usdc-logo.svg?v=032",
+    "decimals": 6,
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 0
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 0
+      }
+    }
+  },
+  {
+    "project": "Arbitrum",
+    "description": "Arbitrum is a Layer 2 scaling solution for Ethereum that uses Optimistic Rollups to increase transaction throughput and reduce costs. It allows developers to deploy smart contracts with greater efficiency and lower fees while maintaining the security of the Ethereum network.",
+    "governance": "DAO",
+    "business": "Layer 2 Scaling Solution",
+    "website": "https://arbitrum.io",
+    "forum": "https://forum.arbitrum.io",
+    "token": "ARB",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/arbitrum-arb-logo.svg?v=032",
+    "decimals": 18,
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 1275000000
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 10000000000
+      }
+    }
+  },
+  {
+    "project": "Optimism",
+    "description": "Optimism is a Layer 2 scaling solution for Ethereum that leverages Optimistic Rollups to enhance transaction speed and reduce gas fees. It is designed to make Ethereum transactions faster and more affordable while maintaining compatibility with the Ethereum Virtual Machine (EVM).",
+    "governance": "DAO",
+    "business": "Layer 2 Scaling Solution",
+    "website": "https://optimism.io",
+    "forum": "https://gov.optimism.io",
+    "token": "OP",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/optimism-op-logo.svg?v=032",
+    "decimals": 18,
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 677482431
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 4294967296
+      }
+    }
+  },
+  {
+    "project": "Rocket Pool ETH",
+    "description": "Rocket Pool ETH (rETH) is a liquid staking token for Ethereum provided by Rocket Pool, a decentralized Ethereum 2.0 staking protocol. rETH represents a user's staked ETH plus any accrued staking rewards. It allows users to participate in Ethereum staking while maintaining liquidity and earning rewards.",
+    "governance": "DAO",
+    "business": "Staking Platform",
+    "website": "https://rocketpool.net",
+    "forum": "https://dao.rocketpool.net",
+    "token": "rETH",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/rocket-pool-reth-logo.svg?v=032",
+    "decimals": 18,
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 4456454
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 4456454
+      }
+    }
+  },
+  {
+    "project": "Ondo",
+    "description": "Ondo is a decentralized finance (DeFi) protocol focused on providing structured financial products. Ondo offers tokenized tranches that allow users to earn yield with varying levels of risk. The platform aims to bridge the gap between traditional finance and decentralized finance by creating innovative financial instruments.",
+    "governance": "DAO",
+    "business": "DeFi Protocol",
+    "website": "https://ondo.finance",
+    "forum": "https://forum.ondo.finance",
+    "token": "ONDO",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/ondo-finance-ondo-logo.svg?v=032",
+    "decimals": 18,
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 50000000
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 1000000000
+      }
+    }
+  },
+  {
+    "project": "dYdX",
+    "description": "dYdX is a decentralized trading platform that offers perpetual contracts, margin trading, spot trading, and lending on the Ethereum blockchain. It is designed to provide a non-custodial and decentralized alternative to traditional financial exchanges, allowing users to trade directly from their wallets while maintaining control over their funds.",
+    "governance": "DAO",
+    "business": "Decentralized Exchange",
+    "website": "https://dydx.exchange",
+    "forum": "https://forum.dydx.community",
+    "token": "DYDX",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/dydx-dydx-logo.svg?v=032",
+    "decimals": 18,
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 156256174
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 1000000000
+      }
+    }
+  },
+
+  {
+    "project": "Solana",
+    "description": "Solana is a high-performance, decentralized blockchain platform designed to support large-scale decentralized applications (DApps) and cryptocurrencies. It is known for its fast transaction speeds and low fees, making it ideal for both developers and users.",
+    "governance": "Delegated Proof of Stake (DPoS)",
+    "business": "Blockchain Platform",
+    "website": "https://solana.com",
+    "forum": "https://forums.solana.com",
+    "token": "SOL",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/solana-sol-logo.svg?v=032",
+    "decimals": 9,
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 412598504
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 558299573
+      }
+    }
+  },
+  {
     "project": "Ethereum",
     "description": "Ethereum is a decentralized, open-source blockchain platform that enables the creation of smart contracts and decentralized applications (DApps). It supports a wide range of applications from finance to gaming and beyond.",
     "governance": "DAO",
@@ -16,8 +237,8 @@
         "amount": 120267845
       },
       "totSupply": {
-        "method": "dynamic",
-        "amount": null
+        "method": "hardcoded",
+        "amount": 0
       }
     }
   },
@@ -491,7 +712,7 @@
     }
   },
   {
-    "project": "stETH (Lido Staked Ether)",
+    "project": "staked ETH (Lido Staked Ether)",
     "description": "stETH is a liquid staking token representing staked Ether on the Ethereum 2.0 Beacon Chain through the Lido protocol. stETH allows users to earn staking rewards while maintaining liquidity, enabling participation in DeFi activities.",
     "governance": "Decentralized",
     "business": "Liquid Staking",
@@ -504,11 +725,11 @@
     "logoUrl": "https://cryptologos.cc/logos/lido-dao-ldo-logo.svg?v=033",
     "supply": {
       "circSupply": {
-        "method": "dynamic",
+        "method": "hardcoded",
         "source": "Lido Dashboard or Blockchain Explorer"
       },
       "totSupply": {
-        "method": "dynamic",
+        "method": "hardcoded",
         "source": "Lido Dashboard or Blockchain Explorer"
       }
     }

@@ -77,8 +77,8 @@ const ProjectList = () => {
 
       <div className="flex flex-col md:flex-row gap-4 mb-4">
         <div>
-          <h2 className="text-lg font-semibold mb-2">⬆ Top Daily Gainers 🐂</h2>
-          <table className="min-w-full bg-white dark:bg-gray-800 text-black dark:text-white text-left">
+          <h2 className="text-lg font-semibold mb-2 ">⬆ Top Daily Gainers</h2>
+          <table className=" bg-white border shadow dark:bg-gray-800 border-gray-300 min-w-full text-black dark:text-white text-left">
             <thead>
               <tr>
                 <th className="py-2 px-4">Token</th>
@@ -108,8 +108,8 @@ const ProjectList = () => {
         </div>
 
         <div>
-          <h2 className="text-lg font-semibold mb-2">⬇ Top Daily Losers 🐻</h2>
-          <table className="min-w-full bg-white dark:bg-gray-800 text-black dark:text-white text-left">
+          <h2 className="text-lg font-semibold mb-2">⬇ Top Daily Losers</h2>
+          <table className="min-w-full  bg-white border shadow dark:bg-gray-800 border-gray-300 text-black dark:text-white text-left">
             <thead>
               <tr>
                 <th className="py-2 px-4">Token</th>
