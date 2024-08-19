@@ -118,12 +118,13 @@
     "forum": "https://gov.optimism.io",
     "token": "OP",
     "audited": "Yes",
-    "logoUrl": "https://cryptologos.cc/logos/optimism-op-logo.svg?v=032",
+    "logoUrl": "https://cryptologos.cc/logos/optimism-ethereum-op-logo.svg?v=033",
     "decimals": 18,
     "supply": {
       "circSupply": {
-        "method": "hardcoded",
-        "amount": 677482431
+        "method": "API",
+        "enpoint": "https://static.optimism.io/tokenomics/circulatingSupply.txt",
+        "path": ""
       },
       "totSupply": {
         "method": "hardcoded",
@@ -140,7 +141,7 @@
     "forum": "https://dao.rocketpool.net",
     "token": "rETH",
     "audited": "Yes",
-    "logoUrl": "https://cryptologos.cc/logos/rocket-pool-reth-logo.svg?v=032",
+    "logoUrl": "https://cryptologos.cc/logos/rocket-pool-eth-reth-logo.svg?v=033",
     "decimals": 18,
     "supply": {
       "circSupply": {
