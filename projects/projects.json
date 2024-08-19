@@ -27,7 +27,7 @@
     "governance": "Decentralized",
     "business": "Tokenized Bitcoin",
     "website": "https://wbtc.network",
-    "forum": "https://governance.wbtc.network",
+    "forum": "",
     "token": "WBTC",
     "audited": "Yes",
     "logoUrl": "https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.svg?v=032",
@@ -35,11 +35,11 @@
     "supply": {
       "circSupply": {
         "method": "hardcoded",
-        "amount": 162358
+        "amount": 154414
       },
       "totSupply": {
         "method": "hardcoded",
-        "amount": 162358
+        "amount": 154414
       }
     }
   },
@@ -74,16 +74,16 @@
     "forum": "https://forum.ethena.fi",
     "token": "USDe",
     "audited": "Yes",
-    "logoUrl": "https://cryptologos.cc/logos/usd-coin-usdc-logo.svg?v=032",
+    "logoUrl": "https://cryptologos.cc/logos/ethena-ena-logo.svg?v=032",
     "decimals": 6,
     "supply": {
       "circSupply": {
         "method": "hardcoded",
-        "amount": 0
+        "amount": 1
       },
       "totSupply": {
         "method": "hardcoded",
-        "amount": 0
+        "amount": 1
       }
     }
   },
@@ -101,11 +101,33 @@
     "supply": {
       "circSupply": {
         "method": "hardcoded",
-        "amount": 1275000000
+        "amount": 3339278542
       },
       "totSupply": {
         "method": "hardcoded",
         "amount": 10000000000
+      }
+    }
+  },
+  {
+    "project": "crvUSD",
+    "description": "crvUSD is a stablecoin launched by Curve Finance, a decentralized exchange protocol designed for low-slippage swaps between stablecoins. crvUSD is pegged to the US dollar and is integrated into the Curve ecosystem, allowing users to engage in decentralized finance (DeFi) activities with reduced volatility and consistent value.",
+    "governance": "DAO",
+    "business": "Stablecoin",
+    "website": "https://curve.fi",
+    "forum": "https://gov.curve.fi",
+    "token": "crvUSD",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/curve-dao-token-crv-logo.svg?v=014",
+    "decimals": 18,
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 500000000
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 1000000000
       }
     }
   },

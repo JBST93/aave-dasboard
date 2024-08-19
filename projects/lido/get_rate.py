@@ -54,8 +54,6 @@ def get_lido():
     print(f"{symbol} - {supply} - {market_cap} - {price}- {apr} - {address}")
 
 
-
-
 # Lido collects a percentage of the staking rewards as a protocol fee.
 # The exact fee size is defined by the DAO and can be changed in the future via DAO voting.
 # To collect the fee, the protocol mints new stETH token shares and assigns them to the fee recipients.

@@ -40,6 +40,7 @@ def get_projects():
 
                     # Fetch the latest data from the database
                     token_data = get_latest_token_data(token)
+                    timestamp = token_data.timestamp
 
                     if token_data:
                         price = token_data.price or 0
@@ -84,8 +85,8 @@ def get_projects():
                         'website': result["website"],
                         'forum': result["forum"],
                         'type': result["business"],
-                        'logo': result.get("logoUrl","")
-
+                        'logo': result.get("logoUrl",""),
+                        'timestamp':timestamp
                     })
 
                 projects.sort(key=lambda x: x['marketCapSorting'], reverse=True)
