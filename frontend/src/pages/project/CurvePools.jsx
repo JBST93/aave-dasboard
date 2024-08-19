@@ -50,15 +50,19 @@ const ProjectList = () => {
     fetchPools();
   }, []);
 
-  const filteredPools = pools.filter((pool) =>
-    pool.coins.some((coin) => {
+  const filteredPools = pools.filter((pool) => {
+    if (!filter) {
+      return true;
+    }
+
+    return pool.coins.some((coin) => {
       const symbol = coin[0];
       return (
         typeof symbol === 'string' &&
         symbol.toLowerCase().includes(filter.toLowerCase())
       );
-    })
-  );
+    });
+  });
 
   const formattedNumber = (base) => {
     if (base >= 1e9) {
