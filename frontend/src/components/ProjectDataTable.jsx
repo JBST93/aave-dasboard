@@ -1,4 +1,6 @@
 import { DataGrid } from '@mui/x-data-grid';
+import Tooltip from '@mui/material/Tooltip'; // Import Tooltip component
+
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -38,7 +40,7 @@ const DataTable = ({ rows }) => {
             <img
               src={params.row.logo}
               alt={`${params.row.token} logo`}
-              className="mr-2 shrink-0 w-6 h-6"
+              className="mr-2 shrink-0 w-6 h-6 text-center"
             />
           )}
           {params.value}
@@ -51,6 +53,18 @@ const DataTable = ({ rows }) => {
       headerName: 'Description',
       width: 300,
       headerClassName: 'font-bold dark:text-white',
+      renderCell: (params) => (
+        <Tooltip
+          title={params.value}
+          arrow
+        >
+          <span className="truncate block max-w-xs">
+            {params.value.length > 100
+              ? `${params.value.substring(0, 100)}...`
+              : params.value}
+          </span>
+        </Tooltip>
+      ),
     },
     {
       field: 'project',
@@ -61,12 +75,16 @@ const DataTable = ({ rows }) => {
     {
       field: 'type',
       headerName: 'Type',
-      width: 100,
+      width: 150,
       headerClassName: 'font-bold dark:text-white',
     },
     {
       field: 'price',
       headerName: 'Price',
+      type: 'number',
+      headerAlign: 'left',
+
+      align: 'left',
       width: 100,
       headerClassName: 'font-bold dark:text-white',
     },
@@ -85,6 +103,7 @@ const DataTable = ({ rows }) => {
       field: 'marketCap',
       headerName: 'MarketCap',
       width: 150,
+      align: 'left',
       headerClassName: 'font-bold dark:text-white',
     },
     {
@@ -149,17 +168,29 @@ const DataTable = ({ rows }) => {
         disableSelectionOnClick
         disableColumnResize={true}
         disableColumnMenu={true}
-        getRowHeight={() => 'auto'}
+        getRowHeight={() => 60}
         getRowClassName={() => 'DataGrid-row'}
-        sx={{ m: 2, border: 'black' }}
+        sx={{
+          m: 2,
+          border: 'black',
+          '& .MuiDataGrid-sortIcon': {
+            opacity: 'inherit !important',
+            color: 'inherit',
+          },
+          '& .MuiDataGrid-row:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.05)', // Row hover effect
+            cursor: 'pointer',
+          },
+        }}
         classes={{
           root: 'bg-white dark:bg-gray-800 text-black dark:text-white',
           columnHeader: 'text-black dark:text-white bg-white dark:bg-gray-800',
-          cell: 'text-black dark:text-white',
+          cell: 'text-black dark:text-white text-center flex items-center justify-center',
           row: 'bg-white dark:bg-gray-800',
           footerContainer:
             'text-white dark:text-white bg-white dark:bg-gray-800',
           filler: 'bg-white dark:bg-gray-800',
+          sortIcon: 'black dark:white',
         }}
       />
     </Box>

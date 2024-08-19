@@ -27,6 +27,15 @@ const ProjectList = () => {
     fetchProjects();
   }, []);
 
+  const topGainers = [...projects]
+    .sort((a, b) => b.price_day_delta - a.price_day_delta)
+    .slice(0, 3);
+
+  // Filtering top 3 losers
+  const topLosers = [...projects]
+    .sort((a, b) => a.price_day_delta - b.price_day_delta)
+    .slice(0, 3);
+
   const filteredProjects = projects.filter((project) => {
     const searchTerm = filter.toLocaleLowerCase();
     return (
@@ -66,30 +75,82 @@ const ProjectList = () => {
         </p>
       </div>
 
-      {/* <div>
-        Top 3 gainers / top 3 Losers
-        // Table with 2 sides
-        // 1 top component
-        // 2 table inside the component
-        // List inside each side of the component
-              - Logo
-              - Coin Name
-              - % Change
+      <div className="flex flex-col md:flex-row gap-4 mb-4">
+        <div>
+          <h2 className="text-lg font-semibold mb-2">⬆ Top Daily Gainers 🐂</h2>
+          <table className="min-w-full bg-white dark:bg-gray-800 text-black dark:text-white text-left">
+            <thead>
+              <tr>
+                <th className="py-2 px-4">Token</th>
+                <th className="py-2 px-4">Price Change</th>
+              </tr>
+            </thead>
+            <tbody>
+              {topGainers.map((project) => (
+                <tr key={project.token}>
+                  <td className="py-2 px-4 flex">
+                    {project.logo && (
+                      <img
+                        src={project.logo}
+                        alt={`${project.token} logo`}
+                        className="mr-2 w-6 h-6"
+                      />
+                    )}
+                    {project.token}
+                  </td>
+                  <td className="py-2 px-4 text-green-600">
+                    {project.price_day_delta}%
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-        ⬆
-        ⬇
-      </div> */}
+        <div>
+          <h2 className="text-lg font-semibold mb-2">⬇ Top Daily Losers 🐻</h2>
+          <table className="min-w-full bg-white dark:bg-gray-800 text-black dark:text-white text-left">
+            <thead>
+              <tr>
+                <th className="py-2 px-4">Token</th>
+                <th className="py-2 px-4">Price Change</th>
+              </tr>
+            </thead>
+            <tbody>
+              {topLosers.map((project) => (
+                <tr key={project.token}>
+                  <td className="py-2 px-4 flex">
+                    {project.logo && (
+                      <img
+                        src={project.logo}
+                        alt={`${project.token} logo`}
+                        className="mr-2 w-6 h-6"
+                      />
+                    )}
+                    {project.token}
+                  </td>
+                  <td className="py-2 px-4 text-red-600">
+                    {project.price_day_delta}%
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       <div className="py-2">
-        {/* <Filter
+        <h2 className="text-xl font-semibold mb-2">Project Directory</h2>
+
+        <Filter
           placeholder="Search by Project or Token Name"
           filter={filter}
           setFilter={setFilter}
           className="flex-grow py-2 border border-gray-300"
-        /> */}
+        />
       </div>
 
-      <ProjectDataTable rows={projects} />
+      <ProjectDataTable rows={filteredProjects} />
     </>
   );
 };
