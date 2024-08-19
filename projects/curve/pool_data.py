@@ -4,6 +4,8 @@ import requests
 
 import functools
 import time
+from sqlalchemy import desc, and_
+
 
 chains = ["ethereum","arbitrum"]
 
@@ -12,6 +14,16 @@ sys.path.append(project_root)
 
 from app import app
 
+token = "CRV"
+from instances.TokenData import TokenData
+
+def get_supply():
+    endpoint = "https://api.curve.fi/api/getCrvCircSupply"
+    r = requests.get(endpoint)
+    data = r.json()
+    supply = data.get("data").get("crvCirculatingSupply")
+    return float(supply)
+
 def get_crvusd():
     endpoint_crvusd="https://api.curve.fi/v1/getCrvusdTotalSupply"
     r = requests.get(endpoint_crvusd)
@@ -19,7 +31,10 @@ def get_crvusd():
     supply_crv_usd = data.get("data",{}).get("crvusdTotalSupply")
     print(supply_crv_usd)
 
-
+def get_latest_token_data(token):
+    """Fetch the latest token data from the database based on timestamp."""
+    result = TokenData.query.filter_by(token=token).order_by(desc(TokenData.timestamp)).first()
+    return float(result.price)
 
 def get_volumes(chain):
     endpoint_volumes = f"https://api.curve.fi/v1/getVolumes/{chain}"
@@ -30,10 +45,12 @@ def get_volumes(chain):
 
 @functools.cache
 def get_pools():
+    price = get_latest_token_data("CRV")
+    supply_raw = get_supply()
+    supply_usd = supply_raw*price
     data_list = []
 
     for chain in chains:
-
         endpoint = f"https://api.curve.fi/v1/getPools/all/{chain}"
         r = requests.get(endpoint)
         data = r.json()
@@ -111,14 +128,16 @@ def get_pools():
                 data_list.append(data)
 
     sorted_data_list = sorted(data_list, key=lambda x: x['tvl'], reverse=True)
-    crv_usd_supply = get_crvusd()
-    print(crv_usd_supply)
 
-    return jsonify(sorted_data_list)
+    result = {
+            "name": "Curve Finance",
+            "price": price,
+            "supply":supply_usd,
+            "pools": sorted_data_list
+        }
 
-
-
+    return jsonify(result)
 # Run the Flask app
 if __name__ == "__main__":
     with app.app_context():
-        print(get_crvusd)
+        get_pools()
