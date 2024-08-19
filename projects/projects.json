@@ -122,12 +122,14 @@
     "decimals": 18,
     "supply": {
       "circSupply": {
-        "method": "hardcoded",
-        "amount": 500000000
+        "method": "API",
+        "endpoit": "https://api.curve.fi/v1/getCrvCircSupply",
+        "path": "data.crvCirculatingSupply"
       },
       "totSupply": {
-        "method": "hardcoded",
-        "amount": 1000000000
+        "method": "API",
+        "endpoit": "https://api.curve.fi/v1/getCrvusdTotalSupply",
+        "path": "data.crvusdTotalSupply"
       }
     }
   },

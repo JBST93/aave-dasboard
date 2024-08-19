@@ -159,7 +159,7 @@ const DataTable = ({ rows }) => {
           const dataTime = new Date(timestamp);
           const timeDifference = (currentTime - dataTime) / (1000 * 60 * 60); // Time difference in hours
 
-          if (timeDifference < 1) {
+          if (timeDifference < 2) {
             circleColor = 'bg-green-500';
           } else if (timeDifference <= 24) {
             circleColor = 'bg-yellow-500';
