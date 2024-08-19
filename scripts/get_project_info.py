@@ -38,12 +38,15 @@ def get_projects():
                 for result in results:
                     token = result.get("token")
 
+
                     # Fetch the latest data from the database
                     token_data = get_latest_token_data(token)
 
                     if token_data:
                         price = token_data.price or 0
                         circ_supply = token_data.circ_supply or 0
+                        timestamp = token_data.timestamp
+
 
                         time_24h_ago = token_data.timestamp - timedelta(hours=24)
                         token_data_24h_ago = get_token_data_at_time(token, time_24h_ago)
@@ -54,10 +57,15 @@ def get_projects():
                         else:
                             price_day_delta = 0
 
+
+                        formatted_timestamp = timestamp.strftime('%Y-%m-%d %H:%M:%S') if timestamp else "NEW"
+
                     else:
                         price = 0
                         circ_supply = 0
                         price_day_delta = 0
+                        formatted_timestamp = "NEW"
+
 
 
                     marketCap = price * circ_supply
@@ -85,6 +93,7 @@ def get_projects():
                         'forum': result["forum"],
                         'type': result["business"],
                         'logo': result.get("logoUrl",""),
+                        'timestamp': formatted_timestamp
                     })
 
                 projects.sort(key=lambda x: x['marketCapSorting'], reverse=True)
