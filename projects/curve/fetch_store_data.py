@@ -25,11 +25,11 @@ def get_crvusd():
     chain = "ethereum"
     token ="crvUSD"
 
-    crvUSD_endpoint = "https://api.curve.fi/v1/getCrvCircSupply"
+    crvUSD_endpoint = "https://api.curve.fi/v1/getCrvusdTotalSupply"
     r = requests.get(crvUSD_endpoint)
     data = r.json()
 
-    supply = data.get("data",{}).get("crvCirculatingSupply")
+    supply = data.get("data",{}).get("crvusdTotalSupply")
     price = get_price(token, crvUSD_contract, chain)
     supply_transformed = supply
 

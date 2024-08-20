@@ -3,9 +3,7 @@ import axios from 'axios';
 import Filter from '../components/Filter';
 import ProjectDataTable from '../components/ProjectDataTable';
 
-import { Typography, Button } from '@mui/material';
-
-import Box from '@mui/material/Box';
+import { Typography } from '@mui/material';
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -77,7 +75,7 @@ const ProjectList = () => {
       <div className="flex flex-col md:flex-row gap-4 mb-4">
         <div>
           <h2 className="text-lg font-semibold mb-2 ">⬆ Top Daily Gainers</h2>
-          <table className=" bg-white border shadow dark:bg-gray-800 border-gray-300 min-w-full text-black dark:text-white text-left">
+          <table className=" bg-white border shadow dark:bg-gray-800 border-gray-300 dark:border-gray-800 min-w-full text-black dark:text-white text-left">
             <thead>
               <tr>
                 <th className="py-2 px-4">Token</th>
@@ -108,7 +106,7 @@ const ProjectList = () => {
 
         <div>
           <h2 className="text-lg font-semibold mb-2">⬇ Top Daily Losers</h2>
-          <table className="min-w-full  bg-white border shadow dark:bg-gray-800 border-gray-300 text-black dark:text-white text-left">
+          <table className="min-w-full  bg-white border shadow dark:bg-gray-800 dark:border-gray-800 border-gray-300 text-black dark:text-white text-left">
             <thead>
               <tr>
                 <th className="py-2 px-4">Token</th>
@@ -142,7 +140,7 @@ const ProjectList = () => {
         <h2 className="text-xl font-semibold mb-2">Project Directory</h2>
 
         <Filter
-          placeholder="Search by Project or Token Name"
+          placeholder="Search"
           filter={filter}
           setFilter={setFilter}
           className="flex-grow py-2 border border-gray-300"
