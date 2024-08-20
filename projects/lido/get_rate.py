@@ -58,7 +58,6 @@ def get_data_steth():
     data = Data (
         token= "stETH",
         price= price,
-        supply= supply,
         price_source= "Curve",
         tot_supply= tot_supply_usd,
         circ_supply= circ_supply_usd ,
