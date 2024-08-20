@@ -14,8 +14,34 @@ sys.path.append(project_root)
 
 from app import app, db
 from instances.YieldRate import YieldRate as Data
+from utils.get_price import get_price
 
 
+
+def get_crvusd():
+    crvUSD_contract="0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
+    chain = "ethereum"
+    token ="crvUSD"
+
+    crvUSD_endpoint = "https://api.curve.fi/v1/getCrvCircSupply"
+    r = requests.get(crvUSD_endpoint)
+    data = r.json()
+
+    supply = data.get("data",{}).get("crvCirculatingSupply")
+    price = get_price(token, crvUSD_contract, chain)
+    supply_transformed = supply
+
+    data = Data (
+        token= token,
+        price=price,
+        price_source= "",
+        tot_supply= supply_transformed,
+        circ_supply= supply_transformed ,
+        timestamp=datetime.utcnow(),
+    )
+
+    db.session.add(data)
+    db.session.commit()
 
 
 def fetch_store_data():
@@ -85,3 +111,4 @@ def fetch_store_data():
 
 if __name__ == '__main__':
     fetch_store_data()
+    get_crvusd()
