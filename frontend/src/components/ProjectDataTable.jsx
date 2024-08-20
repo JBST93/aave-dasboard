@@ -48,24 +48,7 @@ const DataTable = ({ rows }) => {
       ),
       headerClassName: 'font-bold dark:text-white',
     },
-    {
-      field: 'description',
-      headerName: 'Description',
-      width: 300,
-      headerClassName: 'font-bold dark:text-white',
-      renderCell: (params) => (
-        <Tooltip
-          title={params.value}
-          arrow
-        >
-          <span className="truncate block max-w-xs">
-            {params.value.length > 100
-              ? `${params.value.substring(0, 100)}...`
-              : params.value}
-          </span>
-        </Tooltip>
-      ),
-    },
+
     {
       field: 'project',
       headerName: 'Project',

@@ -64,10 +64,9 @@ const ProjectList = () => {
 
       <div className="mb-4 text-center md:text-left">
         <p className="md:text-lg text-base text-left pt-1">
-          Our comprehensive list of DeFi projects. Here you can find detailed
-          information about various decentralized finance (deFi) protocols Click
-          on the buttons to visit their websites and forums for more
-          information.
+          Navigate the world of digital assets with our comprehensive directory.
+          Explore real-time data on your favorite cryptocurrencies, compare
+          market performance, and stay ahead with the latest updates.
         </p>
         <p className="text-sm text-left text-gray-500">
           Disclaimer: We do not vet or audit the platforms we aggregate. Always

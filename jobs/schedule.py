@@ -15,6 +15,7 @@ from projects.spark.fetch_rates import fetch_store_sparklend as spark
 from projects.yearn.get_yearn_data import fetch_yearn as yearn
 from projects.fx.fetch_data import fetch_store_data as fx
 from projects.clearpool.fetch_data import fetch_store_rates as clearpool
+from projects.lido.get_rate import get_data_steth as lido
 
 
 from scripts.get_price_supply import get_price_supply
@@ -26,9 +27,13 @@ from scripts.stablecoin_fetch import get_stablecoin_data as stablecoin
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+FETCH_INTERVAL_MINUTES = 30
+STABLECOIN_INTERVAL_MINUTES = 60
+
 sched = BlockingScheduler()
 
 def log_and_execute(func, func_name):
+    """Log execution of the given function with error handling."""
     try:
         logger.info(f"Fetching Data for {func_name}")
         func()
@@ -36,98 +41,34 @@ def log_and_execute(func, func_name):
     except Exception as e:
         logger.error(f"Error fetching {func_name} data: {e}")
 
+
 def fetch_store_data():
+    """Fetch data for all defined projects."""
+    tasks = {
+        "Aave": aave,
+        "Curve": curve,
+        "Gearbox": gearbox,
+        "Maker DSR": spark,
+        "Compound": compound,
+        "Morpho": morpho,
+        "Yearn": yearn,
+        "Pendle": pendle,
+        "FX": fx,
+        "Clearpool": clearpool,
+        "Lido": lido
+    }
+
     with app.app_context():
-        try:
-            logger.info("Fetching Data for Aave")
-            aave()
-            logger.info("Aave Data fetched")
-        except Exception as e:
-            logger.error(f"Error fetching Aave data: {e}")
+        for name, task in tasks.items():
+            log_and_execute(task, name)
 
-        try:
-            logger.info("Fetching Data for Curve")
-            curve()
-            logger.info("Curve Data fetched")
-        except Exception as e:
-            logger.error(f"Error fetching Curve data: {e}")
-
-        try:
-            logger.info("Fetching Data for Gearbox")
-            gearbox()
-            logger.info("Gearbox Data fetched")
-        except Exception as e:
-            logger.error(f"Error fetching Gearbox data: {e}")
-
-        try:
-            logger.info("Fetching Data for Maker DSR")
-            spark()
-            logger.info("Maker DSR Data fetched")
-        except Exception as e:
-            logger.error(f"Error fetching Maker DSR data: {e}")
-
-        try:
-            logger.info("Fetching Data for Compound")
-            compound()
-            logger.info("Compound Data fetched")
-        except Exception as e:
-            logger.error(f"Error fetching Compound data: {e}")
-
-        try:
-            logger.info("Fetching Data for Morpho")
-            morpho()
-            logger.info("Morpho Data fetched")
-        except Exception as e:
-            logger.error(f"Error fetching Morpho data: {e}")
-
-        try:
-            logger.info("Fetching Data for Yearn")
-            yearn()
-            logger.info("Morpho Data fetched")
-        except Exception as e:
-            logger.error(f"Error fetching yearn data: {e}")
-
-        try:
-            logger.info("Fetching Data for Pendle")
-            pendle()
-            logger.info("Pendle Data fetched")
-        except Exception as e:
-            logger.error(f"Error fetching yearn data: {e}")
-
-        try:
-            logger.info("Fetching Data for FX")
-            fx()
-            logger.info("FX Data fetched")
-        except Exception as e:
-            logger.error(f"Error fetching FX data: {e}")
-
-        try:
-            logger.info("Fetching Data for Clearpool")
-            clearpool()
-            logger.info("Clearpool Data fetched")
-        except Exception as e:
-            logger.error(f"Error fetching Clearpool data: {e}")
-
-        logger.info("Data fetching completed")
-
-sched.add_job(fetch_store_data, 'interval', minutes=30)
-
-# def get_stable_data():
-#     with app.app_context():
-#         try:
-#             logger.info("Fetching Stablecoin Data")
-#             stablecoin()
-#             logger.info("Stablecoin Data fetched")
-#         except Exception as e:
-#             logger.error(f"Error fetching Stablecoin data: {e}")
-
-# sched.add_job(get_stable_data, 'interval', minutes=60)
 
 def fetch_price_supply():
     with app.app_context():
         log_and_execute(get_price_supply, "Token Info")
-        print("DONE")
 
+
+sched.add_job(fetch_store_data, 'interval', minutes=FETCH_INTERVAL_MINUTES)
 sched.add_job(get_price_supply, 'interval', minutes=30)
 
 if __name__ == '__main__':

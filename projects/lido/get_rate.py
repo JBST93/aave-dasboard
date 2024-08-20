@@ -1,6 +1,7 @@
 import requests, sys, os
 from web3 import Web3
 from dotenv import load_dotenv
+from datetime import datetime
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.append(project_root)
@@ -8,7 +9,9 @@ sys.path.append(project_root)
 load_dotenv(os.path.join(project_root, '.env'))
 
 from app import app, db
-from scripts.utils import load_abi, insert_yield_db, get_curve_price
+from scripts.utils import load_abi, get_curve_price
+from instances.TokenData import TokenData as Data
+
 
 provider_abi = load_abi("lido",'lido_abi.json')
 
@@ -31,7 +34,7 @@ def get_curve_price(address):
     return None
 
 
-def get_lido():
+def get_data_steth():
     endpoint = "https://eth-api.lido.fi/v1/protocol/steth/apr/sma"
     r = requests.get(endpoint)
     data = r.json()
@@ -47,11 +50,24 @@ def get_lido():
     supply_raw = pool_contract.functions.totalSupply().call()
     supply = round(supply_raw/10**decimals,2)
 
-    price = round(get_curve_price(address),2)
-    market_cap = round(supply * price,2)
+    price = (get_curve_price(address))
+    tot_supply_usd = round(supply * price,2)
+    circ_supply_usd = round(supply * price,2)
 
 
-    print(f"{symbol} - {supply} - {market_cap} - {price}- {apr} - {address}")
+    data = Data (
+        token= "stETH",
+        price= price,
+        supply= supply,
+        price_source= "Curve",
+        tot_supply= tot_supply_usd,
+        circ_supply= circ_supply_usd ,
+        timestamp=datetime.utcnow(),
+    )
+
+    db.session.add(data)
+    db.session.commit()
+
 
 
 # Lido collects a percentage of the staking rewards as a protocol fee.
@@ -61,4 +77,4 @@ def get_lido():
 
 if __name__ == '__main__':
     with app.app_context():
-        get_lido()
+        get_data_steth()

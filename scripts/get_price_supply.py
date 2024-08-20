@@ -87,16 +87,19 @@ def get_price_supply():
             del item["address"]
             del item["chain"]
 
-            try:
-                token_data = Data(
-                    token=token,
-                    price=price,
-                    circ_supply=circ_supply
-                )
-                db.session.add(token_data)
-                print(token_data)
-            except Exception as e:
-                logger.error(f"Error adding token data to database: {e}")
+            if token != "stETH":
+
+                try:
+                    token_data = Data(
+                        token=token,
+                        price=price,
+                        circ_supply=circ_supply
+                    )
+
+                    db.session.add(token_data)
+
+                except Exception as e:
+                    logger.error(f"Error adding token data to database: {e}")
 
         try:
             db.session.commit()
