@@ -68,7 +68,7 @@ def get_projects():
 
 
 
-                    marketCap = price * circ_supply
+                    marketCap = circ_supply
 
                     if price < 1:
                         price = round(price,6)

@@ -16,6 +16,7 @@ from projects.yearn.get_yearn_data import fetch_yearn as yearn
 from projects.fx.fetch_data import fetch_store_data as fx
 from projects.clearpool.fetch_data import fetch_store_rates as clearpool
 from projects.lido.get_rate import get_data_steth as lido
+from projects.rocketpool.fetch_data import get_data_reth as rocketpool
 
 
 from scripts.get_price_supply import get_price_supply
@@ -55,7 +56,8 @@ def fetch_store_data():
         "Pendle": pendle,
         "FX": fx,
         "Clearpool": clearpool,
-        "Lido": lido
+        "Lido": lido,
+        "RocketPool":rocketpool,
     }
 
     with app.app_context():
