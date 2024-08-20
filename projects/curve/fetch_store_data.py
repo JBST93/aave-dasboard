@@ -14,6 +14,8 @@ sys.path.append(project_root)
 
 from app import app, db
 from instances.YieldRate import YieldRate as Data
+from instances.TokenData import TokenData as TokenData
+
 from utils.get_price import get_price
 
 
@@ -31,7 +33,7 @@ def get_crvusd():
     price = get_price(token, crvUSD_contract, chain)
     supply_transformed = supply
 
-    data = Data (
+    data = TokenData (
         token= token,
         price=price,
         price_source= "",
