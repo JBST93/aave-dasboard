@@ -44,8 +44,8 @@ def get_data_reth():
         token= token,
         price=price,
         price_source= "",
-        tot_supply= supply_usd,
-        circ_supply= supply_usd ,
+        tot_supply= supply_transformed,
+        circ_supply= supply_transformed ,
         timestamp=datetime.utcnow(),
     )
 
