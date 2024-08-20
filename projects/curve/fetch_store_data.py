@@ -15,6 +15,9 @@ sys.path.append(project_root)
 from app import app, db
 from instances.YieldRate import YieldRate as Data
 
+
+
+
 def fetch_store_data():
     chains = {"arbitrum", "ethereum"}
 

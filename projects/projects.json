@@ -737,7 +737,7 @@
     }
   },
   {
-    "project": "staked ETH (Lido Staked Ether)",
+    "project": "Lido staked ETH",
     "description": "stETH is a liquid staking token representing staked Ether on the Ethereum 2.0 Beacon Chain through the Lido protocol. stETH allows users to earn staking rewards while maintaining liquidity, enabling participation in DeFi activities.",
     "governance": "Decentralized",
     "business": "Liquid Staking",

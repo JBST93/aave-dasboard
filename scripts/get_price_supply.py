@@ -87,7 +87,7 @@ def get_price_supply():
             del item["address"]
             del item["chain"]
 
-            if token != "stETH" or token !="rETH":
+            if token != "stETH" and token !="rETH" and token !="USDe":
 
                 try:
                     token_data = Data(
