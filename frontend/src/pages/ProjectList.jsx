@@ -26,6 +26,7 @@ const ProjectList = () => {
   }, []);
 
   const topGainers = [...projects]
+    .filter((project) => project.price_day_delta < 99)
     .sort((a, b) => b.price_day_delta - a.price_day_delta)
     .slice(0, 3);
 

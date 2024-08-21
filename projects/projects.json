@@ -761,5 +761,18 @@
     "chain": "ethereum",
     "audited": "Yes",
     "logoUrl": "https://avatars.githubusercontent.com/u/90873178?s=200&v=4"
+  },
+  {
+    "project": "Stargate Finance",
+    "description": "STG is the governance token for the Stargate Finance protocol, a decentralized and composable native asset bridge that enables cross-chain transfers and swaps while ensuring unified liquidity. It focuses on eliminating fragmented liquidity and providing a seamless experience for decentralized finance (DeFi) users.",
+    "governance": "Decentralized",
+    "business": "Bridge",
+    "forum": "https://community.stargate.finance/",
+    "website": "https://stargate.finance/",
+    "token": "STG",
+    "address": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
+    "chain": "ethereum",
+    "audited": "Yes",
+    "logoUrl": "https://pbs.twimg.com/profile_images/1453865643053182980/s9_nNOkD_400x400.jpg"
   }
 ]
