@@ -168,8 +168,6 @@ def get_yield():
 
                 reward_apy = reward/tvl_usd
 
-                print(f"{token} - {tvl_usd} - {apy}")
-
                 data = Yield(
                     market=token,
                     project=project,
