@@ -3,6 +3,7 @@ import requests, sys, os
 from web3 import Web3
 from dotenv import load_dotenv
 from datetime import datetime
+import logging
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.append(project_root)
@@ -99,6 +100,9 @@ contracts = [
 ]
 
 
+
+
+
 def get_token_data():
     with app.app_context():
         token = "STG"
@@ -122,38 +126,49 @@ def get_token_data():
         db.session.commit()
 
 
+reward_contracts = {
+    "ethereum":"0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881",
+    "arbitrum":"0x957b12606690C7692eF92bb5c34a0E63baED99C7",
+    "optimism":"0x146c8e409C113ED87C6183f4d25c50251DFfbb3a"
+}
+
+stg_address = {
+    "ethereum":"0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
+    "arbitrum":"0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
+    "optimism":"0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
+
+}
+
 def get_yield():
     with app.app_context():
         project = "Stargate V2"
-        try:
-            reward = {
-            "contract": "0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881",
-            "reward_token":"STG",
-            "reward_decimals":18,
-            "reward_address":"0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6"
-            }
+        total_tvl = 0
 
-            web3 = Web3(Web3.HTTPProvider(infura_url["ethereum"] + infura_key))
+        for item in contracts:
+            try:
+                reward = {
+                "reward_token":"STG",
+                "reward_decimals":18,
+                "reward_address":"0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6"
+                }
 
-            reward_contract = reward.get("contract",{})
-            reward_address = reward.get("reward_address",{})
-            reward_decimal = reward.get("reward_decimals",{})
+                chain = item.get("chain",{})
+                reward_contract = reward_contracts.get(chain)
+                reward_address = stg_address.get(chain,{})
+                reward_decimal = reward.get("reward_decimals",{})
 
-            total_tvl = 0
-            reward_contract = web3.eth.contract(address=reward_contract, abi=reward_abi)
-            total_reward = sum(reward_contract.functions.allocPointsByReward(reward_address).call()[1])
+                web3 = Web3(Web3.HTTPProvider(infura_url[chain] + infura_key))
 
-            stg_reward = reward_contract.functions.rewardDetails(reward_address).call()[0]
+                reward_contract = web3.eth.contract(address=reward_contract, abi=reward_abi)
+                total_reward = sum(reward_contract.functions.allocPointsByReward(reward_address).call()[1])
 
-            for item in contracts:
+                stg_reward = reward_contract.functions.rewardDetails(reward_address).call()[0]
+
                 token = item.get("token")
                 address = item.get("address")
                 chain = item.get("chain")
                 decimals = item.get("decimals")
                 lp_address = item.get("lp")
-
-                web3 = Web3(Web3.HTTPProvider(infura_url["ethereum"] + infura_key))
-
 
                 pool_contract = web3.eth.contract(address=address, abi=provider_abi)
                 tvl = (pool_contract.functions.tvl().call())
@@ -163,8 +178,17 @@ def get_yield():
                 total_tvl += tvl_usd
 
                 share_reward = (reward_contract.functions.allocPointsByStake(lp_address).call())[1][0]
-                share = float(share_reward) / float(total_reward)
-                reward = share * stg_reward / 10**reward_decimal * 60*60*24*365 * 0.3119 * 100
+                try:
+                    if total_reward != 0:
+                        share = float(share_reward) / float(total_reward)
+                    else:
+                        share = None  # or some default value
+                except ZeroDivisionError:
+                    share = None  # or some default value if you want to handle it explicitly
+                    print("Division by zero occurred when calculating share")
+
+
+                reward = share * stg_reward / 10**18 * 60*60*24*365 * 0.3119 * 100
 
                 reward_apy = reward/tvl_usd
 
@@ -185,8 +209,8 @@ def get_yield():
                 db.session.add(data)
                 db.session.commit()
 
-        except Exception:
-            print("error")
+            except Exception as e:
+                print(f"Error processing vault data: {e}")
 
 def get_data():
     get_token_data()
