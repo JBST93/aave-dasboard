@@ -747,16 +747,19 @@
     "address": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
     "chain": "ethereum",
     "audited": "Yes",
-    "logoUrl": "https://cryptologos.cc/logos/lido-dao-ldo-logo.svg?v=033",
-    "supply": {
-      "circSupply": {
-        "method": "hardcoded",
-        "source": "Lido Dashboard or Blockchain Explorer"
-      },
-      "totSupply": {
-        "method": "hardcoded",
-        "source": "Lido Dashboard or Blockchain Explorer"
-      }
-    }
+    "logoUrl": "https://cryptologos.cc/logos/lido-dao-ldo-logo.svg?v=033"
+  },
+  {
+    "project": "Silo Finance",
+    "description": "SILO is a governance token for the Silo Finance protocol, a decentralized, non-custodial lending platform that allows users to create isolated lending markets (silos) for any token. Each silo operates independently, minimizing risks of cross-market contagion.",
+    "governance": "Decentralized",
+    "business": "Lending Market",
+    "forum": "https://gov.silo.finance/latest",
+    "website": "https://silo.finance/",
+    "token": "SILO",
+    "address": "0x6f80310CA7F2C654691D1383149Fa1A57d8AB1f8",
+    "chain": "ethereum",
+    "audited": "Yes",
+    "logoUrl": "https://avatars.githubusercontent.com/u/90873178?s=200&v=4"
   }
 ]
