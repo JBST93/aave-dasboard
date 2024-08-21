@@ -22,8 +22,6 @@ def get_token_data():
         r = requests.get(endpoint_circ_supply)
         circ_supply = float(r.json())
         price = get_price(token,address,chain)
-        circ_supply_usd = price * circ_supply
-
 
         data = TokenData (
                 token= token,

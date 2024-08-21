@@ -18,10 +18,6 @@ r = requests.get(endpoint)
 data = r.json()
 
 # TVL in ETH
-tvl = data.get("tvl")
-
+tvl_eth = data.get("tvl")
 price_ETH = get_price("ETH","NA","NA")
-
-tvl_usd = tvl * price_ETH
-
-print(tvl_usd)
+tvl_usd = tvl_eth * price_ETH
