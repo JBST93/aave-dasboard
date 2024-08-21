@@ -13,6 +13,7 @@ from app import app, db
 from scripts.utils import load_abi
 from utils.get_price import get_price
 from instances.TokenData import TokenData as Data
+from instances.YieldRate import YieldRate as Yield
 
 provider_abi = load_abi("stargate",'v2_pool_abi.json')
 reward_abi = load_abi("stargate",'reward_abi.json')
@@ -123,6 +124,7 @@ def get_token_data():
 
 def get_yield():
     with app.app_context():
+        project = "Stargate V2"
         try:
             reward = {
             "contract": "0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881",
@@ -164,18 +166,33 @@ def get_yield():
                 share = float(share_reward) / float(total_reward)
                 reward = share * stg_reward / 10**reward_decimal * 60*60*24*365 * 0.3119 * 100
 
-                apy = reward/tvl_usd
+                reward_apy = reward/tvl_usd
 
                 print(f"{token} - {tvl_usd} - {apy}")
 
+                data = Yield(
+                    market=token,
+                    project=project,
+                    information="",
+                    yield_rate_base=0,
+                    yield_rate_reward=reward_apy,
+                    yield_token_reward="STG",
+                    tvl=tvl_usd,
+                    chain=chain.capitalize(),
+                    type="Bridge",
+                    smart_contract=address,
+                    timestamp=datetime.utcnow()
+                )
 
-            print(total_tvl)
+                db.session.add(data)
+                db.session.commit()
 
         except Exception:
             print("error")
 
 def get_data():
     get_token_data()
+    get_yield()
 
 if __name__ == '__main__':
     with app.app_context():
