@@ -11,7 +11,7 @@ from app import app
 def get_price(token, address, chain):
     with app.app_context():
         logger.info(f"Fetching price for {token}")
-        price = get_price_kraken(token) or get_price_bitstamp(token) or get_price_curve(address, chain) or  0
+        price = get_price_kraken(token) or get_price_bitstamp(token) or get_price_curve(address, chain) or get_angle_price(token) or 0
         return price
 
 def get_price_kraken(token):
@@ -59,6 +59,24 @@ def get_price_curve(address, chain):
     except requests.RequestException as e:
         logger.error(f"Error fetching price from Curve: {e}")
     return None
+
+def get_angle_price(token):
+    endpoint = "https://api.angle.money/v1/prices"
+    try:
+        r = requests.get(endpoint, timeout=10)
+        r.raise_for_status()
+        data = r.json()
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data: {e}")
+        return None
+
+    for item in data:
+        if item['token'] == token:
+            return item['rate']
+
+    return None  # Return None if the token is not found
+
 
 
 
