@@ -7,7 +7,7 @@ import time
 from sqlalchemy import desc, and_
 
 
-chains = ["ethereum","arbitrum"]
+chains = ["ethereum","arbitrum","optimism","base","fraxtal"]
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 sys.path.append(project_root)
