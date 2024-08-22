@@ -83,7 +83,7 @@ const DataTable = ({ rows }) => {
     },
     {
       field: 'marketCap',
-      headerName: 'MarketCap',
+      headerName: 'Market Cap',
       width: 150,
       align: 'left',
       headerClassName: 'font-bold dark:text-white',

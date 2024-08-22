@@ -31,17 +31,7 @@
     "token": "WBTC",
     "audited": "Yes",
     "logoUrl": "https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.svg?v=032",
-    "decimals": 8,
-    "supply": {
-      "circSupply": {
-        "method": "hardcoded",
-        "amount": 154414
-      },
-      "totSupply": {
-        "method": "hardcoded",
-        "amount": 154414
-      }
-    }
+    "decimals": 8
   },
   {
     "project": "Polygon",

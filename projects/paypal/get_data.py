@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from datetime import datetime
 
 from solana.rpc.api import Client
+from solders.pubkey import Pubkey
 
 import base58
 from web3 import Web3

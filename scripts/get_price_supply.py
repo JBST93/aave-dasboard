@@ -43,13 +43,16 @@ def open_json():
                         chain = result.get("chain")
                         address = result.get("address")
                         supply = result.get("supply")
+                        tvl = result.get("tvl")
+
 
                         tokens.append(
                             {
                                 "token": token,
                                 "chain": chain,
                                 "address": address,
-                                "supply": supply
+                                "supply": supply,
+                                "tvl": tvl,
                             }
                         )
                 return tokens
@@ -69,6 +72,8 @@ def get_price_supply():
             address = item["address"]
             chain = item["chain"]
             supply = item.get("supply", {})
+            supply = item.get("tvl", "-")
+
 
             logger.info(f"Fetching price for {token}")
             price = get_price_kraken(token) or get_price_bitstamp(token) or (address and chain and get_curve_price(address, chain) or 0)
@@ -87,7 +92,7 @@ def get_price_supply():
             del item["address"]
             del item["chain"]
 
-            if token != "stETH" and token !="rETH" and token !="crvUSD" and token !="USDe" and token!="OP":
+            if token != "stETH":
 
                 try:
                     token_data = Data(
