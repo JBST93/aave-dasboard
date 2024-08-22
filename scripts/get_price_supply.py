@@ -74,25 +74,30 @@ def get_price_supply():
             # Check for existing data in the database
             existing_data = Data.query.filter_by(token=token).last()
 
-            if existing_data.circ_supply is None or existing_data.circ_supply == 0:
+            if existing_data is None or existing_data.circ_supply is None or existing_data.circ_supply == 0:
                 logger.info(f"No existing data for {token}, fetching from JSON or API")
                 circ_supply = get_supply(supply_data) if supply_data else 0
-                price = get_price(token,address,chain)
-                item['price'] = price
-                item['circ_supply'] = circ_supply
-                logger.info(f"Processed token {token} with price {price} and supply {circ_supply}")
+                print(circ_supply)
+                price = get_price(token, address, chain)
+                print(price)
 
-                try:
-                    token_data = Data(
-                        token=token,
-                        price=price,
-                        circ_supply=circ_supply
-                    )
+                if circ_supply is not None and price is not None:
+                    item['price'] = price
+                    item['circ_supply'] = circ_supply
+                    logger.info(f"Processed token {token} with price {price} and supply {circ_supply}")
 
-                    db.session.add(token_data)
+                    try:
+                        token_data = Data(
+                            token=token,
+                            price=price,
+                            circ_supply=circ_supply
+                        )
 
-                except Exception as e:
-                    logger.error(f"Error adding token data to database: {e}")
+                        db.session.add(token_data)
+                    except Exception as e:
+                        logger.error(f"Error adding token data to database: {e}")
+                else:
+                    logger.warning(f"Skipping token {token} due to missing price or supply data")
 
         try:
             db.session.commit()

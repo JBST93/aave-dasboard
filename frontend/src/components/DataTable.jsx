@@ -2,6 +2,7 @@ import { DataGrid } from '@mui/x-data-grid/DataGrid';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import '../App.css';
+import { NetworkIcon } from '@web3icons/react';
 
 const DataTable = ({ rows }) => {
   const validRows = Array.isArray(rows) ? rows : [];
@@ -32,7 +33,23 @@ const DataTable = ({ rows }) => {
           type: 'number',
           width: 120,
         },
-        { field: 'chain', headerName: 'Chain', width: 120 },
+        {
+          field: 'chain',
+          headerName: 'Chain',
+          width: 120,
+          renderCell: (params) => {
+            const symbol = params.value?.toLowerCase() || 'default';
+            return (
+              <div className="flex items-center">
+                <NetworkIcon
+                  network={symbol}
+                  variant="branded"
+                />
+                {params.value} {/* Cell Value */}
+              </div>
+            );
+          },
+        },
 
         {
           field: 'yield_rate_reward_formatted',
@@ -56,7 +73,23 @@ const DataTable = ({ rows }) => {
 
         { field: 'project', headerName: 'Project', width: 130 },
         { field: 'apy_sum', headerName: 'APY', type: 'number', width: 90 },
-        { field: 'chain', headerName: 'Chain', width: 100 },
+        {
+          field: 'chain',
+          headerName: 'Chain',
+          width: 100,
+          renderCell: (params) => {
+            const symbol = params.value?.toLowerCase() || 'default';
+            return (
+              <div className="flex items-center">
+                <NetworkIcon
+                  network={symbol}
+                  variant="mono"
+                />
+                {params.value} {/* Cell Value */}
+              </div>
+            );
+          },
+        },
         {
           field: 'tvl_formatted2',
           headerName: 'Amount Supplied',

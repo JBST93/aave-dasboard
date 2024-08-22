@@ -13,7 +13,6 @@ json_file_path = os.path.join(project_root, 'projects', 'projects.json')
 from app import db
 from instances.TokenData import TokenData
 
-
 def get_latest_token_data(token):
     """Fetch the latest token data from the database based on timestamp."""
     return TokenData.query.filter_by(token=token).order_by(desc(TokenData.timestamp)).first()
@@ -47,7 +46,6 @@ def get_projects():
                         circ_supply = token_data.circ_supply or 0
                         timestamp = token_data.timestamp
 
-
                         time_24h_ago = token_data.timestamp - timedelta(hours=24)
                         token_data_24h_ago = get_token_data_at_time(token, time_24h_ago)
 
@@ -65,7 +63,6 @@ def get_projects():
                         circ_supply = 0
                         price_day_delta = 0
                         formatted_timestamp = "NEW"
-
 
 
                     marketCap = price * circ_supply
@@ -87,7 +84,6 @@ def get_projects():
                         'supply_formatted': circ_supply,
                         'price': price,
                         'price_day_delta': f"{price_day_delta:,.2f}",
-                        'tvl':0,
                         'marketCapSorting': marketCap,
                         'marketCap': f"{marketCap:,.0f}",
                         'website': result["website"],
