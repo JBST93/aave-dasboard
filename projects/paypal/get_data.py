@@ -55,14 +55,13 @@ def get_supply():
         sol_supply = get_sol_supply()
         evm_supply = get_evm_supply()
         total_supply = sol_supply + evm_supply
-        total_supply_usd = total_supply*price
 
         data = Data (
         token=token,
         price=price,
         price_source= "",
-        tot_supply= total_supply_usd,
-        circ_supply= total_supply_usd ,
+        tot_supply= total_supply,
+        circ_supply= total_supply ,
         timestamp=datetime.utcnow(),
     )
 

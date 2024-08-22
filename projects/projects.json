@@ -65,17 +65,7 @@
     "token": "USDe",
     "audited": "Yes",
     "logoUrl": "https://cryptologos.cc/logos/ethena-ena-logo.svg?v=032",
-    "decimals": 6,
-    "supply": {
-      "circSupply": {
-        "method": "hardcoded",
-        "amount": 1
-      },
-      "totSupply": {
-        "method": "hardcoded",
-        "amount": 1
-      }
-    }
+    "decimals": 6
   },
   {
     "project": "Arbitrum",
