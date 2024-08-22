@@ -15,8 +15,10 @@ def select_infura(chain):
         infura_url = "https://optimism-mainnet.infura.io/v3/"
     elif chain == "arbitrum":
         infura_url = "https://arbitrum-mainnet.infura.io/v3/"
-    elif chain == "Polygon":
+    elif chain == "polygon":
         infura_url = "https://polygon-mainnet.infura.io/v3/"
+    elif chain == "bsc":
+        infura_url = "https://bsc-mainnet.infura.io/v3/"
     else:
         infura_url = None
 

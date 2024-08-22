@@ -50,13 +50,13 @@ def get_evm_supply():
 
 
 def get_supply():
-    with app.app_context():
-        price = get_price(token,ETH_contract,"ethereum")
-        sol_supply = get_sol_supply()
-        evm_supply = get_evm_supply()
-        total_supply = sol_supply + evm_supply
+    price = get_price(token,ETH_contract,"ethereum")
+    sol_supply = get_sol_supply()
+    evm_supply = get_evm_supply()
+    total_supply = sol_supply + evm_supply
 
-        data = Data (
+
+    data = Data (
         token=token,
         price=price,
         price_source= "",
@@ -69,4 +69,5 @@ def get_supply():
     db.session.commit()
 
 if __name__ == '__main__':
+    with app.app_context():
         get_supply()
