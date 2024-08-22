@@ -24,6 +24,7 @@ token_info = [
         "token":"JitoSOL",
         "contract":"J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn",
         "decimals": 9
+
     }
 ]
 

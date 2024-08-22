@@ -44,8 +44,6 @@ def open_json():
                         chain = result.get("chain")
                         address = result.get("address")
                         supply = result.get("supply")
-                        tvl = result.get("tvl")
-
 
                         tokens.append(
                             {
@@ -53,7 +51,6 @@ def open_json():
                                 "chain": chain,
                                 "address": address,
                                 "supply": supply,
-                                "tvl": tvl,
                             }
                         )
                 return tokens
@@ -77,18 +74,13 @@ def get_price_supply():
             # Check for existing data in the database
             existing_data = Data.query.filter_by(token=token).last()
 
-            if not existing_data or (existing_data.circ_supply is None or existing_data.circ_supply == 0):
+            if existing_data.circ_supply is None or existing_data.circ_supply == 0:
                 logger.info(f"No existing data for {token}, fetching from JSON or API")
                 circ_supply = get_supply(supply_data) if supply_data else 0
                 price = get_price(token,address,chain)
                 item['price'] = price
                 item['circ_supply'] = circ_supply
                 logger.info(f"Processed token {token} with price {price} and supply {circ_supply}")
-
-            # Remove unnecessary fields before adding to DB
-                del item["supply"]
-                del item["address"]
-                del item["chain"]
 
                 try:
                     token_data = Data(
@@ -110,48 +102,6 @@ def get_price_supply():
 
         return tokens
 
-def get_price_kraken(token):
-    ticker = f"{token}USD"
-    endpoint = f"https://api.kraken.com/0/public/Ticker?pair={ticker}"
-    try:
-        r = requests.get(endpoint, timeout=10)  # Timeout added here
-        r.raise_for_status()
-        data = r.json()
-        result = data.get("result", {})
-        if ticker in result:
-            price = result[ticker].get("c", [0])[0]
-            return float(price)
-    except requests.RequestException as e:
-        logger.error(f"Error fetching price from Kraken: {e}")
-    return None
-
-def get_price_bitstamp(token):
-    pair = f"{token.lower()}usd"
-
-    endpoint = f"https://www.bitstamp.net/api/v2/ticker/{pair}"
-    r = requests.get(endpoint)
-    if r.status_code == 200:
-        try:
-           data = r.json()
-        except requests.RequestException as e:
-            logger.error(f"Error fetching price from Kraken: {e}")
-            return None
-        return data.get("last")
-    else:
-        return None
-
-
-def get_curve_price(address, chain):
-    endpoint = f"https://prices.curve.fi/v1/usd_price/{chain}/{address}"
-    try:
-        r = requests.get(endpoint, timeout=10)  # Timeout added here
-        r.raise_for_status()
-        data = r.json()
-        price = data.get("data", {}).get("usd_price")
-        return float(price)
-    except requests.RequestException as e:
-        logger.error(f"Error fetching price from Curve: {e}")
-    return None
 
 def get_supply(supply):
     data = supply.get("circSupply", {})
@@ -177,4 +127,3 @@ def get_supply(supply):
 
 if __name__ == '__main__':
         get_price_supply()
-        print("This script is intended to be run as a scheduled task.")
