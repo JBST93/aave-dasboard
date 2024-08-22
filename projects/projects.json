@@ -820,5 +820,120 @@
         "amount": 1000000000
       }
     }
+  },
+  {
+    "project": "Sushi Finance",
+    "description": "SUSHI is the governance token for SushiSwap, a decentralized finance (DeFi) platform that allows users to swap, earn, lend, borrow, and stake tokens. SushiSwap is a community-driven organization that has evolved from a simple automated market maker (AMM) to a comprehensive DeFi suite, offering innovative financial products and services.",
+    "governance": "Decentralized",
+    "business": "Decentralized Exchange (DEX)",
+    "forum": "https://forum.sushi.com/",
+    "website": "https://www.sushi.com/",
+    "token": "SUSHI",
+    "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2",
+    "chain": "ethereum",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/sushiswap-sushi-logo.svg?v=033",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 192789255
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 277733521
+      }
+    }
+  },
+  {
+    "project": "GHO",
+    "description": "GHO is a decentralized stablecoin introduced by Aave, a leading DeFi lending protocol. GHO is pegged to the US dollar and can be minted against a wide range of collateral assets supplied within the Aave protocol. It aims to provide a more flexible and decentralized stablecoin option for users, allowing them to borrow stablecoins while earning interest on their collateral.",
+    "governance": "Decentralized",
+    "business": "Stablecoin Issuance",
+    "forum": "https://governance.aave.com/",
+    "website": "https://aave.com/",
+    "token": "GHO",
+    "address": "0x40d16fc0246ad3160ccc09b8d0d3a2cd28ae6c2f",
+    "chain": "ethereum",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/aave-aave-logo.svg?v=032",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 118250087
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 118250087
+      }
+    }
+  },
+  {
+    "project": "Balancer",
+    "description": "BAL is the governance token for Balancer, a decentralized automated market maker (AMM) that allows users to create and manage customizable liquidity pools. Balancer offers unique features such as multi-token pools, customizable weightings, and smart order routing, providing a flexible and efficient platform for decentralized trading and liquidity provision.",
+    "governance": "Decentralized",
+    "business": "DeFi Platform",
+    "forum": "https://forum.balancer.fi/",
+    "website": "https://balancer.fi/",
+    "token": "BAL",
+    "address": "0xba100000625a3754423978a60c9317c58a424e3d",
+    "chain": "ethereum",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/balancer-bal-logo.svg?v=033",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 64655910
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 64655910
+      }
+    }
+  },
+  {
+    "project": "Frax",
+    "description": "FRAX is the governance token for the Frax Protocol, a decentralized stablecoin system that implements a unique fractional-algorithmic approach. Frax is designed to be a scalable and decentralized solution to stablecoins, with its value partially backed by collateral and partially stabilized algorithmically. The protocol aims to provide a highly scalable, trustless, and stable form of digital money.",
+    "governance": "Decentralized",
+    "business": "Stablecoin",
+    "forum": "https://gov.frax.finance/",
+    "website": "https://frax.finance/",
+    "token": "FRAX",
+    "address": "0x853d955acef822db058eb8505911ed77f175b99e",
+    "chain": "ethereum",
+    "audited": "Yes",
+    "logoUrl": "https://frax.finance/frax-logo.png",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 649434270
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 649434270
+      }
+    }
+  },
+  {
+    "project": "1inch",
+    "description": "1INCH is the governance token for the 1inch Network, a decentralized exchange (DEX) aggregator that sources liquidity from various DEXs to offer users the best possible trading rates. The 1inch Network includes several products, such as a DEX aggregator, a liquidity protocol, and a limit order protocol, all designed to enhance efficiency and reduce slippage in the DeFi ecosystem.",
+    "governance": "Decentralized",
+    "business": "DEX Aggregator",
+    "forum": "https://gov.1inch.io/",
+    "website": "https://1inch.io/",
+    "token": "1INCH",
+    "address": "0x111111111117dc0aa78b770fa6a738034120c302",
+    "chain": "ethereum",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/1inch-1inch-logo.svg?v=033",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 1499999999
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 1499999999
+      }
+    }
   }
 ]
