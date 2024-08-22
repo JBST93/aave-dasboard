@@ -13,6 +13,7 @@ sys.path.append(project_root)
 json_file_path = os.path.join(project_root, 'projects', 'projects.json')
 
 from app import app, db
+from utils.get_price import get_price
 from instances.TokenData import TokenData as Data
 
 def get_nested_value(data, path):
@@ -76,10 +77,10 @@ def get_price_supply():
             # Check for existing data in the database
             existing_data = Data.query.filter_by(token=token).last()
 
-            if not existing_data:
+            if not existing_data or (existing_data.circ_supply is None or existing_data.circ_supply == 0):
                 logger.info(f"No existing data for {token}, fetching from JSON or API")
                 circ_supply = get_supply(supply_data) if supply_data else 0
-                price = get_price_kraken(token) or get_price_bitstamp(token) or (address and chain and get_curve_price(address, chain) or 0)
+                price = get_price(token,address,chain)
                 item['price'] = price
                 item['circ_supply'] = circ_supply
                 logger.info(f"Processed token {token} with price {price} and supply {circ_supply}")

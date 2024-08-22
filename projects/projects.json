@@ -28,7 +28,7 @@
     "business": "Tokenized Bitcoin",
     "website": "https://wbtc.network",
     "forum": "",
-    "token": "WBTC",
+    "token": "wBTC",
     "audited": "Yes",
     "logoUrl": "https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.svg?v=032",
     "decimals": 8
