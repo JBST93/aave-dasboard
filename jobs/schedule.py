@@ -26,6 +26,7 @@ from projects.stargate.get_data import get_data as stargate
 from projects.paypal.get_data import get_supply as paypal
 from projects.wBTC.get_data import get_store_data as wbtc
 from projects.jito.get_data import get_supply as jito
+from projects.avax.get_data import get_data as avax
 
 
 
@@ -77,6 +78,7 @@ def fetch_store_data():
         "Paypal":paypal,
         "wBTC":wbtc,
         "Jito":jito,
+        "Avax":avax,
     }
 
     with app.app_context():

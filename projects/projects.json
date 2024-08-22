@@ -954,5 +954,18 @@
     "chain": "solana",
     "audited": "Yes",
     "logoUrl": "https://pbs.twimg.com/profile_images/1687112019563188224/mnbhxwox_400x400.png"
+  },
+  {
+    "project": "Avalanche",
+    "description": "Avalanche is an open-source platform for launching decentralized applications and enterprise blockchain deployments in one interoperable, highly scalable ecosystem. Avalanche is the first decentralized smart contracts platform built for the scale of global finance, with near-instant transaction finality. Powered by the native AVAX token, Avalanche is designed to have low transaction fees, high throughput, and is capable of sub-second finality.",
+    "governance": "Decentralized",
+    "business": "Layer 1 Blockchain",
+    "forum": "https://forum.avax.network/",
+    "website": "https://www.avax.network/",
+    "token": "AVAX",
+    "address": "",
+    "chain": "avalanche",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/avalanche-avax-logo.png"
   }
 ]
