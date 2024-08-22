@@ -71,28 +71,23 @@ def get_price_supply():
             token = item["token"]
             address = item["address"]
             chain = item["chain"]
-            supply = item.get("supply", {})
-            supply = item.get("tvl", "-")
+            supply_data = item.get("supply", {})
 
+            # Check for existing data in the database
+            existing_data = Data.query.filter_by(token=token).last()
 
-            logger.info(f"Fetching price for {token}")
-            price = get_price_kraken(token) or get_price_bitstamp(token) or (address and chain and get_curve_price(address, chain) or 0)
-            item['price'] = price
+            if not existing_data:
+                logger.info(f"No existing data for {token}, fetching from JSON or API")
+                circ_supply = get_supply(supply_data) if supply_data else 0
+                price = get_price_kraken(token) or get_price_bitstamp(token) or (address and chain and get_curve_price(address, chain) or 0)
+                item['price'] = price
+                item['circ_supply'] = circ_supply
+                logger.info(f"Processed token {token} with price {price} and supply {circ_supply}")
 
-            if supply:
-                circ_supply = get_supply(supply)
-                if isinstance(circ_supply, float):
-                    item['circ_supply'] = circ_supply
-                else:
-                    item['circ_supply'] = 0
-
-            logger.info(f"Processed token {token} with price {price} and supply {circ_supply}")
-
-            del item["supply"]
-            del item["address"]
-            del item["chain"]
-
-            if token != "stETH":
+            # Remove unnecessary fields before adding to DB
+                del item["supply"]
+                del item["address"]
+                del item["chain"]
 
                 try:
                     token_data = Data(
@@ -143,8 +138,6 @@ def get_price_bitstamp(token):
         return data.get("last")
     else:
         return None
-
-
 
 
 def get_curve_price(address, chain):

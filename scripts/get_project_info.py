@@ -87,6 +87,7 @@ def get_projects():
                         'supply_formatted': circ_supply,
                         'price': price,
                         'price_day_delta': f"{price_day_delta:,.2f}",
+                        'tvl':0,
                         'marketCapSorting': marketCap,
                         'marketCap': f"{marketCap:,.0f}",
                         'website': result["website"],
