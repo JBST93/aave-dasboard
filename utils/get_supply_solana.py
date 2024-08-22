@@ -8,5 +8,5 @@ def get_sol_supply(contract):
     SOL_contract_bytes = base58.b58decode(contract)
     SOL_contract_pubkey = Pubkey.from_bytes(SOL_contract_bytes)
     response = solana_client.get_token_supply(SOL_contract_pubkey)
-    supply = float(response.value.amount) / 10**decimals
-    return supply
+    supply = float(response.value.ui_amount_string)
+    return float(supply)

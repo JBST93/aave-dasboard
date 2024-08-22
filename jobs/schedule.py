@@ -25,6 +25,7 @@ from projects.silo.get_data import get_token_data as silo
 from projects.stargate.get_data import get_data as stargate
 from projects.paypal.get_data import get_supply as paypal
 from projects.wBTC.get_data import get_store_data as wbtc
+from projects.jito.get_data import get_supply as jito
 
 
 
@@ -75,6 +76,7 @@ def fetch_store_data():
         "Stargate":stargate,
         "Paypal":paypal,
         "wBTC":wbtc,
+        "Jito":jito,
     }
 
     with app.app_context():
