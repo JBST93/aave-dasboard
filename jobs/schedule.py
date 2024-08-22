@@ -23,6 +23,8 @@ from projects.ethena.get_data import get_data as ethena
 from projects.optimism.get_data import get_token_data as optimism
 from projects.silo.get_data import get_token_data as silo
 from projects.stargate.get_data import get_data as stargate
+from projects.paypal.get_data import get_supply as paypal
+
 
 
 
@@ -69,7 +71,8 @@ def fetch_store_data():
         "CurveUSD": crv_usd,
         "Optimism": optimism,
         "Silo":silo,
-        "Stargate":stargate
+        "Stargate":stargate,
+        "Paypal":paypal,
     }
 
     with app.app_context():

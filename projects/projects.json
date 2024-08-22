@@ -935,5 +935,18 @@
         "amount": 1499999999
       }
     }
+  },
+  {
+    "project": "PayPal USD",
+    "description": "PyUSD is a stablecoin issued by PayPal, fully backed by U.S. dollar deposits, short-term U.S. Treasuries, and similar cash equivalents. PyUSD is designed to provide a stable and transparent digital currency option for payments and transfers within the PayPal ecosystem, as well as across other compatible networks. It is redeemable 1:1 for U.S. dollars.",
+    "governance": "Centralized",
+    "business": "Stablecoin",
+    "forum": "",
+    "website": "https://www.paypal.com/us/digital-wallet/manage-money/crypto",
+    "token": "pyUSD",
+    "address": "0xe3bcfabedee82ca0c4f9d2cf36f75989e90702ba",
+    "chain": "ethereum",
+    "audited": "Yes",
+    "logoUrl": "https://w7.pngwing.com/pngs/136/293/png-transparent-paypal-logo.png"
   }
 ]
