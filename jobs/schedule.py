@@ -40,7 +40,7 @@ from scripts.stablecoin_fetch import get_stablecoin_data as stablecoin
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-FETCH_INTERVAL_MINUTES = 5
+FETCH_INTERVAL_MINUTES = 2
 STABLECOIN_INTERVAL_MINUTES = 60
 
 sched = BlockingScheduler()
@@ -49,13 +49,12 @@ def log_and_execute(func, func_name):
     """Log execution of the given function with error handling."""
     try:
         logger.info(f"Fetching Data for {func_name}")
-        if callable(func):
-            func()
-            logger.info(f"{func_name} Data fetched")
-        else:
-            logger.error(f"{func_name} is not callable.")
+        func()  # Execute the function
+        logger.info(f"{func_name} Data fetched")
     except Exception as e:
         logger.error(f"Error fetching {func_name} data: {e}")
+    finally:
+        logger.info(f"Finished task {func_name}, moving to the next task.")
 
 
 

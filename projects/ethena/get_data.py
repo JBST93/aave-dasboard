@@ -18,6 +18,7 @@ infura_key = os.getenv('INFURA_KEY')
 if not infura_key:
     raise ValueError("INFURA_KEY not found in environment variables")
 
+
 tokens = [
     {
         "token": "USDe",
@@ -35,31 +36,35 @@ tokens = [
     }
 ]
 
+
 def get_data():
     with app.app_context():
 
         for token in tokens:
-            web3 = Web3(Web3.HTTPProvider(infura_url + infura_key))
-            pool_contract = web3.eth.contract(address=token["address"], abi=token["abi"])
-            supply_raw = float(pool_contract.functions.totalSupply().call())
-            supply_transformed = float(supply_raw / 10**token["decimals"])
-            price = get_price(token["token"], token["address"], token["chain"])
+            try:
+                web3 = Web3(Web3.HTTPProvider(infura_url + infura_key))
+                pool_contract = web3.eth.contract(address=token["address"], abi=token["abi"])
+                supply_raw = float(pool_contract.functions.totalSupply().call())
+                supply_transformed = float(supply_raw / 10**token["decimals"])
+                price = get_price(token["token"], token["address"], token["chain"])
 
-            data = Data (
-                token=token["token"],
-                price=price,
-                price_source= None,
-                tot_supply= float(supply_transformed),
-                circ_supply= float(supply_transformed),
-                timestamp=datetime.utcnow(),
-            )
+                data = Data (
+                    token=token["token"],
+                    price=price,
+                    price_source= None,
+                    tot_supply= float(supply_transformed),
+                    circ_supply= float(supply_transformed),
+                    timestamp=datetime.utcnow(),
+                )
 
-            db.session.add(data)
+                db.session.add(data)
 
-            print(data)
-            print(supply_transformed)
+                print(data)
+                print(supply_transformed)
 
-            db.session.add(data)
+                db.session.add(data)
+            except Exception as e:
+                print(e)
 
         db.session.commit()
 
