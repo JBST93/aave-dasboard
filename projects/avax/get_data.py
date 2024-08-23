@@ -22,8 +22,8 @@ def get_data():
             token=token,
             price=price,
             price_source= "",
-            tot_supply= total_supply,
-            circ_supply= circ_supply ,
+            tot_supply= float(total_supply),
+            circ_supply= float(circ_supply),
             timestamp=datetime.utcnow(),
         )
 

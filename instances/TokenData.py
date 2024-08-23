@@ -28,4 +28,6 @@ class TokenData(db.Model):
         }
 
     def __repr__(self) -> str:
-        return f"TokenData (id={self.id!r}, token={self.token!r}, price={self.price!r}"
+        return (f"TokenData(id={self.id!r}, token={self.token!r}, price={self.price!r}, "
+                f"price_source={self.price_source!r}, tot_supply={self.tot_supply!r}, "
+                f"circ_supply={self.circ_supply!r}, timestamp={self.timestamp!r})")

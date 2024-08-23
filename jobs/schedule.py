@@ -40,7 +40,7 @@ from scripts.stablecoin_fetch import get_stablecoin_data as stablecoin
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-FETCH_INTERVAL_MINUTES = 30
+FETCH_INTERVAL_MINUTES = 5
 STABLECOIN_INTERVAL_MINUTES = 60
 
 sched = BlockingScheduler()

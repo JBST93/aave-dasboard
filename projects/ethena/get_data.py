@@ -25,7 +25,6 @@ tokens = [
         "chain": "ethereum",
         "decimals":18,
         "abi": load_abi("ethena",'USDe_abi.json')
-
     },
     {
         "token": "ENA",
@@ -37,25 +36,32 @@ tokens = [
 ]
 
 def get_data():
-    for token in tokens:
-        web3 = Web3(Web3.HTTPProvider(infura_url + infura_key))
-        pool_contract = web3.eth.contract(address=token["address"], abi=token["abi"])
-        supply_raw = float(pool_contract.functions.totalSupply().call())
-        supply_transformed = supply_raw / 10**token["decimals"]
-        price = get_price(token["token"], token["address"], token["chain"])
+    with app.app_context():
 
-        data = Data (
-            token=token["token"],
-            price=price,
-            price_source= "",
-            tot_supply= supply_transformed,
-            circ_supply= supply_transformed ,
-            timestamp=datetime.utcnow(),
-        )
+        for token in tokens:
+            web3 = Web3(Web3.HTTPProvider(infura_url + infura_key))
+            pool_contract = web3.eth.contract(address=token["address"], abi=token["abi"])
+            supply_raw = float(pool_contract.functions.totalSupply().call())
+            supply_transformed = float(supply_raw / 10**token["decimals"])
+            price = get_price(token["token"], token["address"], token["chain"])
 
-        db.session.add(data)
+            data = Data (
+                token=token["token"],
+                price=price,
+                price_source= None,
+                tot_supply= float(supply_transformed),
+                circ_supply= float(supply_transformed),
+                timestamp=datetime.utcnow(),
+            )
 
-    db.session.commit()
+            db.session.add(data)
+
+            print(data)
+            print(supply_transformed)
+
+            db.session.add(data)
+
+        db.session.commit()
 
 if __name__ == '__main__':
     with app.app_context():
