@@ -72,9 +72,7 @@ def get_price_supply():
             supply_data = item.get("supply", {})
 
             # Check for existing data in the database
-            existing_data = Data.query.filter_by(token=token).last()
-
-            if existing_data is None or existing_data.circ_supply is None or existing_data.circ_supply == 0:
+            if supply_data:
                 logger.info(f"No existing data for {token}, fetching from JSON or API")
                 circ_supply = get_supply(supply_data) if supply_data else 0
                 print(circ_supply)

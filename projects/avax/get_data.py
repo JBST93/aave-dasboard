@@ -18,9 +18,6 @@ def get_data():
     circ_supply = data
     price = get_price(token,"","")
 
-    print(data)
-    print(price)
-
     data = Data (
             token="USDe",
             price=price,
@@ -32,8 +29,6 @@ def get_data():
 
     db.session.add(data)
     db.session.commit()
-
-
 
 if __name__ == '__main__':
     with app.app_context():

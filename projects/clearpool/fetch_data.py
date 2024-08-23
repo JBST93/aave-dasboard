@@ -45,7 +45,6 @@ def token_price():
 def fetch_store_rates():
     price = token_price()
 
-    print("Starting Fetching Data for Clearpool")
     for chain, contract_address in smart_contracts.items():
         web3 = Web3(Web3.HTTPProvider(infura_url[chain] + infura_key))
         pool_contract = web3.eth.contract(address=contract_address, abi=pool_abi)
@@ -61,12 +60,10 @@ def fetch_store_rates():
                     market = pool_data.functions.symbol().call().partition("-")[2]
                     information = pool_data.functions.name().call()
 
-                    print(market)
-                    print(information)
+
 
                     borrow_amount = pool_data.functions.poolSize().call()
                     borrow_amount_transformed = borrow_amount/1e6
-                    print(borrow_amount)
 
                     supply_rate = pool_data.functions.getSupplyRate().call()
                     supply_rate_annualised = round(float(supply_rate)/1e18*31536000 * 100,2)
@@ -82,8 +79,6 @@ def fetch_store_rates():
                     chain = chain
 
                     insert_yield_db(market, project, information, supply_rate_annualised,reward_rate_transformed,reward_token,borrow_amount_transformed,chain, business, smart_contract)
-
-                    print(f"{information} - {market} - {borrow_amount_transformed} - {supply_rate_annualised} - {borrow_amount} - {reward_rate_transformed} - {smart_contract}")
 
                 except Exception as e:
                     print(f"Error fetching data for {item}: {e}")

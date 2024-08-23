@@ -10,7 +10,6 @@ from app import app
 
 def get_price(token, address, chain):
     with app.app_context():
-        logger.info(f"Fetching price for {token}")
         price = get_price_kraken(token) or get_price_bitstamp(token) or get_price_curve(address, chain) or get_angle_price(token) or 0
         return price
 
