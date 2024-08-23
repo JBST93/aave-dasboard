@@ -172,11 +172,11 @@
     "supply": {
       "circSupply": {
         "method": "hardcoded",
-        "amount": 50000000
+        "amount": 1443764727
       },
       "totSupply": {
         "method": "hardcoded",
-        "amount": 1000000000
+        "amount": 10000000000
       }
     }
   },
@@ -881,7 +881,7 @@
     "address": "0x853d955acef822db058eb8505911ed77f175b99e",
     "chain": "ethereum",
     "audited": "Yes",
-    "logoUrl": "https://frax.finance/frax-logo.png",
+    "logoUrl": "https://cryptologos.cc/logos/frax-frax-logo.svg?v=033",
     "supply": {
       "circSupply": {
         "method": "hardcoded",
@@ -959,7 +959,7 @@
     "project": "Avalanche",
     "description": "Avalanche is an open-source platform for launching decentralized applications and enterprise blockchain deployments in one interoperable, highly scalable ecosystem. Avalanche is the first decentralized smart contracts platform built for the scale of global finance, with near-instant transaction finality. Powered by the native AVAX token, Avalanche is designed to have low transaction fees, high throughput, and is capable of sub-second finality.",
     "governance": "Decentralized",
-    "business": "Layer 1 Blockchain",
+    "business": "Blockchain",
     "forum": "https://forum.avax.network/",
     "website": "https://www.avax.network/",
     "token": "AVAX",
@@ -967,5 +967,51 @@
     "chain": "avalanche",
     "audited": "Yes",
     "logoUrl": "https://cryptologos.cc/logos/avalanche-avax-logo.png"
+  },
+  {
+    "project": "Fantom",
+    "description": "Fantom is an open-source, decentralized, and scalable blockchain platform for dApps and digital assets. It is designed to overcome the limitations of previous-generation blockchain platforms, with high transaction speeds and near-instant finality. The platform utilizes a Directed Acyclic Graph (DAG) consensus algorithm known as Lachesis, which allows for high throughput and low fees. Powered by the native FTM token, Fantom is optimized for performance and is suitable for a wide range of decentralized finance (DeFi) applications.",
+    "governance": "Decentralized",
+    "business": "Blockchain",
+    "forum": "https://forum.fantom.network/",
+    "website": "https://fantom.foundation/",
+    "token": "FTM",
+    "address": "",
+    "chain": "fantom",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/fantom-ftm-logo.png",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 2803634835
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 3175000000
+      }
+    }
+  },
+  {
+    "project": "Synthetix",
+    "description": "Synthetix is a decentralized finance (DeFi) protocol on the Ethereum blockchain that provides the issuance and trading of synthetic assets. These synthetic assets, or 'Synths', are ERC-20 tokens that track the value of real-world assets like currencies, commodities, stocks, and indices. The protocol is powered by the native SNX token, which is staked by users to create Synths. Synthetix enables users to gain exposure to a variety of assets without needing to hold the underlying asset itself, offering high liquidity and zero slippage trading.",
+    "governance": "Decentralized",
+    "business": "DeFi Protocol",
+    "forum": "https://research.synthetix.io/",
+    "website": "https://synthetix.io/",
+    "token": "SNX",
+    "address": "",
+    "chain": "ethereum",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/synthetix-snx-logo.png",
+    "supply": {
+      "circSupply": {
+        "method": "hardcoded",
+        "amount": 327769196
+      },
+      "totSupply": {
+        "method": "hardcoded",
+        "amount": 328193104
+      }
+    }
   }
 ]

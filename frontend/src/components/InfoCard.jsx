@@ -1,6 +1,6 @@
 const InfoCard = (props) => {
   return (
-    <div className="w-full md:max-w-sm p-4 my-2 bg-white border shadow dark:bg-gray-800 border-gray-300 dark:border-teal-700">
+    <div className="w-full md:max-w-sm p-4 my-2 bg-white border shadow dark:bg-gray-800 border-gray-300 dark:border-yellow-500">
       <div className="flex items-center gap-2">
         <h5 className="md:text-lg text-lg font-bold tracking-tight text-gray-900 dark:text-white">
           {props.title}

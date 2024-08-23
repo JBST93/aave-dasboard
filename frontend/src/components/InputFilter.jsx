@@ -104,7 +104,7 @@ const InputFilter = ({ data, setSelectedBlockchains, resetFilter }) => {
       }}
       classNames={{
         control: () =>
-          'h-full overflow-hidden border border-gray-300 text-sm dark:border-teal-600 bg-white dark:bg-gray-800 text-gray-400 dark:text-white focus:outline-none focus:ring-2',
+          'h-full overflow-hidden border border-gray-300 text-sm dark:border-yellow-600 bg-white dark:bg-gray-800 text-gray-400 dark:text-white focus:outline-none focus:ring-2',
         placeholder: () => placeholderStyles,
         input: () => selectInputStyles,
         valueContainer: () => valueContainerStyles,
