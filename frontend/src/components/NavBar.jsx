@@ -63,6 +63,14 @@ const NavBar = () => {
             </li>
             <li>
               <Link
+                to="/yields"
+                className="hover:text-yellow-500 text-black dark:text-white"
+              >
+                Yields
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/"
                 className="hover:text-yellow-500 text-black dark:text-white"
               >

@@ -19,6 +19,8 @@ migrate = Migrate(app, db)
 CORS(app)
 
 from scripts.stablecoin_yield import get_stablecoin_rates
+from scripts.yields import get_rates
+
 from scripts.eth_yield_api import get_ethereum_yields as eth_yield
 from scripts.stablecoin_info_render import get_stablecoin_info_render
 from scripts.get_project_info import get_projects
@@ -39,6 +41,10 @@ def get_project_list():
 @app.route('/api/stablecoin_yield_rates', methods=['GET'])
 def liquidity_rates():
     return get_stablecoin_rates()
+
+@app.route('/api/yield_rates', methods=['GET'])
+def liquidity_rates():
+    return get_rates()
 
 @app.route('/api/eth_yields', methods=['GET'])
 def eth_rate():

@@ -85,7 +85,7 @@ const DataTable = ({ rows }) => {
                   network={symbol}
                   variant="mono"
                 />
-                {params.value} {/* Cell Value */}
+                {params.value}
               </div>
             );
           },

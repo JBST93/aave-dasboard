@@ -8,6 +8,8 @@ import './index.css';
 
 import ProjectList from './pages/ProjectList.jsx';
 import StablecoinYield from './pages/StablecoinYield';
+import Yield from './pages/Yield';
+
 import StablecoinInfo from './pages/StablecoinInfo';
 import Blog from './pages/Blog';
 import StablecoinYieldFarming from './pages/blog/StablecoinYieldFarming';
@@ -21,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <StablecoinYield />, // Default route when visiting '/'
+      },
+      {
+        path: '/yields',
+        element: <Yield />, // Default route when visiting '/'
       },
       {
         path: 'projects',

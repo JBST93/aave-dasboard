@@ -2,8 +2,6 @@ from web3 import Web3
 from dotenv import load_dotenv
 import os
 import sys
-
-
 # Ensure the root directory is in the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.append(project_root)
@@ -13,6 +11,15 @@ load_dotenv(os.path.join(project_root, '.env'))
 from app import app, db
 from instances.YieldRate import YieldRate
 from scripts.utils import load_abi, insert_yield_db, get_curve_price
+
+
+
+
+
+
+
+
+
 
 provider_abi = load_abi("aave",'aave_abi.json')
 
