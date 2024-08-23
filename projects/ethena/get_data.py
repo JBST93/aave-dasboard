@@ -27,13 +27,13 @@ tokens = [
         "decimals":18,
         "abi": load_abi("ethena",'USDe_abi.json')
     },
-    {
-        "token": "ENA",
-        "address": "0x57e114B691Db790C35207b2e685D4A43181e6061",
-        "chain": "ethereum",
-        "decimals":18,
-        "abi": load_abi("ethena",'ENA_abi.json')
-    }
+    # {
+    #     "token": "ENA",
+    #     "address": "0x57e114B691Db790C35207b2e685D4A43181e6061",
+    #     "chain": "ethereum",
+    #     "decimals":18,
+    #     "abi": load_abi("ethena",'ENA_abi.json')
+    # }
 ]
 
 
