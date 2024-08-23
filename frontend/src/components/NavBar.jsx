@@ -94,18 +94,18 @@ const NavBar = () => {
               </Link>
             </li>
           </ul>
-          <div className="pt-10">
+          {/* <div className="pt-10">
             <ul>
               <li>
                 <Link
                   to="/contact"
                   className="hover:text-yellow-500 text-black dark:text-white"
                 >
-                  Blog
+                  Contact us
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
       </nav>
     </>
