@@ -127,7 +127,7 @@ const DataTable = ({ rows }) => {
     },
     {
       field: 'update_status',
-      headerName: 'Update Status',
+      headerName: ' Status',
       width: 150,
       renderCell: (params) => {
         const timestamp = params.row.timestamp;
