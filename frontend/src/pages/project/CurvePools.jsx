@@ -102,7 +102,9 @@ const ProjectList = () => {
         />
       </Helmet>
 
-      <h1>Curve Finance</h1>
+      <h1 className="md:text-5xl text-3xl font-extrabold text-gray-800 dark:text-white tracking-tight md:tracking-wide text-center md:text-left">
+        Curve Finance
+      </h1>
 
       <Socials className="pb-4" />
 

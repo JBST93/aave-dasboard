@@ -87,15 +87,18 @@ const Yield = () => {
   return (
     <>
       <div className="flex justify-between items-center flex-wrap">
-        <h1 className="md:text-2xl text-xl font-bold">Earn Yield</h1>
+        <h1 className="md:text-5xl text-3xl font-extrabold text-gray-800 dark:text-white tracking-tight md:tracking-wide text-center md:text-left">
+          {' '}
+          Earn Yield
+        </h1>
       </div>
       <div className="mb-4 text-center md:text-left">
-        <p className="md:text-lg text-base text-left pt-1">
+        <p className="md:text-xl text-lg text-left pt-2 leading-relaxed dark:text-white text-gray-700 md:text-gray-600 border-l-4 border-yellow-300 pl-4">
           We aggregate interest rates and yields, ensuring you always have
           access to the highest yields. Discover the best rates in real-time and
           make informed investment decisions effortlessly.
         </p>
-        <p className="text-sm text-left text-gray-500">
+        <p className="text-sm text-left text-gray-500 pl-4">
           Disclaimer: We do not vet or audit the platforms we aggregate. Always
           conduct your own due diligence before making any investment decisions.
         </p>
