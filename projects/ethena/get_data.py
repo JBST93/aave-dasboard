@@ -59,8 +59,6 @@ def get_data():
 
                 db.session.add(data)
 
-                print(data)
-                print(supply_transformed)
 
                 db.session.add(data)
             except Exception as e:

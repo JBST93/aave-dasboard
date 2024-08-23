@@ -40,7 +40,6 @@ def fetch_store_data():
                 underlying = market.get("poolType",{})
                 reward = get_text_after_underscore(name)[1]
                 information = f"Deposit in Stability Pool for {underlying} ({reward} & FXN reward)"
-                print(f"{underlying} - {reward_apy} - {information} - {tvl}")
                 type = "Stability Pool"
 
                 insert_yield_db(underlying,project,information,0,reward_apy,reward,tvl,chain,type,contract_address)

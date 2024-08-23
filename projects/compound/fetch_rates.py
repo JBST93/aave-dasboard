@@ -111,8 +111,6 @@ def fetch_store_rates():
 
                 reward_apy = (baseTrackingSupplySpeed/trackingIndexScale) * 60*60*24*365 * comp_price / tvl_transformed * 100
 
-                print(f"{market} | {apy_base_formatted} | {reward_apy}")
-
 
                 data = Data(
                     market=market,

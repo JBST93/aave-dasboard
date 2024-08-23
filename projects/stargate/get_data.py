@@ -212,8 +212,6 @@ def get_yield():
             except Exception as e:
                 print(f"Error processing vault data: {e}")
 
-        print(total_tvl)
-
 def get_data():
     get_token_data()
     get_yield()
