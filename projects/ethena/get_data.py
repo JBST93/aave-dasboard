@@ -13,8 +13,6 @@ from scripts.utils import load_abi
 from utils.get_price import get_price
 from instances.TokenData import TokenData as Data
 
-provider_abi = load_abi("ethena",'eUSD_abi.json')
-
 infura_url = "https://mainnet.infura.io/v3/"
 infura_key = os.getenv('INFURA_KEY')
 if not infura_key:
@@ -25,47 +23,38 @@ tokens = [
         "token": "USDe",
         "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
         "chain": "ethereum",
-        "decimals":18
+        "decimals":18,
+        "abi": load_abi("ethena",'eUSD_abi.json')
+
     },
     {
         "token": "ENA",
         "address": "0x57e114B691Db790C35207b2e685D4A43181e6061",
         "chain": "ethereum",
-        "decimals":18
-
+        "decimals":18,
+        "abi": load_abi("ethena",'ENA_abi.json')
     }
 ]
 
-USDe = "USDe"
-token="ENA"
-USDe_address = "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3"
-ENA_address = "0x57e114B691Db790C35207b2e685D4A43181e6061"
-ENA_decimals = 18
-USDe_decimals = 18
-chain = "ethereum"
-
-
 def get_data():
-    web3 = Web3(Web3.HTTPProvider(infura_url + infura_key))
-    pool_contract = web3.eth.contract(address=USDe_address, abi=provider_abi)
-    supply_raw = float(pool_contract.functions.totalSupply().call())
+    for token in tokens:
+        web3 = Web3(Web3.HTTPProvider(infura_url + infura_key))
+        pool_contract = web3.eth.contract(address=token["address"], abi=token["abi"])
+        supply_raw = float(pool_contract.functions.totalSupply().call())
+        supply_transformed = supply_raw / 10**token["decimals"]
+        price = get_price(token["token"], token["address"], token["chain"])
 
-    supply_transformed = supply_raw / 10**USDe_decimals
+        data = Data (
+            token=token["token"],
+            price=price,
+            price_source= "",
+            tot_supply= supply_transformed,
+            circ_supply= supply_transformed ,
+            timestamp=datetime.utcnow(),
+        )
 
-    price = get_price(USDe, USDe_address, chain)
+        db.session.add(data)
 
-    print(f"{token} - {price} - {supply_transformed}")
-
-    data = Data (
-        token="USDe",
-        price=price,
-        price_source= "",
-        tot_supply= supply_transformed,
-        circ_supply= supply_transformed ,
-        timestamp=datetime.utcnow(),
-    )
-
-    db.session.add(data)
     db.session.commit()
 
 if __name__ == '__main__':

@@ -19,7 +19,7 @@ def get_data():
     price = get_price(token,"","")
 
     data = Data (
-            token="USDe",
+            token=token,
             price=price,
             price_source= "",
             tot_supply= total_supply,
