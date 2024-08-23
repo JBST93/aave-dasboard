@@ -13,7 +13,10 @@ from instances.YieldRate import YieldRate
 from scripts.utils import load_abi, insert_yield_db, get_curve_price
 
 
+treasury_wallets = {
+    "ethereum":"0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c"
 
+}
 
 
 
@@ -81,10 +84,6 @@ def fetch_store_rates():
 
     print("Aave v3 data fetched and committed")
 
-
-def get_revenue():
-
-def get_total_tvl():
 
 if __name__ == '__main__':
     with app.app_context():
