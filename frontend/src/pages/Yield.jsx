@@ -87,9 +87,7 @@ const Yield = () => {
   return (
     <>
       <div className="flex justify-between items-center flex-wrap">
-        <h1 className="md:text-2xl text-xl font-bold">
-          Earn Yield on Stablecoins
-        </h1>
+        <h1 className="md:text-2xl text-xl font-bold">Earn Yield</h1>
       </div>
       <div className="mb-4 text-center md:text-left">
         <p className="md:text-lg text-base text-left pt-1">
@@ -103,13 +101,6 @@ const Yield = () => {
         </p>
       </div>
       <div className="md:flex gap-2">
-        <InfoCard
-          title="DeFi Base Rate"
-          description="Based on the average yields of USDC, USDT, and DAI across pools with
-        more than $500 million in TVL (Total Value Locked)."
-          value={avgRate}
-        />
-
         <InfoCard
           title="What is Yield Farming?"
           description="Yield farming is a strategy in the decentralized finance (DeFi) space where you can earn rewards by lending or staking your cryptocurrency in DeFi platforms. By participating, you put your crypto to work and generate passive income through interest, fees, or other incentives."

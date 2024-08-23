@@ -94,6 +94,18 @@ const NavBar = () => {
               </Link>
             </li>
           </ul>
+          <div className="pt-10">
+            <ul>
+              <li>
+                <Link
+                  to="/contact"
+                  className="hover:text-yellow-500 text-black dark:text-white"
+                >
+                  Blog
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
     </>

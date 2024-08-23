@@ -49,10 +49,14 @@ def log_and_execute(func, func_name):
     """Log execution of the given function with error handling."""
     try:
         logger.info(f"Fetching Data for {func_name}")
-        func()
-        logger.info(f"{func_name} Data fetched")
+        if callable(func):
+            func()
+            logger.info(f"{func_name} Data fetched")
+        else:
+            logger.error(f"{func_name} is not callable.")
     except Exception as e:
         logger.error(f"Error fetching {func_name} data: {e}")
+
 
 
 def fetch_store_data():

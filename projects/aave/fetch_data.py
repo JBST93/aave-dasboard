@@ -81,6 +81,11 @@ def fetch_store_rates():
 
     print("Aave v3 data fetched and committed")
 
+
+def get_revenue():
+
+def get_total_tvl():
+
 if __name__ == '__main__':
     with app.app_context():
         fetch_store_rates()

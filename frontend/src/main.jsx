@@ -14,6 +14,7 @@ import StablecoinInfo from './pages/StablecoinInfo';
 import Blog from './pages/Blog';
 import StablecoinYieldFarming from './pages/blog/StablecoinYieldFarming';
 import CurvePools from './pages/project/CurvePools.jsx';
+import Contact from './pages/Contact.jsx';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: 'curve-pools',
         element: <CurvePools />, // Nested route for '/stablecoin'
+      },
+      {
+        path: 'contact',
+        element: <Contact />, // Nested route for '/stablecoin'
       },
     ],
   },
