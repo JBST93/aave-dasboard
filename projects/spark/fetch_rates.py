@@ -153,7 +153,7 @@ def fetch_store_DSR():
 
             data = Data(
                     market=token,
-                    project="Spark Lend",
+                    project="DAI Savings Rate",
                     information=None,
                     yield_rate_base=float(apy),
                     yield_rate_reward=None,
