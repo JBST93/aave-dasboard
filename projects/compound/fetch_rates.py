@@ -138,7 +138,7 @@ def fetch_store_rates():
                 if market == "wETH":
                     tvl_usd = float(tvl_transformed) / eth_price
                 else:
-                     tvl_usd = float(tvl_transformed)
+                    tvl_usd = float(tvl_transformed)
 
                 baseTrackingSupplySpeed = float(pool_contract.functions.baseTrackingBorrowSpeed().call())
                 trackingIndexScale = float(pool_contract.functions.trackingIndexScale().call())
