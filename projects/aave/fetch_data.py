@@ -52,6 +52,8 @@ def token_data(total_lend_usd, total_borrowed_usd):
         timestamp=datetime.utcnow()
     )
     db.session.add(info)
+    db.session.commit()
+
 
 def fetch_store_rates():
     print("Starting Fetching Data for AaveV3")
