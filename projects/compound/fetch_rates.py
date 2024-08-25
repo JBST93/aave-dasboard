@@ -4,6 +4,8 @@ import sys
 import json
 from datetime import datetime
 import requests
+from sqlalchemy import desc
+
 
 # Ensure the root directory is in the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
@@ -13,7 +15,8 @@ load_dotenv(os.path.join(project_root, '.env'))
 # Import app and db from the root directory
 from app import app, db
 from instances.YieldRate import YieldRate as Data
-from utils.get_price import get_price
+
+from utils.get_last_price_db import get_latest_price
 from utils.get_infura import select_infura
 
 # Construct the absolute path to the aave_abi.json file
@@ -36,11 +39,23 @@ contracts= [
 
     },
     {
+        "token":"wETH",
+        "address":"0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+        "chain":"ethereum",
+        "decimals":18
+    },
+    {
         "token": "USDC",
         "address":"0x9c4ec768c28520B50860ea7a15bd7213a9fF58bf",
         "chain": "arbitrum",
         "decimals":6
 
+    },
+    {
+        "token":"wETH",
+        "address":"0x6f7D514bbD4aFf3BcD1140B7344b32f063dEe486",
+        "chain":"arbitrum",
+        "decimals":18
     },
     {
         "token": "USDC",
@@ -62,24 +77,6 @@ contracts= [
         "chain":"optimism",
         "decimals":6
 
-    },
-    {
-        "token":"wETH",
-        "address":"0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-        "chain":"ethereum",
-        "decimals":18
-    },
-    {
-        "token":"wETH",
-        "address":"0x6f7D514bbD4aFf3BcD1140B7344b32f063dEe486",
-        "chain":"arbitrum",
-        "decimals":18
-    },
-    {
-        "token":"wETH",
-        "address":"0xE36A30D249f7761327fd973001A32010b521b6Fd",
-        "chain":"optimism",
-        "decimals":18
     },
     {
         "token":"wUSDC",
@@ -107,6 +104,7 @@ contracts= [
     },
 ]
 
+
 def get_comp_price():
     r = requests.get("https://api.exchange.coinbase.com/products/COMP-USD/ticker")
     data = r.json()
@@ -116,17 +114,25 @@ def get_comp_price():
     else:
             return 0
 
+
 def fetch_store_rates():
     print("Starting Fetching Data for Compound V3")
     with app.app_context():
+
+        total_tvl_usd = 0
+        total_lend_usd = 0
+        total_borrow_usd = 0
+
         for contract in contracts:
             market = contract["token"]
             address = contract["address"]
             chain = contract["chain"]
-            decimals = contract["decimals"]
+
+            modified_symbol = market[1:] if market.startswith('w') else market
 
             comp_price = get_comp_price()
-            eth_price = get_price("ETH","","")
+
+            price = get_latest_price(modified_symbol)
 
             abi_path = os.path.join(script_dir, f'compound_abi_{chain}.json')
 
@@ -139,6 +145,7 @@ def fetch_store_rates():
             web3 = select_infura(contract["chain"])
             pool_contract = web3.eth.contract(address=address, abi=provider_abi)
 
+
             try:
                 # getSupplyRate(Utilization) / (10 ^ 18) * Seconds Per Year (3,154e+7) * 100
                 utilization = pool_contract.functions.getUtilization().call()
@@ -148,17 +155,23 @@ def fetch_store_rates():
 
                 # Total supply
                 tvl = pool_contract.functions.totalSupply().call()
-                tvl_transformed = tvl / (10**decimals)
+                tvl_transformed = tvl / (10**contract["decimals"])
 
-                if market == "wETH":
-                    tvl_usd = float(tvl_transformed) / eth_price
-                else:
-                    tvl_usd = float(tvl_transformed)
+                borrow_amount_raw = pool_contract.functions.totalBorrow().call()
+                borrow_amount = borrow_amount_raw / (10**contract["decimals"])
+
+                tvl_usd = float(tvl_transformed) * price
+                borrow_usd = float(borrow_amount) * price
+
+                total_lend_usd += tvl_usd
+                total_borrow_usd += borrow_usd
+
 
                 baseTrackingSupplySpeed = float(pool_contract.functions.baseTrackingBorrowSpeed().call())
                 trackingIndexScale = float(pool_contract.functions.trackingIndexScale().call())
 
                 reward_apy = (baseTrackingSupplySpeed/trackingIndexScale) * 60*60*24*365 * comp_price / tvl_transformed * 100
+
 
 
                 data = Data(
