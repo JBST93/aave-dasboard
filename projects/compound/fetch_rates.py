@@ -106,7 +106,6 @@ def fetch_store_rates():
             comp_price = get_comp_price()
             eth_price = get_price("ETH","","")
 
-
             abi_path = os.path.join(script_dir, f'compound_abi_{chain}.json')
 
             with open(abi_path) as f:
@@ -133,7 +132,7 @@ def fetch_store_rates():
 
                 # Total supply
                 tvl = pool_contract.functions.totalSupply().call()
-                tvl_transformed = tvl / decimals
+                tvl_transformed = tvl / (10**decimals)
 
                 if market == "wETH":
                     tvl_usd = float(tvl_transformed) / eth_price
