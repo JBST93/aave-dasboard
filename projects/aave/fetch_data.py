@@ -32,7 +32,7 @@ smart_contracts = {
     "fantom":"0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
     # "avalanche":"0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
     "base":"0x2d8A3C5677189723C4cB8873CfC9C8976FDF38Ac",
-    "bsc":"0x41585C50524fb8c3899B43D7D797d9486AAc94DB",
+    # "bsc":"0x41585C50524fb8c3899B43D7D797d9486AAc94DB",
 }
 
 def token_data(total_lend_usd, total_borrowed_usd):

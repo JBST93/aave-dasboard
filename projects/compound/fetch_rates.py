@@ -113,16 +113,32 @@ contracts= [
     },
 ]
 
-
 def get_comp_price():
     r = requests.get("https://api.exchange.coinbase.com/products/COMP-USD/ticker")
     data = r.json()
     price = data.get("price")
     if price is not None:
-            return float(price)
+        return float(price)
     else:
-            return 0
+        return 0
 
+def token_data(total_lend_usd, total_borrowed_usd):
+    tvl_usd = total_lend_usd - total_borrowed_usd
+    total_supply = 10000000
+    circ_supply = 8378120
+    price = get_comp_price()
+
+    info = Info(
+        token="COMP",
+        price=price,
+        price_source="",
+        tot_supply = total_supply,
+        circ_supply = circ_supply,
+        tvl=tvl_usd,
+        revenue=0,
+        timestamp=datetime.utcnow()
+    )
+    db.session.add(info)
 
 def fetch_store_rates():
     print("Starting Fetching Data for Compound V3")
@@ -196,27 +212,14 @@ def fetch_store_rates():
                 )
 
                 db.session.add(data)
-                tvl_usd = total_borrow_usd - total_lend_usd
 
-                info = Info(
-                    token = "COMP",
-                    price = comp_price,
-                    price_source = "Coinbase",
-                    tot_supply = 10000000,
-                    circ_supply = 10000000,
-                    tvl = tvl_usd,
-                    revenue = 0,
-                    timestamp=datetime.utcnow()
-                )
-
-                db.session.add(info)
-
-                print("Compound Data Fetched")
 
             except Exception as e:
                 print(f"Error fetching data for {market}: {e}")
 
         db.session.commit()
+        print("Compound Data Fetched")
+        token_data(total_lend_usd, total_borrow_usd)
 
 
 
