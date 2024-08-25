@@ -16,7 +16,6 @@ from utils.get_price import get_price
 
 treasury_wallets = {
     "ethereum":"0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c"
-
 }
 
 
@@ -72,7 +71,7 @@ def fetch_store_rates():
                 else:
                     tvl = raw_tvl / 1e18  # Default to 18 decimal places for other tokens
 
-                price = get_price(token,"","") or 0
+                price = get_price(token,contract,"ethereum") or 0
                 tvl_usd = tvl * price
 
                 information = None
