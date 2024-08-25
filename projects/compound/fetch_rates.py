@@ -1,4 +1,3 @@
-from web3 import Web3
 from dotenv import load_dotenv
 import os
 import sys
@@ -15,6 +14,7 @@ load_dotenv(os.path.join(project_root, '.env'))
 from app import app, db
 from instances.YieldRate import YieldRate as Data
 from utils.get_price import get_price
+from utils.get_infura import select_infura
 
 # Construct the absolute path to the aave_abi.json file
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -80,9 +80,31 @@ contracts= [
         "address":"0xE36A30D249f7761327fd973001A32010b521b6Fd",
         "chain":"optimism",
         "decimals":18
-    }
-
-
+    },
+    {
+        "token":"wUSDC",
+        "address":"0xF25212E676D1F7F89Cd72fFEe66158f541246445",
+        "chain":"polygon",
+        "decimals":6
+    },
+    {
+        "token":"wUSDT",
+        "address":"0xaeB318360f27748Acb200CE616E389A6C9409a07",
+        "chain":"polygon",
+        "decimals":6
+    },
+    {
+        "token":"USDC",
+        "address":"0xb125E6687d4313864e53df431d5425969c15Eb2F",
+        "chain":"base",
+        "decimals":6
+    },
+    {
+        "token":"wETH",
+        "address":"0x46e6b214b524310239732D51387075E0e70970bf",
+        "chain":"base",
+        "decimals":18
+    },
 ]
 
 def get_comp_price():
@@ -114,15 +136,9 @@ def fetch_store_rates():
                 except FileNotFoundError:
                     exit(1)
 
-                if chain=="ethereum":
-                    # Connect to an Ethereum node
-                    infura_url = os.getenv('INFURA_URL')
-                else:
-                    infura_url=(f"https://{chain}-mainnet.infura.io/v3/{os.getenv('INFURA_KEY')}")
-
-
-            web3 = Web3(Web3.HTTPProvider(infura_url))
+            web3 = select_infura(contract["chain"])
             pool_contract = web3.eth.contract(address=address, abi=provider_abi)
+
             try:
                 # getSupplyRate(Utilization) / (10 ^ 18) * Seconds Per Year (3,154e+7) * 100
                 utilization = pool_contract.functions.getUtilization().call()
@@ -166,7 +182,6 @@ def fetch_store_rates():
 
         db.session.commit()
         print("Compound Data Fetched")
-
 
 if __name__ == '__main__':
     fetch_store_rates()
