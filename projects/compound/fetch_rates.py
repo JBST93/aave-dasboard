@@ -19,7 +19,8 @@ from utils.get_price import get_price
 # Construct the absolute path to the aave_abi.json file
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-#Compounds contracts
+# Addresses: https://docs.compound.finance/
+
 contracts= [
     {
         "token":"USDC",
@@ -67,7 +68,18 @@ contracts= [
         "address":"0xA17581A9E3356d9A858b789D68B4d866e593aE94",
         "chain":"ethereum",
         "decimals":18
-
+    },
+    {
+        "token":"wETH",
+        "address":"0x6f7D514bbD4aFf3BcD1140B7344b32f063dEe486",
+        "chain":"arbitrum",
+        "decimals":18
+    },
+    {
+        "token":"wETH",
+        "address":"0xE36A30D249f7761327fd973001A32010b521b6Fd",
+        "chain":"optimism",
+        "decimals":18
     }
 
 
@@ -124,7 +136,7 @@ def fetch_store_rates():
                 tvl_transformed = tvl / decimals
 
                 if market == "wETH":
-                    tvl_usd = float(tvl_transformed) * eth_price
+                    tvl_usd = float(tvl_transformed) / eth_price
                 else:
                      tvl_usd = float(tvl_transformed)
 

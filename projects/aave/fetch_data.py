@@ -11,6 +11,7 @@ load_dotenv(os.path.join(project_root, '.env'))
 from app import app, db
 from instances.YieldRate import YieldRate
 from scripts.utils import load_abi, insert_yield_db, get_curve_price
+from utils.get_price import get_price
 
 
 treasury_wallets = {
@@ -59,19 +60,21 @@ def fetch_store_rates():
                 token = item[0]
                 contract = item[1]
 
+
                 reserve_data = pool_contract.functions.getReserveData(contract).call()
                 apy_base = reserve_data[5] / 1e27 * 100  # Convert from Ray to percentage
                 apy_base_formatted = round(apy_base, 2)
 
                 raw_tvl = pool_contract.functions.getATokenTotalSupply(contract).call()
 
-                if token in ['USDC', 'pyUSD', 'USDT']:  # TVL in LCY - need to find USD
+                if token in ['USDC', 'pyUSD', 'USDT']:
                     tvl = raw_tvl / 1e6  # These tokens have 6 decimal places
                 else:
                     tvl = raw_tvl / 1e18  # Default to 18 decimal places for other tokens
 
-                # Need to find TVL_USD
-                tvl_usd = tvl
+                price = get_price(token,"","") or 0
+                tvl_usd = tvl * price
+
                 information = None
                 type = "Lending market"
 
