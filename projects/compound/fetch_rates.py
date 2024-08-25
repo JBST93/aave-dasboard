@@ -87,18 +87,18 @@ contracts= [
         "decimals":18
 
     },
-    {
-        "token":"wUSDC",
-        "address":"0xF25212E676D1F7F89Cd72fFEe66158f541246445",
-        "chain":"polygon",
-        "decimals":6
-    },
-    {
-        "token":"wUSDT",
-        "address":"0xaeB318360f27748Acb200CE616E389A6C9409a07",
-        "chain":"polygon",
-        "decimals":6
-    },
+    # {
+    #     "token":"wUSDC",
+    #     "address":"0xF25212E676D1F7F89Cd72fFEe66158f541246445",
+    #     "chain":"polygon",
+    #     "decimals":6
+    # },
+    # {
+    #     "token":"wUSDT",
+    #     "address":"0xaeB318360f27748Acb200CE616E389A6C9409a07",
+    #     "chain":"polygon",
+    #     "decimals":6
+    # },
     {
         "token":"USDC",
         "address":"0xb125E6687d4313864e53df431d5425969c15Eb2F",
@@ -195,6 +195,7 @@ def fetch_store_rates():
                 trackingIndexScale = float(pool_contract.functions.trackingIndexScale().call())
 
                 reward_apy = (baseTrackingSupplySpeed/trackingIndexScale) * 60*60*24*365 * comp_price / total_lend_usd * 100
+                print(lend_usd-borrow_usd)
 
 
                 data = Data(
