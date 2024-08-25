@@ -94,7 +94,10 @@ const DataTable = ({ rows }) => {
       width: 150,
       align: 'left',
       type: 'number',
+      headerAlign: 'left',
       headerClassName: 'font-bold dark:text-white',
+      renderCell: (params) =>
+        params.value === 0 ? '-' : params.value.toLocaleString(),
     },
     {
       field: 'website',

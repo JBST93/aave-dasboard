@@ -168,10 +168,10 @@ def fetch_store_rates():
                 borrow_amount_raw = pool_contract.functions.totalBorrow().call()
                 borrow_amount = borrow_amount_raw / (10**contract["decimals"])
 
-                tvl_usd = float(tvl_transformed) * price
+                lend_usd = float(tvl_transformed) * price
                 borrow_usd = float(borrow_amount) * price
 
-                total_lend_usd += tvl_usd
+                total_lend_usd += lend_usd
                 total_borrow_usd += borrow_usd
 
 
@@ -188,6 +188,7 @@ def fetch_store_rates():
                     yield_rate_base=float(apy_base_formatted),
                     yield_rate_reward=reward_apy,
                     yield_token_reward="COMP",
+                    tvl = lend_usd,
                     chain=chain.capitalize(),
                     type='',
                     smart_contract=address,
