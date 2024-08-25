@@ -27,6 +27,7 @@ from projects.paypal.get_data import get_supply as paypal
 from projects.wBTC.get_data import get_store_data as wbtc
 from projects.jito.get_data import get_supply as jito
 from projects.avax.get_data import get_data as avax
+from projects.coinbase.get_data import token_data as coinbase
 
 
 
@@ -80,6 +81,7 @@ def fetch_store_data():
         "wBTC":wbtc,
         "Jito":jito,
         "Avax":avax,
+        "coinbase":coinbase,
     }
 
     with app.app_context():
