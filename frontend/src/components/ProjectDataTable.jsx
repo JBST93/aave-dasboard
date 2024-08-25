@@ -89,6 +89,14 @@ const DataTable = ({ rows }) => {
       headerClassName: 'font-bold dark:text-white',
     },
     {
+      field: 'tvl',
+      headerName: 'Value Locked',
+      width: 150,
+      align: 'left',
+      type: 'number',
+      headerClassName: 'font-bold dark:text-white',
+    },
+    {
       field: 'website',
       headerName: 'Website',
       width: 150,

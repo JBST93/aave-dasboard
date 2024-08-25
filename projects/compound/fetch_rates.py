@@ -15,6 +15,8 @@ load_dotenv(os.path.join(project_root, '.env'))
 # Import app and db from the root directory
 from app import app, db
 from instances.YieldRate import YieldRate as Data
+from instances.TokenData import TokenData as Info
+
 
 from utils.get_last_price_db import get_latest_price
 from utils.get_infura import select_infura
@@ -126,7 +128,6 @@ def fetch_store_rates():
     print("Starting Fetching Data for Compound V3")
     with app.app_context():
 
-        total_tvl_usd = 0
         total_lend_usd = 0
         total_borrow_usd = 0
 
@@ -180,7 +181,6 @@ def fetch_store_rates():
                 reward_apy = (baseTrackingSupplySpeed/trackingIndexScale) * 60*60*24*365 * comp_price / tvl_usd * 100
 
 
-
                 data = Data(
                     market=market,
                     project="Compound v3",
@@ -188,7 +188,6 @@ def fetch_store_rates():
                     yield_rate_base=float(apy_base_formatted),
                     yield_rate_reward=reward_apy,
                     yield_token_reward="COMP",
-                    tvl=tvl_usd,
                     chain=chain.capitalize(),
                     type='',
                     smart_contract=address,
@@ -201,6 +200,24 @@ def fetch_store_rates():
                 print(f"Error fetching data for {market}: {e}")
 
         db.session.commit()
+
+        tvl_usd = total_borrow_usd - total_lend_usd
+
+        info = Info(
+            token = "COMP",
+            price = comp_price,
+            tvl = tvl_usd,
+            price_source = "Coinbase",
+            tot_supply = 10000000,
+            circ_supply = 10000000,
+            tvl = tvl_usd,
+            revenue = 0,
+            timestamp=datetime.utcnow()
+        )
+
+        db.session.add(info)
+        db.session.commit()
+
         print("Compound Data Fetched")
 
 if __name__ == '__main__':

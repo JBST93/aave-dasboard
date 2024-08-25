@@ -298,17 +298,7 @@
     "forum": "https://www.comp.xyz/latest",
     "token": "COMP",
     "logoUrl": "https://cryptologos.cc/logos/compound-comp-logo.png",
-    "audited": "Yes",
-    "supply": {
-      "circSupply": {
-        "method": "hardcoded",
-        "amount": 10000000
-      },
-      "totSupply": {
-        "method": "hardcoded",
-        "amount": 10000000
-      }
-    }
+    "audited": "Yes"
   },
   {
     "project": "Morpho",

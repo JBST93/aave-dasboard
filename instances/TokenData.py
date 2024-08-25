@@ -14,7 +14,11 @@ class TokenData(db.Model):
     tot_supply = db.Column(db.Float, nullable=True)
     circ_supply = db.Column(db.Float, nullable=True)
 
+    tvl = db.Column(db.Float, nullable=True)
+    revenue = db.Column(db.Float, nullable=True)
+
     timestamp = db.Column(db.DateTime, default=datetime.now)
+
 
     def to_dict(self):
         return {
@@ -24,10 +28,13 @@ class TokenData(db.Model):
             'price_source': self.price_source,
             'tot_supply': self.tot_supply,
             'circ_supply': self.circ_supply,
+            'tvl':self.tvl,
+            'revenue':self.revenue,
             'timestamp': self.timestamp.isoformat(),
         }
 
     def __repr__(self) -> str:
         return (f"TokenData(id={self.id!r}, token={self.token!r}, price={self.price!r}, "
                 f"price_source={self.price_source!r}, tot_supply={self.tot_supply!r}, "
+                f"tvl={self.tvl!r}, revenue={self.revenue!r}),"
                 f"circ_supply={self.circ_supply!r}, timestamp={self.timestamp!r})")

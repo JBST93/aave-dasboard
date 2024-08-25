@@ -45,6 +45,7 @@ def get_projects():
                         price = token_data.price or 0
                         circ_supply = token_data.circ_supply or 0
                         timestamp = token_data.timestamp
+                        tvl = token_data.tvl or 0
 
                         time_24h_ago = token_data.timestamp - timedelta(hours=24)
                         token_data_24h_ago = get_token_data_at_time(token, time_24h_ago)
@@ -83,6 +84,7 @@ def get_projects():
                         'token': result["token"],
                         'supply_formatted': circ_supply,
                         'price': price,
+                        'tvl':tvl,
                         'price_day_delta': f"{price_day_delta:,.2f}",
                         'marketCapSorting': marketCap,
                         'marketCap': f"{marketCap:,.0f}",
