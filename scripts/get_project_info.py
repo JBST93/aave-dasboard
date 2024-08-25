@@ -74,8 +74,11 @@ def get_projects():
                     elif price <= 10:
                         price = round(price,4)
 
-                    else:
+                    elif price <= 1000:
                         price = round(price,2)
+
+                    else:
+                        price = round(price,0)
 
 
                     projects.append({
@@ -84,7 +87,7 @@ def get_projects():
                         'token': result["token"],
                         'supply_formatted': circ_supply,
                         'price': price,
-                        'tvl':tvl,
+                        'tvl':f"{tvl:,.0f}",
                         'price_day_delta': f"{price_day_delta:,.2f}",
                         'marketCapSorting': marketCap,
                         'marketCap': f"{marketCap:,.0f}",
