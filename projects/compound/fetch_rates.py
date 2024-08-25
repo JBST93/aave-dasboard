@@ -196,29 +196,29 @@ def fetch_store_rates():
                 )
 
                 db.session.add(data)
+                tvl_usd = total_borrow_usd - total_lend_usd
+
+                info = Info(
+                    token = "COMP",
+                    price = comp_price,
+                    price_source = "Coinbase",
+                    tot_supply = 10000000,
+                    circ_supply = 10000000,
+                    tvl = tvl_usd,
+                    revenue = 0,
+                    timestamp=datetime.utcnow()
+                )
+
+                db.session.add(info)
+
+                print("Compound Data Fetched")
 
             except Exception as e:
                 print(f"Error fetching data for {market}: {e}")
 
         db.session.commit()
 
-        tvl_usd = total_borrow_usd - total_lend_usd
 
-        info = Info(
-            token = "COMP",
-            price = comp_price,
-            price_source = "Coinbase",
-            tot_supply = 10000000,
-            circ_supply = 10000000,
-            tvl = tvl_usd,
-            revenue = 0,
-            timestamp=datetime.utcnow()
-        )
-
-        db.session.add(info)
-        db.session.commit()
-
-        print("Compound Data Fetched")
 
 if __name__ == '__main__':
     fetch_store_rates()
