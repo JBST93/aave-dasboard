@@ -194,7 +194,7 @@ def fetch_store_rates():
                 baseTrackingSupplySpeed = float(pool_contract.functions.baseTrackingBorrowSpeed().call())
                 trackingIndexScale = float(pool_contract.functions.trackingIndexScale().call())
 
-                reward_apy = (baseTrackingSupplySpeed/trackingIndexScale) * 60*60*24*365 * comp_price / tvl_usd * 100
+                reward_apy = (baseTrackingSupplySpeed/trackingIndexScale) * 60*60*24*365 * comp_price / total_lend_usd * 100
 
 
                 data = Data(
