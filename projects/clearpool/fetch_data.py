@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from sqlalchemy import desc
 import os
 import sys
+from datetime import datetime
 
 
 # Ensure the root directory is in the Python path
@@ -13,7 +14,7 @@ load_dotenv(os.path.join(project_root, '.env'))
 
 from app import app, db
 from instances.YieldRate import YieldRate
-from instances.TokenData import TokenData as Price
+from instances.TokenData import TokenData as Info
 
 from scripts.utils import load_abi, insert_yield_db
 
@@ -37,13 +38,34 @@ if not infura_key:
     raise ValueError("INFURA_KEY not found in environment variables")
 
 def token_price():
-    record = db.session.query(Price).filter(
-            Price.token == 'CPOOL').order_by(desc(Price.timestamp)).first()
+    record = db.session.query(Info).filter(
+            Info.token == 'CPOOL').order_by(desc(Info.timestamp)).first()
     return record.price if record is not None else 0.1
 
 
+def get_info(total_borrow, total_lend):
+    price = token_price()
+    tvl_usd = total_borrow - total_lend
+
+    info = Info(
+        token="CPOOL",
+        price=price,
+        price_source="",
+        tot_supply=1000000000,
+        circ_supply=1000000000,
+        tvl=tvl_usd,
+        revenue=0,
+        timestamp=datetime.utcnow()
+    )
+    db.session.add(info)
+    db.session.commit()
+
+    return
+
 def fetch_store_rates():
     price = token_price()
+    total_borrow = 0
+    total_lend = 0
 
     for chain, contract_address in smart_contracts.items():
         web3 = Web3(Web3.HTTPProvider(infura_url[chain] + infura_key))
@@ -60,16 +82,22 @@ def fetch_store_rates():
                     market = pool_data.functions.symbol().call().partition("-")[2]
                     information = pool_data.functions.name().call()
 
+                    lend_amount = pool_data.functions.poolSize().call()
+                    lend_amount_transformed = lend_amount/1e6 if lend_amount != 0 else 0
 
-
-                    borrow_amount = pool_data.functions.poolSize().call()
-                    borrow_amount_transformed = borrow_amount/1e6
+                    borrow_amount = pool_data.functions.borrows().call()
+                    borrow_amount_transformed = borrow_amount/1e6 if borrow_amount != 0 else 0
 
                     supply_rate = pool_data.functions.getSupplyRate().call()
                     supply_rate_annualised = round(float(supply_rate)/1e18*31536000 * 100,2)
 
+                    total_borrow += borrow_amount_transformed
+                    total_lend += lend_amount_transformed
+
+
+
                     reward_rate = pool_data.functions.rewardPerSecond().call()
-                    reward_rate_transformed = round(float(reward_rate * 31536000 / 1e12 * price) / borrow_amount * 100,2)
+                    reward_rate_transformed = round(float(reward_rate * 31536000 / 1e12 * price) / lend_amount * 100,2)
 
                     reward_token = "CPOOL"
 
@@ -78,15 +106,16 @@ def fetch_store_rates():
                     project = "ClearPool"
                     chain = chain
 
-                    insert_yield_db(market, project, information, supply_rate_annualised,reward_rate_transformed,reward_token,borrow_amount_transformed,chain, business, smart_contract)
+                    insert_yield_db(market, project, information, supply_rate_annualised,reward_rate_transformed,reward_token,lend_amount_transformed,chain, business, smart_contract)
 
                 except Exception as e:
                     print(f"Error fetching data for {item}: {e}")
 
             db.session.commit()
-            print("Clearpool data fetched and committed")
 
+        return total_borrow, total_lend
 
 if __name__ == '__main__':
         with app.app_context():
-            fetch_store_rates()
+            total_borrow, total_lend = fetch_store_rates()
+            get_info(total_borrow, total_lend)

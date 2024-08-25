@@ -671,17 +671,7 @@
     "address": "0x66761Fa41377003622aEE3c7675Fc7b5c1C2FaC5",
     "chain": "ethereum",
     "audited": "Yes",
-    "logoUrl": "https://avatars.githubusercontent.com/u/84125554?s=280&v=4",
-    "supply": {
-      "circSupply": {
-        "method": "hardcoded",
-        "amount": 1000000000
-      },
-      "totSupply": {
-        "method": "hardcoded",
-        "amount": 1000000000
-      }
-    }
+    "logoUrl": "https://avatars.githubusercontent.com/u/84125554?s=280&v=4"
   },
   {
     "project": "Convex Finance",
