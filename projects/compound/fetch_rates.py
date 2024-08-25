@@ -207,7 +207,6 @@ def fetch_store_rates():
         info = Info(
             token = "COMP",
             price = comp_price,
-            tvl = tvl_usd,
             price_source = "Coinbase",
             tot_supply = 10000000,
             circ_supply = 10000000,

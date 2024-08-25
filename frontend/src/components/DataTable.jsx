@@ -141,7 +141,19 @@ const DataTable = ({ rows }) => {
         disableSelectionOnClick
         disableColumnResize={true}
         disableColumnMenu={true}
-        getRowClassName={() => 'DataGrid-row'}
+        getRowClassName={() => 'DataGrid-row'},
+        sx={{
+          m: 2,
+          border: 'black',
+          '& .MuiDataGrid-sortIcon': {
+            opacity: 'inherit !important',
+            color: 'inherit',
+          },
+          '& .MuiDataGrid-row:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.05)', // Row hover effect
+            cursor: 'pointer',
+          },
+        }}
         classes={{
           root: 'bg-white dark:bg-gray-800 text-black dark:text-white',
           columnHeader: 'text-black dark:text-white bg-white dark:bg-gray-800',
