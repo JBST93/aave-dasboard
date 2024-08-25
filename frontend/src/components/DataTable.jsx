@@ -141,7 +141,7 @@ const DataTable = ({ rows }) => {
         disableSelectionOnClick
         disableColumnResize={true}
         disableColumnMenu={true}
-        getRowClassName={() => 'DataGrid-row'},
+        getRowClassName={() => 'DataGrid-row'}
         sx={{
           m: 2,
           border: 'black',
