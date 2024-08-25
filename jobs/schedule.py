@@ -30,8 +30,6 @@ from projects.avax.get_data import get_data as avax
 from projects.coinbase.get_data import token_data as coinbase
 
 
-
-
 from scripts.get_price_supply import get_price_supply
 
 
@@ -99,4 +97,8 @@ sched.add_job(fetch_store_data, 'interval', minutes=FETCH_INTERVAL_MINUTES)
 sched.add_job(get_price_supply, 'interval', minutes=30)
 
 if __name__ == '__main__':
+
+    fetch_store_data()
+    fetch_price_supply()
+
     sched.start()
