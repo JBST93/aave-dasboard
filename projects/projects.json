@@ -760,7 +760,7 @@
     "chain": "ethereum",
     "audited": "Yes",
     "logoUrl": "https://cryptologos.cc/logos/coinbase-token-cbeth-logo.svg"
-}
+  },
   {
     "project": "Silo Finance",
     "description": "SILO is a governance token for the Silo Finance protocol, a decentralized, non-custodial lending platform that allows users to create isolated lending markets (silos) for any token. Each silo operates independently, minimizing risks of cross-market contagion.",
