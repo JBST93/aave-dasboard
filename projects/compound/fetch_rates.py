@@ -113,6 +113,8 @@ contracts= [
     },
 ]
 
+
+
 def get_comp_price():
     r = requests.get("https://api.exchange.coinbase.com/products/COMP-USD/ticker")
     data = r.json()
@@ -139,9 +141,13 @@ def token_data(total_lend_usd, total_borrowed_usd):
         timestamp=datetime.utcnow()
     )
     db.session.add(info)
+    db.session.commit()
+
 
 def fetch_store_rates():
     print("Starting Fetching Data for Compound V3")
+    comp_price = get_comp_price()
+
     with app.app_context():
 
         total_lend_usd = 0
@@ -153,8 +159,6 @@ def fetch_store_rates():
             chain = contract["chain"]
 
             modified_symbol = market[1:] if market.startswith('w') else market
-
-            comp_price = get_comp_price()
 
             price = get_latest_price(modified_symbol)
 

@@ -73,16 +73,12 @@ def get_price_supply():
 
             # Check for existing data in the database
             if supply_data:
-                logger.info(f"No existing data for {token}, fetching from JSON or API")
                 circ_supply = get_supply(supply_data) if supply_data else 0
-                print(circ_supply)
                 price = get_price(token, address, chain)
-                print(price)
 
                 if circ_supply is not None and price is not None:
                     item['price'] = price
                     item['circ_supply'] = circ_supply
-                    logger.info(f"Processed token {token} with price {price} and supply {circ_supply}")
 
                     try:
                         token_data = Data(

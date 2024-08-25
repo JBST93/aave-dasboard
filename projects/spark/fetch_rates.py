@@ -24,15 +24,12 @@ web3 = Web3(Web3.HTTPProvider(infura_url))
 
 
 
-gov_token = "SPARK"
-gov_token_price = 0
-tot_supply=0,
-circ_supply=0,
-
 def token_data(total_lend_usd, total_borrowed_usd, dsr_tvl):
     tvl_usd = total_lend_usd - total_borrowed_usd + dsr_tvl
-
-    print(tvl_usd)
+    gov_token = "SPARK"
+    gov_token_price = 0
+    tot_supply=0,
+    circ_supply=0,
 
     info = Info(
         token=gov_token,
@@ -45,7 +42,6 @@ def token_data(total_lend_usd, total_borrowed_usd, dsr_tvl):
         timestamp=datetime.utcnow()
     )
     db.session.add(info)
-
     db.session.commit()
 
 def fetch_store_sparklend():
