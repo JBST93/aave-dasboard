@@ -57,11 +57,7 @@ const DataTable = ({ rows }) => {
           type: 'number',
           width: 130,
         },
-        {
-          field: 'information_formatted',
-          headerName: 'Information',
-          width: 300,
-        },
+
         {
           field: 'humanized_timestamp',
           headerName: 'Last Updated',
@@ -98,11 +94,6 @@ const DataTable = ({ rows }) => {
           width: 150,
         },
 
-        {
-          field: 'information_formatted',
-          headerName: 'Information',
-          width: 200,
-        },
         {
           field: 'yield_rate_base',
           headerName: 'Base APY',
