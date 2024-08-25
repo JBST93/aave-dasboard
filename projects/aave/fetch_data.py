@@ -60,8 +60,8 @@ def fetch_store_rates():
                 token = item[0]
                 contract = item[1]
 
-
                 reserve_data = pool_contract.functions.getReserveData(contract).call()
+
                 apy_base = reserve_data[5] / 1e27 * 100  # Convert from Ray to percentage
                 apy_base_formatted = round(apy_base, 2)
 
@@ -77,6 +77,7 @@ def fetch_store_rates():
 
                 information = None
                 type = "Lending market"
+                print(token)
 
                 insert_yield_db(token, "Aave v3", information, apy_base_formatted,None,None,tvl_usd,chain, type, contract)
 

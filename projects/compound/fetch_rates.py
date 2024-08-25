@@ -52,6 +52,13 @@ contracts= [
 
     },
     {
+        "token": "USDT",
+        "address": "0xd98Be00b5D27fc98112BdE293e487f8D4cA57d07",
+        "chain": "arbitrum",
+        "decimals":6
+
+    },
+    {
         "token":"wETH",
         "address":"0x6f7D514bbD4aFf3BcD1140B7344b32f063dEe486",
         "chain":"arbitrum",
@@ -65,17 +72,17 @@ contracts= [
 
     },
     {
-        "token": "USDT",
-        "address": "0xd98Be00b5D27fc98112BdE293e487f8D4cA57d07",
-        "chain": "arbitrum",
+        "token":"USDT",
+        "address":"0x995E394b8B2437aC8Ce61Ee0bC610D617962B214",
+        "chain":"optimism",
         "decimals":6
 
     },
     {
-        "token":"USDT",
-        "address":"0x2e44e174f7D53F0212823acC11C01A11d58c5bCB",
+        "token":"wETH",
+        "address":"0xE36A30D249f7761327fd973001A32010b521b6Fd",
         "chain":"optimism",
-        "decimals":6
+        "decimals":18
 
     },
     {
@@ -170,7 +177,7 @@ def fetch_store_rates():
                 baseTrackingSupplySpeed = float(pool_contract.functions.baseTrackingBorrowSpeed().call())
                 trackingIndexScale = float(pool_contract.functions.trackingIndexScale().call())
 
-                reward_apy = (baseTrackingSupplySpeed/trackingIndexScale) * 60*60*24*365 * comp_price / tvl_transformed * 100
+                reward_apy = (baseTrackingSupplySpeed/trackingIndexScale) * 60*60*24*365 * comp_price / tvl_usd * 100
 
 
 
