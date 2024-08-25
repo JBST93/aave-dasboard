@@ -11,17 +11,12 @@ load_dotenv(os.path.join(project_root, '.env'))
 from app import app, db
 from instances.YieldRate import YieldRate
 from scripts.utils import load_abi, insert_yield_db, get_curve_price
-from utils.get_price import get_price
+from utils.get_last_price_db import get_latest_price
 
 
 treasury_wallets = {
     "ethereum":"0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c"
 }
-
-
-
-
-
 
 
 provider_abi = load_abi("aave",'aave_abi.json')
@@ -71,7 +66,7 @@ def fetch_store_rates():
                 else:
                     tvl = raw_tvl / 1e18  # Default to 18 decimal places for other tokens
 
-                price = get_price(token,contract,"ethereum") or 0
+                price = get_latest_price(token,contract,"ethereum") or 0
                 tvl_usd = tvl * price
 
                 information = None
