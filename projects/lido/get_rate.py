@@ -64,7 +64,6 @@ def get_data_steth():
         )
 
         db.session.add(data)
-        print(data)
 
     db.session.commit()
 
