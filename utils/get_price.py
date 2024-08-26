@@ -10,7 +10,7 @@ from app import app
 
 def get_price(token, address=None, chain=None):
     with app.app_context():
-        price = get_price_kraken(token) or get_price_bitstamp(token) or get_price_curve(address, chain) or get_angle_price(token) or 0
+        price = get_price_kraken(token) or get_price_bitstamp(token) or get_price_curve(address, chain) or get_gateio_price(token) or get_angle_price(token) or 0
         return price
 
 def get_price_kraken(token):
@@ -58,6 +58,13 @@ def get_price_curve(address, chain):
     except requests.RequestException as e:
         logger.error(f"Error fetching price from Curve: {e}")
     return None
+
+def get_gateio_price(token):
+    endpoint = f"https://api.gateio.ws/api/v4/spot/tickers?currency_pair={token}_USDT"
+    data = requests.get(endpoint).json()
+    price = data[0]["last"]
+    return float(price)
+
 
 def get_angle_price(token):
     endpoint = "https://api.angle.money/v1/prices"

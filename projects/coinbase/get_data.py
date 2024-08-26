@@ -28,8 +28,8 @@ def token_data():
         address = "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
         chain = "ethereum"
         price = (get_price(token,address,chain))
-        tot_supply_usd = total_supply/price
-        circ_supply_usd = circulating_supply/price
+        tot_supply_usd = total_supply
+        circ_supply_usd = circulating_supply
 
         info = Info(
             token=token,
@@ -44,7 +44,6 @@ def token_data():
         db.session.add(info)
         db.session.commit()
         print(info)
-
 
 if __name__ == '__main__':
     with app.app_context():

@@ -29,6 +29,8 @@ from projects.jito.get_data import get_supply as jito
 from projects.avax.get_data import get_data as avax
 from projects.coinbase.get_data import token_data as coinbase
 from projects.wETH.get_data import token_data as weth
+from projects.liquity.get_data import get_token as liquity
+from projects.abracadabra.get_data import get_token as abra
 
 
 from scripts.get_price_supply import get_price_supply
@@ -82,6 +84,9 @@ def fetch_store_data():
         "Avax":avax,
         "coinbase":coinbase,
         "wETH":weth,
+        "liquity": liquity,
+        "Abracadabra":abra,
+
     }
 
     with app.app_context():

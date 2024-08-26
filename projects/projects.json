@@ -1059,5 +1059,54 @@
         "amount": 328193104
       }
     }
+  },
+  {
+    "project": "Orca",
+    "description": "Orca is a decentralized exchange (DEX) on the Solana blockchain, known for its user-friendly interface and fast, low-cost transactions. It allows users to swap tokens, provide liquidity, and earn rewards through yield farming. Orca also features a unique 'Fair Price' indicator, which helps users avoid front-running and get better trade execution.",
+    "governance": "Decentralized",
+    "business": "Decentralized Exchange (DEX)",
+    "forum": "",
+    "website": "https://www.orca.so/",
+    "token": "ORCA",
+    "address": "orcaN9wG14A4hgLD43XV2NMstMewLCiA2hBf6YrL3m2",
+    "chain": "solana",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/orca-orca-logo.svg?v=022"
+  },
+  {
+    "project": "Abracadabra",
+    "description": "Spell Token (SPELL) is the governance and utility token of the Abracadabra.money platform, a decentralized finance (DeFi) protocol that allows users to borrow the stablecoin MIM (Magic Internet Money) by collateralizing interest-bearing crypto assets. SPELL holders can stake their tokens to earn rewards and participate in the governance of the Abracadabra protocol.",
+    "governance": "DAO",
+    "business": "Leverage Protocol",
+    "website": "https://abracadabra.money",
+    "forum": "https://forum.abracadabra.money",
+    "token": "SPELL",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/spell-token-spell-logo.svg?v=022",
+    "decimals": 18
+  },
+  {
+    "project": "Liquity",
+    "description": "Liquity (LQTY) is the governance token of the Liquity protocol, a decentralized, interest-free borrowing platform built on Ethereum. Liquity allows users to borrow LUSD, a USD-pegged stablecoin, by using ETH as collateral. LQTY holders can stake their tokens to earn rewards and participate in protocol governance.",
+    "governance": "DAO",
+    "business": "Stablecoin Issuance",
+    "website": "https://www.liquity.org",
+    "forum": "https://community.liquity.org",
+    "token": "LQTY",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/liquity-lqty-logo.svg?v=022",
+    "decimals": 18
+  },
+  {
+    "project": "Liquity USD",
+    "description": "Liquity USD (LUSD) is a decentralized stablecoin pegged to the US Dollar. It is minted through the Liquity protocol by locking up ETH as collateral. LUSD maintains its stability through an algorithmic approach and can be redeemed at any time for its underlying collateral.",
+    "governance": "DAO",
+    "business": "Stablecoin",
+    "website": "https://www.liquity.org",
+    "forum": "https://community.liquity.org",
+    "token": "LUSD",
+    "audited": "Yes",
+    "logoUrl": "https://cryptologos.cc/logos/liquity-lusd-logo.svg?v=022",
+    "decimals": 18
   }
 ]

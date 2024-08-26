@@ -15,23 +15,23 @@ from utils.load_abi import load_abi
 
 tokens_info = [
     {
-        "token": "LUSD",
+        "token": "SPELL",
         "decimals": 18,
-        "contract_address":"0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
-        "provider_abi": load_abi("liquity",'LUSD_abi.json'),
+        "contract_address":"0x090185f2135308bad17527004364ebcc2d37e5f6",
         "chain":"ethereum",
+        "api":"https://analytics.back.popsicle.finance/api/v1/spellcirculatingsupply",
+        "tot_supply":210000000000
 
     },
-    {
-        "token": "LQTY",
-        "decimals": 18,
-        "contract_address":"0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d",
-        "api": "https://api.liquity.org/v1/lqty_circulating_supply.txt",
-        "chain":"ethereum",
-        "tot_supply":100000000
+    # {
+    #     "token": "MIM",
+    #     "decimals": 18,
+    #     "contract_address":"0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3",
+    #     "api": "https://api.liquity.org/v1/lqty_circulating_supply.txt",
+    #     "chain":"ethereum",
+    #     "tot_supply":100000000
 
-    }
-
+    # }
 ]
 
 def get_token():
