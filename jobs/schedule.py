@@ -28,6 +28,7 @@ from projects.wBTC.get_data import get_store_data as wbtc
 from projects.jito.get_data import get_supply as jito
 from projects.avax.get_data import get_data as avax
 from projects.coinbase.get_data import token_data as coinbase
+from projects.wETH.get_data import token_data as weth
 
 
 from scripts.get_price_supply import get_price_supply
@@ -80,6 +81,7 @@ def fetch_store_data():
         "Jito":jito,
         "Avax":avax,
         "coinbase":coinbase,
+        "wETH":weth,
     }
 
     with app.app_context():
