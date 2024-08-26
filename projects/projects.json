@@ -710,19 +710,6 @@
     "logoUrl": "https://cryptologos.cc/logos/lido-dao-ldo-logo.svg?v=033"
   },
   {
-    "project": "LiDo",
-    "description": "wstETH is a liquid staking token representing staked Ether on the Ethereum 2.0 Beacon Chain through the Lido protocol. stETH allows users to earn staking rewards while maintaining liquidity, enabling participation in DeFi activities.",
-    "governance": "Decentralized",
-    "business": "Liquid Staking",
-    "forum": "https://research.lido.fi/",
-    "website": "https://lido.fi/",
-    "token": "wstETH",
-    "address": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
-    "chain": "ethereum",
-    "audited": "Yes",
-    "logoUrl": "https://cryptologos.cc/logos/lido-dao-ldo-logo.svg?v=033"
-  },
-  {
     "project": "ether.fi",
     "description": "weETH is a tokenized version of Ether (ETH) on the Ethereum blockchain. It represents ETH in a wrapped format, enabling it to be used in decentralized finance (DeFi) applications that require ERC-20 tokens.",
     "governance": "Decentralized",
