@@ -31,6 +31,7 @@ from projects.coinbase.get_data import token_data as coinbase
 from projects.wETH.get_data import token_data as weth
 from projects.liquity.get_data import get_token as liquity
 from projects.abracadabra.get_data import get_token as abra
+from projects.orca.get_data import get_info as orca
 
 
 from scripts.get_price_supply import get_price_supply
@@ -86,6 +87,7 @@ def fetch_store_data():
         "wETH":weth,
         "liquity": liquity,
         "Abracadabra":abra,
+        "Orca":orca,
 
     }
 

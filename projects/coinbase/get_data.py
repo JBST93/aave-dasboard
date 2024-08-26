@@ -29,14 +29,14 @@ def token_data():
         chain = "ethereum"
         price = (get_price(token,address,chain))
         tot_supply_usd = total_supply
-        circ_supply_usd = circulating_supply
+        circ_supply_usd = circulating_supply * price
 
         info = Info(
             token=token,
             price=price,
             price_source="",
-            tot_supply=tot_supply_usd,
-            circ_supply=circ_supply_usd,
+            tot_supply=total_supply,
+            circ_supply=circulating_supply,
             tvl=0,
             revenue=0,
             timestamp=datetime.utcnow()
