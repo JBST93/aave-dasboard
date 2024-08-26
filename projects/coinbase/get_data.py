@@ -28,8 +28,8 @@ def token_data():
         address = "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
         chain = "ethereum"
         price = (get_price(token,address,chain))
-        tot_supply_usd = total_supply*price
-        circ_supply_usd = circulating_supply*price
+        tot_supply_usd = total_supply/price
+        circ_supply_usd = circulating_supply/price
 
         info = Info(
             token=token,
