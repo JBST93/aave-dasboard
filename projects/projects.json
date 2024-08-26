@@ -723,7 +723,7 @@
     "logoUrl": "https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=022"
   },
   {
-    "project": "Wrapped Ether (wETH)",
+    "project": "Wrapped Ethereum",
     "description": "wETH is a tokenized version of Ether (ETH) on the Ethereum blockchain. It represents ETH in a wrapped ERC-20 format, enabling it to be used seamlessly in decentralized finance (DeFi) applications that require ERC-20 tokens.",
     "governance": "Decentralized",
     "business": "Wrapped Token",

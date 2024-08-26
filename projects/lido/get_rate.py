@@ -13,7 +13,7 @@ from scripts.utils import load_abi
 from instances.TokenData import TokenData as Data
 from utils.get_infura import select_infura
 from utils.get_price import get_price
-
+from utils.get_last_price_db import get_latest_price
 
 token_list = [
     {
@@ -29,9 +29,9 @@ token_list = [
         "decimals": 18,
         "chain":"ethereum",
         "provider_abi": load_abi("lido",'wsteth_abi.json'),
+        "endpoint": None,
     }
 ]
-
 
 def get_data_steth():
     for token in token_list:
@@ -48,10 +48,14 @@ def get_data_steth():
         supply_raw = pool_contract.functions.totalSupply().call()
         supply = round(supply_raw/10**token["decimals"],2)
 
-        price = get_price(address)
+        if token["token"] == "wstETH":
+            stETH_price = get_latest_price("stETH") or 1
+            price = 1.1770 * stETH_price
+        else:
+            price = get_price(token["token"])
 
         data = Data (
-            token= "stETH",
+            token= token["token"],
             price= price,
             price_source = "",
             tot_supply= supply,
@@ -70,3 +74,6 @@ def get_data_steth():
 # The exact fee size is defined by the DAO and can be changed in the future via DAO voting.
 # To collect the fee, the protocol mints new stETH token shares and assigns them to the fee recipients.
 # Currently, the fee collected by Lido protocol is 10% of staking rewards with half of it going to the node operators and the other half going to the protocol treasury.
+if __name__ == '__main__':
+    with app.app_context():
+        get_data_steth()
