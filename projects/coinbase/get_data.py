@@ -19,29 +19,31 @@ from utils.get_price import get_price
 
 
 def token_data():
-    token = "cbETH"
-    circulating_supply = data.get("circulating_supply")
-    total_supply = float(data.get("total_supply"))
-    apy = round(float(data.get("apy"))*100,2)
-    conversion_rate = data.get("conversion_rate")
-    address = "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
-    chain = "ethereum"
-    price = get_price(token,address,chain)
-    tot_supply_usd = total_supply*price
-    circ_supply_usd = circulating_supply*price
+    with app.app_context():
+        token = "cbETH"
+        circulating_supply = float(data.get("circulating_supply"))
+        total_supply = float(data.get("total_supply"))
+        apy = round(float(data.get("apy"))*100,2)
+        conversion_rate = data.get("conversion_rate")
+        address = "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
+        chain = "ethereum"
+        price = (get_price(token,address,chain))
+        tot_supply_usd = total_supply*price
+        circ_supply_usd = circulating_supply*price
 
-    info = Info(
-        token=token,
-        price=price,
-        price_source="",
-        tot_supply=tot_supply_usd,
-        circ_supply=circ_supply_usd,
-        tvl=circ_supply_usd,
-        revenue=0,
-        timestamp=datetime.utcnow()
-    )
-    db.session.add(info)
-    db.session.commit()
+        info = Info(
+            token=token,
+            price=price,
+            price_source="",
+            tot_supply=tot_supply_usd,
+            circ_supply=circ_supply_usd,
+            tvl=0,
+            revenue=0,
+            timestamp=datetime.utcnow()
+        )
+        db.session.add(info)
+        db.session.commit()
+        print(info)
 
 
 if __name__ == '__main__':

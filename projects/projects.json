@@ -710,7 +710,7 @@
     "logoUrl": "https://cryptologos.cc/logos/lido-dao-ldo-logo.svg?v=033"
   },
   {
-    "project": "Wrapped Staked ETH",
+    "project": "LiDo",
     "description": "wstETH is a liquid staking token representing staked Ether on the Ethereum 2.0 Beacon Chain through the Lido protocol. stETH allows users to earn staking rewards while maintaining liquidity, enabling participation in DeFi activities.",
     "governance": "Decentralized",
     "business": "Liquid Staking",
@@ -723,7 +723,7 @@
     "logoUrl": "https://cryptologos.cc/logos/lido-dao-ldo-logo.svg?v=033"
   },
   {
-    "project": "Wrapped Ethereum (ETH)",
+    "project": "ether.fi",
     "description": "weETH is a tokenized version of Ether (ETH) on the Ethereum blockchain. It represents ETH in a wrapped format, enabling it to be used in decentralized finance (DeFi) applications that require ERC-20 tokens.",
     "governance": "Decentralized",
     "business": "Wrapped Token",
@@ -736,7 +736,7 @@
     "logoUrl": "https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=022"
   },
   {
-    "project": "Staked DAI (sDAI)",
+    "project": "Maker DAO",
     "description": "sDAI is a staked version of DAI, a decentralized stablecoin from MakerDAO. sDAI allows users to earn additional yield on their DAI holdings by participating in the MakerDAO staking mechanism, contributing to the security and stability of the Maker ecosystem.",
     "governance": "Decentralized",
     "business": "Staking",
@@ -749,7 +749,7 @@
     "logoUrl": "https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.svg?v=022"
   },
   {
-    "project": "Coinbase Wrapped Staked ETH",
+    "project": "Coinbase",
     "description": "cbETH is a liquid staking token representing staked Ether on the Ethereum 2.0 Beacon Chain through the Coinbase platform. cbETH allows users to earn staking rewards while maintaining liquidity, enabling participation in DeFi activities.",
     "governance": "Centralized",
     "business": "Liquid Staking",
@@ -759,7 +759,7 @@
     "address": "0xbe9895146f7af43049ca1c1ae358b0541ea49704",
     "chain": "ethereum",
     "audited": "Yes",
-    "logoUrl": "https://cryptologos.cc/logos/coinbase-token-cbeth-logo.svg"
+    "logoUrl": "https://dynamic-assets.coinbase.com/55517c7b84cff054d0bf84f6d82680b5368915854f855ec4fe0178478a637b18a985ec85b87387beb2ae2a1b276fcb320ac7451c358302ceebb179c58934ff65/asset_icons/93aa525880c2df46f3d5404cff1844a42f1a5d1fc812128ae3f70f2ce4a882e1.png"
   },
   {
     "project": "Silo Finance",
