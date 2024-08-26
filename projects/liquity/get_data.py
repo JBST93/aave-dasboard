@@ -8,7 +8,7 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')
 sys.path.append(project_root)
 
 from app import app, db
-import instances.TokenData as Info
+from instances.TokenData import TokenData as Info
 from utils.get_infura import select_infura
 from utils.get_price import get_price
 from utils.load_abi import load_abi
@@ -50,9 +50,9 @@ def get_token():
             circ_supply_usd = circl_supply * price
 
             if "tot_supply" in token:
-                tot_supply = token["tot_supply"]
+                tot_supply = float(token["tot_supply"])
             else:
-                tot_supply = circl_supply
+                tot_supply = float(circl_supply)
 
             info = Info(
                 token=token["token"],
