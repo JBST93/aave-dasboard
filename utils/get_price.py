@@ -60,11 +60,13 @@ def get_price_curve(address, chain):
     return None
 
 def get_gateio_price(token):
-    endpoint = f"https://api.gateio.ws/api/v4/spot/tickers?currency_pair={token}_USDT"
-    data = requests.get(endpoint).json()
-    price = data[0]["last"]
-    return float(price)
-
+    try:
+        endpoint = f"https://api.gateio.ws/api/v4/spot/tickers?currency_pair={token}_USDT"
+        data = requests.get(endpoint).json()
+        price = data[0]["last"]
+        return price
+    except requests.RequestException as e:
+        return None
 
 def get_angle_price(token):
     endpoint = "https://api.angle.money/v1/prices"
