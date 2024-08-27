@@ -123,18 +123,7 @@
     "token": "OP",
     "audited": "Yes",
     "logoUrl": "https://cryptologos.cc/logos/optimism-ethereum-op-logo.svg?v=033",
-    "decimals": 18,
-    "supply": {
-      "circSupply": {
-        "method": "API",
-        "enpoint": "https://static.optimism.io/tokenomics/circulatingSupply.txt",
-        "path": ""
-      },
-      "totSupply": {
-        "method": "hardcoded",
-        "amount": 4294967296
-      }
-    }
+    "decimals": 18
   },
   {
     "project": "Rocket Pool ETH",

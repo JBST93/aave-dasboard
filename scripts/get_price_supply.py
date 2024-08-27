@@ -67,36 +67,40 @@ def get_price_supply():
             return
 
         for item in tokens:
-            token = item["token"]
-            address = item["address"]
-            chain = item["chain"]
-            supply_data = item.get("supply", {})
+            try:
+                token = item["token"]
+                address = item["address"]
+                chain = item["chain"]
+                supply_data = item.get("supply", {})
 
-            # Check for existing data in the database
-            if supply_data:
-                print(f"Fetching data for {token} as supply daya in JSON")
+                # Check for existing data in the database
+                if supply_data:
+                    print(f"Fetching data for {token} as supply daya in JSON")
 
-                circ_supply = get_supply(supply_data) if supply_data else 0
-                price = get_price(token, address, chain) or None
+                    circ_supply = get_supply(supply_data) if supply_data else 0
+                    price = get_price(token, address, chain) or None
 
-                if circ_supply is not None and price is not None:
-                    item['price'] = price
-                    item['circ_supply'] = circ_supply
+                    if circ_supply is not None and price is not None:
+                        item['price'] = price
+                        item['circ_supply'] = circ_supply
 
-                    try:
-                        token_data = Data(
-                            token=token,
-                            price=price,
-                            circ_supply=circ_supply,
-                            tvl = 0,
-                        )
+                        try:
+                            token_data = Data(
+                                token=token,
+                                price=price,
+                                circ_supply=circ_supply,
+                                tvl = 0,
+                            )
 
-                        db.session.add(token_data)
+                            db.session.add(token_data)
 
-                    except Exception as e:
-                        logger.error(f"Error adding token data to database: {e}")
-                else:
-                    logger.warning(f"Skipping token {token} due to missing price or supply data")
+                        except Exception as e:
+                            logger.error(f"Error adding token data to database: {e}")
+                    else:
+                        logger.warning(f"Skipping token {token} due to missing price or supply data")
+
+            except Exception as e:
+                print(f"error for f{item["token"]}: {e}")
 
         try:
             db.session.commit()
