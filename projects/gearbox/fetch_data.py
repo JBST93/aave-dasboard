@@ -33,7 +33,6 @@ provider_abi = load_abi("gearbox","gearbox_abi.json")
 
 
 def fetch_store_data():
-    print("Starting to Fetch Data for Gearbox")
     with app.app_context():
         try:
             for token,address in pool_contract_address.items():

@@ -60,6 +60,7 @@ def open_json():
 
 def get_price_supply():
     with app.app_context():
+        print("Fetching data for token without dedicated function")
         tokens = open_json()
         if not tokens:
             logger.error("No tokens found in JSON file")
@@ -73,6 +74,8 @@ def get_price_supply():
 
             # Check for existing data in the database
             if supply_data:
+                print(f"Fetching data for {token} as supply daya in JSON")
+
                 circ_supply = get_supply(supply_data) if supply_data else 0
                 price = get_price(token, address, chain) or None
 
@@ -89,6 +92,7 @@ def get_price_supply():
                         )
 
                         db.session.add(token_data)
+
                     except Exception as e:
                         logger.error(f"Error adding token data to database: {e}")
                 else:

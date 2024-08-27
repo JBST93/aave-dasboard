@@ -37,9 +37,6 @@ smart_contracts = {
 
 def token_data(total_lend_usd, total_borrowed_usd):
     tvl_usd = total_lend_usd - total_borrowed_usd
-    print(tvl_usd)
-    print(total_borrowed_usd)
-    print(total_lend_usd)
 
     info = Info(
         token=gov_token,

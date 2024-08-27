@@ -20,6 +20,13 @@ const DataTable = ({ rows }) => {
         : row.price_day_delta < 0
         ? 'red'
         : 'inherit',
+
+    tvl_day_delta_color:
+      row.tvl_day_delta > 0
+        ? 'green'
+        : row.price_day_delta < 0
+        ? 'red'
+        : 'inherit',
   }));
 
   const columns = [
@@ -104,7 +111,7 @@ const DataTable = ({ rows }) => {
       headerName: '24H TVL',
       width: 100,
       renderCell: (params) => (
-        <span style={{ color: params.row.price_day_delta_color }}>
+        <span style={{ color: params.row.tvl_day_delta_color }}>
           {params.value}%
         </span>
       ),

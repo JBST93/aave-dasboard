@@ -49,8 +49,6 @@ def get_info():
 
             db.session.add(data)
 
-            print(data)
-
         except requests.exceptions.RequestException as e:
             print(f"Error fetching data for {item['token']}: {e}")
         except KeyError as e:

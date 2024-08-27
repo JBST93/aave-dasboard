@@ -43,7 +43,6 @@ def token_data():
         )
         db.session.add(info)
         db.session.commit()
-        print(info)
 
 if __name__ == '__main__':
     with app.app_context():
