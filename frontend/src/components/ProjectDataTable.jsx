@@ -100,6 +100,17 @@ const DataTable = ({ rows }) => {
         params.value === 0 ? '-' : params.value.toLocaleString(),
     },
     {
+      field: 'tvl_day_delta',
+      headerName: '24H TVL',
+      width: 100,
+      renderCell: (params) => (
+        <span style={{ color: params.row.price_day_delta_color }}>
+          {params.value}%
+        </span>
+      ),
+      headerClassName: 'font-bold dark:text-white',
+    },
+    {
       field: 'website',
       headerName: 'Website',
       width: 150,
