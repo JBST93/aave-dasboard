@@ -94,7 +94,11 @@ def fetch_store_data():
     with app.app_context():
         logger.info(f"Fetching Yields Data")
         for name, task in tasks.items():
-            log_and_execute(task, name)
+            try:
+                log_and_execute(task, name)
+            except Exception as e:
+                print(e)
+
 
 
 def fetch_price_supply():

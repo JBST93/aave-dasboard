@@ -53,13 +53,19 @@ def get_projects():
 
                         if token_data_24h_ago and price != 0:
                             price_24h_ago = token_data_24h_ago.price or 0
-                            tvl_24h_ago = token_data_24h_ago.tvl or 0
-
                             price_day_delta = (price - price_24h_ago)/price*100
-                            tvl_day_delta = (tvl - tvl_24h_ago)/tvl*100
 
                         else:
                             price_day_delta = 0
+
+                        if token_data_24h_ago and tvl != 0:
+                            tvl_24h_ago = token_data_24h_ago.tvl or 0
+                            tvl_day_delta = (tvl - tvl_24h_ago)/tvl*100
+                        else:
+                            tvl_day_delta = 0
+
+
+
 
 
                         formatted_timestamp = timestamp.strftime('%Y-%m-%d %H:%M:%S') if timestamp else "NEW"
@@ -85,7 +91,6 @@ def get_projects():
                     else:
                         price = round(price,0)
 
-
                     projects.append({
                         'project': result["project"],
                         'description': result["description"],
@@ -93,7 +98,7 @@ def get_projects():
                         'supply_formatted': circ_supply,
                         'price': price,
                         'tvl':f"{tvl:,.0f}",
-                        'tvl_day_delta':f"{price_day_delta:,.2f}",
+                        'tvl_day_delta':f"{tvl_day_delta:,.2f}",
                         'price_day_delta': f"{price_day_delta:,.2f}",
                         'marketCapSorting': marketCap,
                         'marketCap': f"{marketCap:,.0f}",
