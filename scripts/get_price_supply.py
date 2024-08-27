@@ -74,7 +74,7 @@ def get_price_supply():
             # Check for existing data in the database
             if supply_data:
                 circ_supply = get_supply(supply_data) if supply_data else 0
-                price = get_price(token, address, chain)
+                price = get_price(token, address, chain) or None
 
                 if circ_supply is not None and price is not None:
                     item['price'] = price
@@ -84,7 +84,8 @@ def get_price_supply():
                         token_data = Data(
                             token=token,
                             price=price,
-                            circ_supply=circ_supply
+                            circ_supply=circ_supply,
+                            tvl = 0,
                         )
 
                         db.session.add(token_data)
@@ -95,7 +96,6 @@ def get_price_supply():
 
         try:
             db.session.commit()
-            logger.info("Token data committed to database")
         except Exception as e:
             logger.error(f"Error committing token data to database: {e}")
 

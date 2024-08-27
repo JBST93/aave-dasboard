@@ -54,9 +54,6 @@ def log_and_execute(func, func_name):
         func()  # Execute the function
     except Exception as e:
         logger.error(f"Error fetching {func_name} data: {e}")
-    finally:
-        logger.info(f"Finished task {func_name}, moving to the next task.")
-
 
 
 def fetch_store_data():
