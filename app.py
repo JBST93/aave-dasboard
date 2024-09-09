@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_from_directory, Response
+from flask import Flask, jsonify, send_from_directory, Response, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dotenv import load_dotenv
@@ -33,6 +33,23 @@ def render_robot():
             Disallow: /api/
             """
     return Response(robots_content, mimetype='text/plain')
+
+@app.route('/admin')
+def render_admin_panel():
+    html_content = """
+    <html>
+        <head>
+            <title>Admin Panel</title>
+        </head>
+        <body>
+            <h1>Placeholder for Admin Panel</h1>
+            <p>The admin panel will be available here soon.</p>
+        </body>
+    </html>
+    """
+    return Response(html_content, mimetype='text/html')
+
+
 
 @app.route('/api/projects',methods=["GET"])
 def get_project_list():
