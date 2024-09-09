@@ -51,14 +51,12 @@ def fetch_store_data():
 
     for chain in chains:
         api_url = f"https://api.curve.fi/v1/getLendingVaults/{chain}/"
-        logging.info(f"Fetching data from {api_url}")
 
         try:
             r = requests.get(api_url)
             r.raise_for_status()
 
             data = r.json()["data"]["lendingVaultData"]
-            logging.info(f"Starting to fetch data for Curve Lend - {chain}")
 
             with app.app_context():
                 for pair in data:
