@@ -21,7 +21,6 @@ class Project(db.Model):
     github_link = db.Column(db.String(255))
     timestamp = db.Column(db.DateTime, default=datetime.now)
 
-
     def to_dict(self):
         return {
             'id': self.id,

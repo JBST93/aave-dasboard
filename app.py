@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, flash, Response, send_from_directory
+from flask import Flask, request, render_template, redirect, url_for, flash, Response, send_from_directory, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dotenv import load_dotenv
@@ -106,7 +106,27 @@ def admin_delete_project(id):
 
 @app.route('/api/projects',methods=["GET"])
 def get_project_list():
-    return get_projects()
+ projects = Project.query.all()
+    project_list = []
+    for project in projects:
+        project_data = {
+            'id': project.id,
+            'protocol_name': project.protocol_name,
+            'token_ticker': project.token_ticker,
+            'logo_url': project.logo_url,
+            'description': project.description,
+            'category_main': project.category_main,
+            'website': project.website,
+            'forum': project.forum,
+            'alert': project.alert,
+            'token_decimals': project.token_decimals,
+            'chain_main': project.chain_main,
+            'contract_main': project.contract_main,
+            'snapshot_name': project.snapshot_name,
+            'github_link': project.github_link
+        }
+        project_list.append(project_data)
+    return jsonify(project_list)
 
 @app.route('/api/stablecoin_yield_rates', methods=['GET'])
 def liquidity_rates():

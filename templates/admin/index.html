@@ -9,8 +9,16 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Protocol Name</th>
-      <th>Token Ticker</th>
+      <th>Protocol</th>
+      <th>Ticker</th>
+      <th>Logo</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Website</th>
+      <th>Forum</th>
+      <th>Alert</th>
+      <th>Decimals</th>
+      <th>Chain</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -20,6 +28,15 @@
       <td>{{ project.id }}</td>
       <td>{{ project.protocol_name }}</td>
       <td>{{ project.token_ticker }}</td>
+      <td>{{ project.logo_url }}</td>
+      <td>{{ project.description }}</td>
+      <td>{{ project.category_main }}</td>
+      <td>{{ project.website }}</td>
+      <td>{{ project.forum }}</td>
+      <td>{{ project.alert }}</td>
+      <td>{{ project.token_decimals }}</td>
+      <td>{{ project.chain_main }}</td>
+
       <td>
         <a
           href="{{ url_for('admin_edit_project', id=project.id) }}"
