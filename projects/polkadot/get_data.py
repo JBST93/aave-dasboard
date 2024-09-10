@@ -26,9 +26,9 @@ def get_token_data():
         data_circ = data['data']['detail']['DOT']['total_issuance']
         data_tot = data['data']['detail']['DOT']['total_issuance']
 
-        circSupply = float(data_circ)
-        totSupply = float(data_tot)
         price = get_price(token, address, chain)
+        circSupply = float(data_circ)/10**decimals/price
+        totSupply = float(data_tot)/10**decimals/price
 
         data = Data (
                 token= token,
