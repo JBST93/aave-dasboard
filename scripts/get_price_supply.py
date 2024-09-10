@@ -40,20 +40,13 @@ def get_projects():
             results = Project.query.all()
             tokens = []
             for result in results:
-                if result.get("token_ticker"):
-                    token = result.get("token_ticker",{})
-                    chain = result.get("chain_main",{})
-                    address = result.get("contract_main",{})
-                    supply = result.get("supply",{})
-                    tokens.append(
-                        {
-                            "token": token,
-                            "chain": chain,
-                            "address": address,
-                            "supply": supply,
-                        }
-                    )
-
+                if result.token_ticker:
+                    tokens.append({
+                        "token": result.token_ticker,
+                        "chain": result.chain_main or None,
+                        "address": result.contract_main or None,
+                        "supply": result.supply or 0,
+                    })
             return tokens
         except Exception as e:
             logger.error(f"Error reading API data: {e}")
@@ -64,15 +57,15 @@ def get_price_supply():
         print("Fetching data for token without dedicated function")
         tokens = get_projects()
         if not tokens:
-            logger.error("No tokens found in JSON file")
+            logger.error("No tokens found in database")
             return
 
         for item in tokens:
             try:
                 token = item["token"]
-                address = item["address"]
-                chain = item["chain"]
-                supply_data = item.get("supply", {})
+                address = item["address"] or None
+                chain = item["chain"] or None
+                supply_data = item.get("supply") or 0
 
                 # Check for existing data in the database
                 if supply_data:

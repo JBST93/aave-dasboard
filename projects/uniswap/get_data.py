@@ -3,6 +3,7 @@ import os, sys
 from dotenv import load_dotenv
 import logging
 import json
+from datetime import datetime
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 sys.path.append(project_root)
@@ -108,9 +109,10 @@ def get_uniswap_pools():
                     tvl=reserve_usd,
                     yield_rate_base=yield_rate_base,
                     yield_rate_reward=yield_rate_reward,
-                    total_yield=total_yield,
                     volume=volume,
                     smart_contract=pair_id,
+                    type='LP',
+                    timestamp=datetime.now()
                 )
 
                 db.session.add(data)
