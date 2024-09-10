@@ -6,7 +6,6 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False, unique=True)
 
-    projects = db.relationship('Project', secondary='project_categories', back_populates='categories')
 
     def __repr__(self):
         return f"Category(id={self.id!r}, name={self.name!r})"

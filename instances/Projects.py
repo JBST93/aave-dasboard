@@ -1,6 +1,5 @@
 from app import db
 from datetime import datetime
-from .Associations import project_categories
 
 
 class Project(db.Model):
@@ -22,8 +21,6 @@ class Project(db.Model):
     github_link = db.Column(db.String(255))
     timestamp = db.Column(db.DateTime, default=datetime.now)
 
-    # Relationship with categories
-    categories = db.relationship('Category', secondary='project_categories', back_populates='projects')
 
     def to_dict(self):
         return {
@@ -42,7 +39,6 @@ class Project(db.Model):
             'snapshot_name': self.snapshot_name,
             'github_link': self.github_link,
             'timestamp': self.timestamp.isoformat(),
-            'categories': [category.name for category in self.categories]
         }
 
     def __repr__(self):
