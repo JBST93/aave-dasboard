@@ -38,6 +38,11 @@ from projects.uniswap.get_data import get_uniswap_pools as uniswap
 from projects.polkadot.get_data import get_token_data as polkadot
 from projects.cardano.get_data import token_data as cardano
 from projects.curve.pool_data import get_pools as curve_pools
+from projects.bitcoin.get_data import get_data as bitcoin
+from projects.fantom.get_data import get_data as fantom
+from projects.mantle.get_data import get_data as mantle
+
+
 
 
 
@@ -101,6 +106,9 @@ def fetch_store_data():
         "Uniswap":uniswap,
         "Polkadot":polkadot,
         "Cardano":cardano,
+        "Bitcoin":bitcoin,
+        "Fantom":fantom,
+        "Mantle":mantle,
     }
 
     with app.app_context():

@@ -10,14 +10,14 @@ from app import app, db
 from utils.get_price import get_price
 from instances.TokenData import TokenData as Data
 
-token = "FTM"
-total_supply = 3,175,000,000
+token = "MNT"
 
 def get_data():
-    r = requests.get("https://kfbcljyy2krzipz5b5vt323i440djihv.lambda-url.us-east-1.on.aws")
-    data = r.json()
-    circ_supply = data
-    price = get_price(token,"","")
+    r = requests.get("https://api.mantle.xyz/api/v1/token-data")
+    data = r.json().get("result").get("totalSupply")
+    circ_supply = data.get("circulatingSupply")
+    total_supply = data.get("totalSupply")
+    price = get_price(token,"0x3c3a81e81dc49a522a592e7622a7e711c06bf354","Ethereum")
 
     data = Data (
             token=token,
