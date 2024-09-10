@@ -1,10 +1,8 @@
-from flask import Flask, request, render_template, redirect, url_for, flash, Response, send_from_directory, jsonify
+from flask import Flask, request, render_template, redirect, url_for, flash, Response, send_from_directory,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dotenv import load_dotenv
 import os
-import humanize
-from datetime import datetime
 from flask_cors import CORS
 
 load_dotenv()
@@ -106,6 +104,10 @@ def admin_delete_project(id):
 
 @app.route('/api/projects',methods=["GET"])
 def get_project_list():
+    return get_projects()
+
+@app.route('/api/projects2', methods=['GET'])
+def get_project_list():
     projects = Project.query.all()
     project_list = []
     for project in projects:
@@ -127,6 +129,7 @@ def get_project_list():
         }
         project_list.append(project_data)
     return jsonify(project_list)
+
 
 @app.route('/api/stablecoin_yield_rates', methods=['GET'])
 def liquidity_rates():
