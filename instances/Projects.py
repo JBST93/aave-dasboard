@@ -6,8 +6,8 @@ class Project(db.Model):
     __tablename__ = "projects"
 
     id = db.Column(db.Integer, primary_key=True)
-    protocol_name = db.Column(db.String(100), nullable=False, unique=True)
-    token_ticker = db.Column(db.String(20), nullable=False)
+    protocol_name = db.Column(db.String(100), nullable=False, unique=False)
+    token_ticker = db.Column(db.String(20), nullable=False, unique=False)
     logo_url = db.Column(db.String(255), nullable=True)
     description = db.Column(db.Text, nullable=True)
     category_main = db.Column(db.String(50), nullable=True)
