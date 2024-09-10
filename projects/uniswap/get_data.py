@@ -102,7 +102,7 @@ def get_uniswap_pools():
                 total_yield = yield_rate_base + yield_rate_reward
 
                 data = YieldRate(
-                    market=f"{pair['token0']['symbol']}-{pair['token1']['symbol']}",
+                    market=f"{pair['token0']['symbol']} / {pair['token1']['symbol']}",
                     project='Uniswap v2',
                     chain='Ethereum',  # Uniswap V2 is on Ethereum
                     tvl=reserve_usd,
