@@ -37,6 +37,8 @@ from projects.tron.get_data import token_data as tron
 from projects.uniswap.get_data import get_uniswap_pools as uniswap
 from projects.polkadot.get_data import get_token_data as polkadot
 from projects.cardano.get_data import token_data as cardano
+from projects.curve.pool_data import get_pools as curve_pools
+
 
 
 
@@ -69,6 +71,7 @@ def fetch_store_data():
     tasks = {
         "Aave": aave,
         "Curve": curve,
+        "Curve Pools": curve_pools,
         "Gearbox": gearbox,
         "Maker DSR": spark,
         "Compound": compound,
