@@ -21,7 +21,7 @@ def token_data():
     with app.app_context():
         token = "XRP"
         price = get_price(token,"","")
-        circulating_supply = requests.get(endpoint).json()
+        circulating_supply = float(requests.get(endpoint).text.strip()) or 0
         total_supply = 29029846799
         info = Info(
             token=token,

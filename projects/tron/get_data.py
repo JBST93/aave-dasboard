@@ -21,7 +21,7 @@ def token_data():
     with app.app_context():
         token = "TRX"
         price = get_price(token,"","")
-        circulating_supply = requests.get(endpoint).json()
+        circulating_supply = float(requests.get(endpoint).text.strip()) or 0
         total_supply = 86715797804
         info = Info(
             token=token,
