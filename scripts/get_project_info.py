@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
+json_file_path = os.path.join(project_root, 'projects', 'projects.json')
 
 from app import db
 from instances.TokenData import TokenData
@@ -31,67 +32,93 @@ def get_projects():
     with app.app_context():
         try:
             results = Projects.query.all()
-            projects = []
-            for result in results:
-                token = result.get("token_ticker")
-                # Fetch the latest data from the database
-                token_dynamic_data = get_latest_token_data(token)
-                if token_dynamic_data:
-                    price = token_dynamic_data.price or 0
-                    circ_supply = token_dynamic_data.circ_supply or 0
-                    timestamp = token_dynamic_data.timestamp
-                    tvl = token_dynamic_data.tvl or 0
-                    time_24h_ago = token_dynamic_data.timestamp - timedelta(hours=24)
-                    token_data_24h_ago = get_token_data_at_time(token, time_24h_ago)
-                    if token_data_24h_ago and price != 0:
-                        price_24h_ago = token_data_24h_ago.price or 0
-                        price_day_delta = (price - price_24h_ago)/price*100
+            with open(json_file_path, 'r') as file:
+                results = json.load(file)
+
+                projects = []
+                for result in results:
+                    token = result.get("token")
+
+
+                    # Fetch the latest data from the database
+                    token_data = get_latest_token_data(token)
+
+                    if token_data:
+                        price = token_data.price or 0
+                        circ_supply = token_data.circ_supply or 0
+                        timestamp = token_data.timestamp
+                        tvl = token_data.tvl or 0
+
+                        time_24h_ago = token_data.timestamp - timedelta(hours=24)
+                        token_data_24h_ago = get_token_data_at_time(token, time_24h_ago)
+
+
+                        if token_data_24h_ago and price != 0:
+                            price_24h_ago = token_data_24h_ago.price or 0
+                            price_day_delta = (price - price_24h_ago)/price*100
+
+                        else:
+                            price_day_delta = 0
+
+                        if token_data_24h_ago and tvl != 0:
+                            tvl_24h_ago = token_data_24h_ago.tvl or 0
+                            tvl_day_delta = (tvl - tvl_24h_ago)/tvl*100
+                        else:
+                            tvl_day_delta = 0
+
+
+
+
+
+                        formatted_timestamp = timestamp.strftime('%Y-%m-%d %H:%M:%S') if timestamp else "NEW"
+
                     else:
+                        price = 0
+                        circ_supply = 0
                         price_day_delta = 0
-                    if token_data_24h_ago and tvl != 0:
-                        tvl_24h_ago = token_data_24h_ago.tvl or 0
-                        tvl_day_delta = (tvl - tvl_24h_ago)/tvl*100
+                        formatted_timestamp = "NEW"
+
+
+                    marketCap = price * circ_supply
+
+                    if price < 1:
+                        price = round(price,6)
+
+                    elif price <= 10:
+                        price = round(price,4)
+
+                    elif price <= 1000:
+                        price = round(price,2)
+
                     else:
-                        tvl_day_delta = 0
-                    formatted_timestamp = timestamp.strftime('%Y-%m-%d %H:%M:%S') if timestamp else "NEW"
-                else:
-                    price = 0
-                    circ_supply = 0
-                    price_day_delta = 0
-                    formatted_timestamp = "NEW"
-                marketCap = price * circ_supply
-                if price < 1:
-                    price = round(price,6)
-                elif price <= 10:
-                    price = round(price,4)
-                elif price <= 1000:
-                    price = round(price,2)
-                else:
-                    price = round(price,0)
-                projects.append({
-                    'project': result["project"],
-                    'description': result["description"],
-                    'token': result["token"],
-                    'supply_formatted': circ_supply,
-                    'price': price,
-                    'tvl':f"{tvl:,.0f}",
-                    'tvl_day_delta':f"{tvl_day_delta:,.2f}",
-                    'price_day_delta': f"{price_day_delta:,.2f}",
-                    'marketCapSorting': marketCap,
-                    'marketCap': f"{marketCap:,.0f}",
-                    'website': result["website"],
-                    'forum': result["forum"],
-                    'type': result["business"],
-                    'logo': result.get("logoUrl",""),
-                    'timestamp': formatted_timestamp
-                })
-            projects.sort(key=lambda x: x['marketCapSorting'], reverse=True)
-            # Remove the 'marketCap' field used for sorting
-            for project in projects:
-                del project['marketCapSorting']
+                        price = round(price,0)
+
+                    projects.append({
+                        'project': result["project"],
+                        'description': result["description"],
+                        'token': result["token"],
+                        'supply_formatted': circ_supply,
+                        'price': price,
+                        'tvl':f"{tvl:,.0f}",
+                        'tvl_day_delta':f"{tvl_day_delta:,.2f}",
+                        'price_day_delta': f"{price_day_delta:,.2f}",
+                        'marketCapSorting': marketCap,
+                        'marketCap': f"{marketCap:,.0f}",
+                        'website': result["website"],
+                        'forum': result["forum"],
+                        'type': result["business"],
+                        'logo': result.get("logoUrl",""),
+                        'timestamp': formatted_timestamp
+                    })
+
+                projects.sort(key=lambda x: x['marketCapSorting'], reverse=True)
+
+                # Remove the 'marketCap' field used for sorting
+                for project in projects:
+                    del project['marketCapSorting']
 
 
-            return jsonify(projects)
+                return jsonify(projects)
 
         except Exception as e:
             return jsonify({"error": str(e)}), 500
