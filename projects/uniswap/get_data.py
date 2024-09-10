@@ -109,7 +109,7 @@ def get_uniswap_pools():
                     tvl=reserve_usd,
                     yield_rate_base=yield_rate_base,
                     yield_rate_reward=yield_rate_reward,
-                    volume=volume,
+                    tvl=volume,
                     smart_contract=pair_id,
                     type='LP',
                     timestamp=datetime.now()

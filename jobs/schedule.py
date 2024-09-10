@@ -35,6 +35,8 @@ from projects.orca.get_data import get_info as orca
 from projects.ripple.get_data import token_data as ripple
 from projects.tron.get_data import token_data as tron
 from projects.uniswap.get_data import get_uniswap_pools as uniswap
+from projects.polkadot.get_data import get_token_data as polkadot
+
 
 
 
@@ -92,6 +94,8 @@ def fetch_store_data():
         "Ripple":ripple,
         "Tron":tron,
         "Uniswap":uniswap,
+        "Polkadot":polkadot,
+
     }
 
     with app.app_context():
