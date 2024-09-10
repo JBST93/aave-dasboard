@@ -26,6 +26,10 @@ from scripts.stablecoin_info_render import get_stablecoin_info_render
 from scripts.get_project_info import get_projects
 from projects.curve.pool_data import get_pools
 
+from instances.Categories import create_predefined_categories
+
+
+
 @app.route('/robot.txt')
 def render_robot():
     robots_content = """# robots.txt file for TokenDataView
