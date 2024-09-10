@@ -106,7 +106,7 @@ def admin_delete_project(id):
 
 @app.route('/api/projects',methods=["GET"])
 def get_project_list():
- projects = Project.query.all()
+    projects = Project.query.all()
     project_list = []
     for project in projects:
         project_data = {
