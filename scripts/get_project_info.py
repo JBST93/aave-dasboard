@@ -12,7 +12,7 @@ json_file_path = os.path.join(project_root, 'projects', 'projects.json')
 
 from app import db
 from instances.TokenData import TokenData
-from instances.Projects import Project
+from instances.Projects import Projects
 
 def get_latest_token_data(token):
     """Fetch the latest token data from the database based on timestamp."""
@@ -31,7 +31,6 @@ def get_token_data_at_time(token, target_time):
 def get_projects():
     with app.app_context():
         try:
-            results = Projects.query.all()
             with open(json_file_path, 'r') as file:
                 results = json.load(file)
 
