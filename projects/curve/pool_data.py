@@ -5,6 +5,7 @@ import requests
 import functools
 import time
 from sqlalchemy import desc, and_
+from datetime import datetime
 
 
 chains = ["ethereum","arbitrum","optimism","base","fraxtal"]
@@ -12,10 +13,11 @@ chains = ["ethereum","arbitrum","optimism","base","fraxtal"]
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 sys.path.append(project_root)
 
-from app import app
+from app import app, db
 
 token = "CRV"
 from instances.TokenData import TokenData
+from instances.YieldRate import YieldRate
 
 def get_supply():
     endpoint = "https://api.curve.fi/api/getCrvCircSupply"
@@ -63,7 +65,6 @@ def get_pools():
 
         for pool in pools:
             address = pool.get("address")
-            tvl_with_basepool = pool.get("totalSupply")
             tvl = pool.get("usdTotalExcludingBasePool")
             total_tvl += tvl
             coins_info = pool.get("coins")
@@ -126,6 +127,23 @@ def get_pools():
                 }
 
                 data_list.append(data)
+
+                info = YieldRate(
+                    market = symbol,
+                    project = "Curve",
+                    information = "Curve Finance",
+                    yield_rate_base = base_apy,
+                    yield_rate_reward = reward_apy,
+                    yield_token_reward = "CRV",
+                    tvl = tvl,
+                    chain = chain.capitalize(),
+                    type = type,
+                    smart_contract = address,
+                    timestamp = datetime.utcnow()
+                )
+                db.session.add(info)
+
+        db.session.commit()
 
     sorted_data_list = sorted(data_list, key=lambda x: x['tvl'], reverse=True)
 
