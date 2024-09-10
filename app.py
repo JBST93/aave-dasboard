@@ -71,7 +71,7 @@ def admin_add_project():
         db.session.add(new_project)
         db.session.commit()
         flash('Project added successfully', 'success')
-        return redirect(url_for('admin_panel'))
+        return redirect(url_for('admin_index'))
     return render_template('admin/add_project.html')
 
 
