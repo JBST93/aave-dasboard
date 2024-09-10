@@ -107,7 +107,7 @@ def get_project_list():
     return get_projects()
 
 @app.route('/api/projects2', methods=['GET'])
-def get_project_list():
+def get_project_list2():
     projects = Project.query.all()
     project_list = []
     for project in projects:
