@@ -10,11 +10,13 @@ logger = logging.getLogger(__name__)
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
+
 json_file_path = os.path.join(project_root, 'projects', 'projects.json')
 
 from app import app, db
 from utils.get_price import get_price
 from instances.TokenData import TokenData as Data
+from instances.Projects import Project
 
 def get_nested_value(data, path):
     keys = path.split('.')
@@ -32,36 +34,35 @@ def get_nested_value(data, path):
     return data
 
 
-def open_json():
+def get_projects():
     with app.app_context():
         try:
-            with open(json_file_path, 'r') as file:
-                results = json.load(file)
-                tokens = []
-                for result in results:
-                    if result.get("token"):
-                        token = result.get("token")
-                        chain = result.get("chain")
-                        address = result.get("address")
-                        supply = result.get("supply")
+            results = Project.query.all()
+            tokens = []
+            for result in results:
+                if result.get("token_ticker"):
+                    token = result.get("token_ticker",{})
+                    chain = result.get("chain_main",{})
+                    address = result.get("contract_main",{})
+                    supply = result.get("supply",{})
+                    tokens.append(
+                        {
+                            "token": token,
+                            "chain": chain,
+                            "address": address,
+                            "supply": supply,
+                        }
+                    )
 
-                        tokens.append(
-                            {
-                                "token": token,
-                                "chain": chain,
-                                "address": address,
-                                "supply": supply,
-                            }
-                        )
-                return tokens
+            return tokens
         except Exception as e:
-            logger.error(f"Error reading JSON file: {e}")
+            logger.error(f"Error reading API data: {e}")
             return []
 
 def get_price_supply():
     with app.app_context():
         print("Fetching data for token without dedicated function")
-        tokens = open_json()
+        tokens = get_projects()
         if not tokens:
             logger.error("No tokens found in JSON file")
             return
