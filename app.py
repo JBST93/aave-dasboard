@@ -39,9 +39,15 @@ def render_robot():
 
 @app.route('/admin')
 @app.route('/admin/')
-
-def admin_panel():
-    projects = Project.query.all()
+def admin_index():
+    search = request.args.get('search', '')
+    if search:
+        projects = Project.query.filter(
+            (Project.protocol_name.ilike(f'%{search}%')) |
+            (Project.token_ticker.ilike(f'%{search}%'))
+        ).all()
+    else:
+        projects = Project.query.all()
     return render_template('admin/index.html', projects=projects)
 
 @app.route('/admin/add-project', methods=['GET', 'POST'])
