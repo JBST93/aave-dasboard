@@ -84,17 +84,17 @@ def admin_edit_project(id):
         project.logo_url = request.form['logo_url']
         project.description = request.form['description']
         project.category_main = request.form['category_main']
-        project.website = request.form['website']
-        project.forum = request.form['forum']
+        project.website = request.form['website'] or None
+        project.forum = request.form['forum'] or None
         project.alert = request.form['alert']
-        project.token_decimals = int(request.form['token_decimals'])
+        project.token_decimals = int(request.form['token_decimals'] or 0)
         project.chain_main = request.form['chain_main']
         project.contract_main = request.form['contract_main']
         project.snapshot_name = request.form['snapshot_name']
-        project.github_link = request.form['github_link']
+        project.github_link = request.form['github_link'] or None
         db.session.commit()
         flash('Project updated successfully', 'success')
-        return redirect(url_for('admin_panel'))
+        return redirect(url_for('admin_index'))
     return render_template('admin/edit_project.html', project=project)
 
 
@@ -104,15 +104,10 @@ def admin_delete_project(id):
     db.session.delete(project)
     db.session.commit()
     flash('Project deleted successfully', 'success')
-    return redirect(url_for('admin_panel'))
+    return redirect(url_for('admin_index'))
 
 
-
-@app.route('/api/projects',methods=["GET"])
-def get_project_list():
-    return get_projects()
-
-@app.route('/api/projects2', methods=['GET'])
+@app.route('/api/projects', methods=['GET'])
 def get_project_list2():
     projects = Project.query.all()
     project_list = []
@@ -135,7 +130,6 @@ def get_project_list2():
         }
         project_list.append(project_data)
     return jsonify(project_list)
-
 
 @app.route('/api/stablecoin_yield_rates', methods=['GET'])
 def liquidity_rates():
