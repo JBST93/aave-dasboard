@@ -1,0 +1,12 @@
+{% extends 'admin/base.html' %} {% block content %}
+<h1>Edit Project</h1>
+<form method="POST">
+  {% include 'admin/project_form.html' %}
+  <button
+    type="submit"
+    class="btn btn-primary"
+  >
+    Update Project
+  </button>
+</form>
+{% endblock %}

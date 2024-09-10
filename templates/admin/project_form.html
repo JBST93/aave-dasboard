@@ -1,0 +1,133 @@
+<div class="form-group">
+  <label for="protocol_name">Protocol Name:</label>
+  <input
+    type="text"
+    class="form-control"
+    id="protocol_name"
+    name="protocol_name"
+    value="{{ project.protocol_name if project else '' }}"
+    required
+  />
+</div>
+<div class="form-group">
+  <label for="token_ticker">Token Ticker:</label>
+  <input
+    type="text"
+    class="form-control"
+    id="token_ticker"
+    name="token_ticker"
+    value="{{ project.token_ticker if project else '' }}"
+    required
+  />
+</div>
+<div class="form-group">
+  <label for="logo_url">Logo URL:</label>
+  <input
+    type="url"
+    class="form-control"
+    id="logo_url"
+    name="logo_url"
+    value="{{ project.logo_url if project else '' }}"
+  />
+</div>
+<div class="form-group">
+  <label for="description">Description:</label>
+  <textarea
+    class="form-control"
+    id="description"
+    name="description"
+    rows="4"
+  >
+{{ project.description if project else '' }}</textarea
+  >
+</div>
+<div class="form-group">
+  <label for="category_main">Main Category:</label>
+  <input
+    type="text"
+    class="form-control"
+    id="category_main"
+    name="category_main"
+    value="{{ project.category_main if project else '' }}"
+  />
+</div>
+<div class="form-group">
+  <label for="website">Website:</label>
+  <input
+    type="url"
+    class="form-control"
+    id="website"
+    name="website"
+    value="{{ project.website if project else '' }}"
+  />
+</div>
+<div class="form-group">
+  <label for="forum">Forum:</label>
+  <input
+    type="url"
+    class="form-control"
+    id="forum"
+    name="forum"
+    value="{{ project.forum if project else '' }}"
+  />
+</div>
+<div class="form-group">
+  <label for="alert">Alert:</label>
+  <input
+    type="text"
+    class="form-control"
+    id="alert"
+    name="alert"
+    value="{{ project.alert if project else '' }}"
+  />
+</div>
+<div class="form-group">
+  <label for="token_decimals">Token Decimals:</label>
+  <input
+    type="number"
+    class="form-control"
+    id="token_decimals"
+    name="token_decimals"
+    value="{{ project.token_decimals if project else '' }}"
+  />
+</div>
+<div class="form-group">
+  <label for="chain_main">Main Chain:</label>
+  <input
+    type="text"
+    class="form-control"
+    id="chain_main"
+    name="chain_main"
+    value="{{ project.chain_main if project else '' }}"
+  />
+</div>
+<div class="form-group">
+  <label for="contract_main">Main Contract:</label>
+  <input
+    type="text"
+    class="form-control"
+    id="contract_main"
+    name="contract_main"
+    value="{{ project.contract_main if project else '' }}"
+  />
+</div>
+<div class="form-group">
+  <label for="snapshot_name">Snapshot Name:</label>
+  <input
+    type="text"
+    class="form-control"
+    id="snapshot_name"
+    name="snapshot_name"
+    value="{{ project.snapshot_name if project else '' }}"
+  />
+</div>
+<div class="form-group">
+  <label for="github_link">GitHub Link:</label>
+  <input
+    type="url"
+    class="form-control"
+    id="github_link"
+    name="github_link"
+    value="{{ project.github_link if project else '' }}"
+  />
+</div>

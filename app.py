@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_from_directory, Response, render_template
+from flask import Flask, request, render_template, redirect, url_for, flash, Response, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dotenv import load_dotenv
@@ -9,10 +9,11 @@ from flask_cors import CORS
 
 load_dotenv()
 
-app = Flask(__name__, static_folder='frontend/dist', static_url_path='')
+static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'frontend', 'dist')
+app = Flask(__name__, static_folder=static_folder, static_url_path='')
 app.config.from_object(os.getenv('APP_SETTINGS', 'config.DevelopmentConfig'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+app.config['SECRET_KEY'] = 'your_secret_key_here'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -27,7 +28,7 @@ from scripts.get_project_info import get_projects
 from projects.curve.pool_data import get_pools
 
 from instances.Categories import create_predefined_categories
-
+from instances.Projects import Project
 
 
 @app.route('/robot.txt')
@@ -39,19 +40,67 @@ def render_robot():
     return Response(robots_content, mimetype='text/plain')
 
 @app.route('/admin')
-def render_admin_panel():
-    html_content = """
-    <html>
-        <head>
-            <title>Admin Panel</title>
-        </head>
-        <body>
-            <h1>Placeholder for Admin Panel</h1>
-            <p>The admin panel will be available here soon.</p>
-        </body>
-    </html>
-    """
-    return Response(html_content, mimetype='text/html')
+@app.route('/admin/')
+
+def admin_panel():
+    projects = Project.query.all()
+    return render_template('admin/index.html', projects=projects)
+
+@app.route('/admin/add-project', methods=['GET', 'POST'])
+def admin_add_project():
+    if request.method == 'POST':
+        new_project = Project(
+            protocol_name=request.form['protocol_name'],
+            token_ticker=request.form['token_ticker'],
+            logo_url=request.form['logo_url'],
+            description=request.form['description'],
+            category_main=request.form['category_main'],
+            website=request.form['website'],
+            forum=request.form['forum'],
+            alert=request.form['alert'],
+            token_decimals=int(request.form['token_decimals']),
+            chain_main=request.form['chain_main'],
+            contract_main=request.form['contract_main'],
+            snapshot_name=request.form['snapshot_name'],
+            github_link=request.form['github_link']
+        )
+        db.session.add(new_project)
+        db.session.commit()
+        flash('Project added successfully', 'success')
+        return redirect(url_for('admin_panel'))
+    return render_template('admin/add_project.html')
+
+
+@app.route('/admin/edit-project/<int:id>', methods=['GET', 'POST'])
+def admin_edit_project(id):
+    project = Project.query.get_or_404(id)
+    if request.method == 'POST':
+        project.protocol_name = request.form['protocol_name']
+        project.token_ticker = request.form['token_ticker']
+        project.logo_url = request.form['logo_url']
+        project.description = request.form['description']
+        project.category_main = request.form['category_main']
+        project.website = request.form['website']
+        project.forum = request.form['forum']
+        project.alert = request.form['alert']
+        project.token_decimals = int(request.form['token_decimals'])
+        project.chain_main = request.form['chain_main']
+        project.contract_main = request.form['contract_main']
+        project.snapshot_name = request.form['snapshot_name']
+        project.github_link = request.form['github_link']
+        db.session.commit()
+        flash('Project updated successfully', 'success')
+        return redirect(url_for('admin_panel'))
+    return render_template('admin/edit_project.html', project=project)
+
+
+@app.route('/admin/delete-project/<int:id>', methods=['POST'])
+def admin_delete_project(id):
+    project = Project.query.get_or_404(id)
+    db.session.delete(project)
+    db.session.commit()
+    flash('Project deleted successfully', 'success')
+    return redirect(url_for('admin_panel'))
 
 
 
@@ -82,14 +131,22 @@ def pools_route():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
-    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
+    try:
+        if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+            return send_from_directory(app.static_folder, path)
+        else:
+            return send_from_directory(app.static_folder, 'index.html')
+    except Exception as e:
+        app.logger.error(f"Error in catch_all: {str(e)}")
+        return str(e), 500
 
 @app.errorhandler(404)
 def not_found(e):
-    return send_from_directory(app.static_folder, 'index.html')
+    try:
+        return send_from_directory(app.static_folder, 'index.html')
+    except Exception as e:
+        app.logger.error(f"Error in not_found: {str(e)}")
+        return str(e), 500
 
 if __name__ == '__main__':
     app.run()
