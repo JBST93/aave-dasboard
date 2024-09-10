@@ -7,10 +7,8 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')
 sys.path.append(project_root)
 
 
-endpoint = "https://proton.bloks.io/supply"
+endpoint = "https://data.ripple.com/v2/network/xrp_distribution?descending=true"
 
-r = requests.get(endpoint)
-data = r.json()
 
 from app import app, db
 from instances.TokenData import TokenData as Info
@@ -21,7 +19,7 @@ def token_data():
     with app.app_context():
         token = "XRP"
         price = get_price(token,"","")
-        circulating_supply = float(requests.get(endpoint).text.strip()) or 0
+        circulating_supply = requests.get(endpoint).json().get("rows",{})[0].get("distributed") or 0
         total_supply = 29029846799
         info = Info(
             token=token,
