@@ -23,7 +23,7 @@ def get_data():
             total_amount = float(token_data.get("totalAmount", 0))
 
             try:
-                price = get_price(symbol, "", "")
+                price = get_price(symbol, "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c" "ethereum")
             except Exception as e:
                 price = None
 
