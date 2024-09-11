@@ -45,6 +45,7 @@ from projects.maker.get_data import get_data as maker
 from projects.etherfi.get_data import get_data as etherfi
 from projects.bnb.get_data import get_data as bnb
 from projects.circle.get_data import get_data as circle
+from projects.tether.get_data import get_data as tether
 
 
 
@@ -119,6 +120,7 @@ def fetch_store_data():
         "EtherFi":etherfi,
         "BNB":bnb,
         "Circle":circle,
+        "Tether":tether,
     }
 
     with app.app_context():

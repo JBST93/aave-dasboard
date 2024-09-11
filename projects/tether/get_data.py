@@ -12,29 +12,20 @@ from instances.TokenData import TokenData as Info
 from utils.get_price import get_price
 
 
-endpoint = "https://api.circle.com/v1/stablecoins"
+endpoint = "https://app.tether.to/transparency.json"
 r = requests.get(endpoint)
 data = r.json()
 
 def get_data():
     with app.app_context():
-        for token_data in data.get("data", []):
-            symbol = token_data.get("symbol")
-            total_amount = float(token_data.get("totalAmount", 0))
+        for token_data in data.get("data_formatted", []):
+            symbol = token_data.get("iso", "").upper()
+            total_amount = token_data.get("total_liabilities", 0)
 
-            if symbol == "EUROC":
-                try:
-                    price = get_price("EURC", "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c", "ethereum")
-                except Exception as e:
-                    price = None
-            else :
-                try:
-                    price = get_price(symbol, "" "ethereum")
-                except Exception as e:
-                    price = None
-
-
-            print(f"{symbol} : {price}")
+            try:
+                price = get_price(symbol, "", "ethereum")
+            except Exception as e:
+                price = None
 
             if price is not None:
                 info = Info(
