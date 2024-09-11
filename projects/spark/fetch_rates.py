@@ -45,7 +45,6 @@ def token_data(total_lend_usd, total_borrowed_usd, dsr_tvl):
     db.session.commit()
 
 def fetch_store_sparklend():
-    print("Starting Fetching Data for SparkLend")
     abi_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'spark_abi.json')
     with open(abi_path) as f:
         try:
@@ -114,7 +113,6 @@ def fetch_store_sparklend():
             print(f"Error fetching data for {token}: {e}")
 
     db.session.commit()
-    print("SparkLend data fetched and committed")
 
     return total_lend_usd, total_borrowed_usd
 

@@ -63,8 +63,6 @@ def fetch_store_data():
         except Exception as e:
             print(f"Error fetching {token} Saving Rate: {e}", 500)
 
-        print("Gearbox Fetched")
-
         db.session.commit()
 
 if __name__ == '__main__':

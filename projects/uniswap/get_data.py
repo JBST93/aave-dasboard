@@ -48,9 +48,7 @@ def get_uniswap_pools():
     """
 
     try:
-        logger.info("Sending request for pairs data")
         response = requests.post(url, json={'query': pairs_query})
-        logger.info(f"Received response with status code: {response.status_code}")
         response.raise_for_status()
         pairs_data = response.json()
 
@@ -105,7 +103,7 @@ def get_uniswap_pools():
                 data = YieldRate(
                     market=f"{pair['token0']['symbol']} / {pair['token1']['symbol']}",
                     project='Uniswap v2',
-                    chain='Ethereum',  # Uniswap V2 is on Ethereum
+                    chain='Ethereum',
                     tvl=reserve_usd,
                     yield_rate_base=yield_rate_base,
                     yield_rate_reward=yield_rate_reward,
@@ -117,7 +115,6 @@ def get_uniswap_pools():
                 db.session.add(data)
 
         db.session.commit()
-        logger.info(f"Successfully processed and stored {len(pairs)} Uniswap pool data entries")
 
     except requests.exceptions.RequestException as e:
         logger.error(f"Error making request: {e}")
@@ -133,4 +130,3 @@ def get_uniswap_pools():
 if __name__ == "__main__":
     with app.app_context():
         get_uniswap_pools()
-    print("Uniswap data fetching process completed")

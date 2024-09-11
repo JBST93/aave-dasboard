@@ -47,7 +47,8 @@ def get_crvusd():
 
 
 def fetch_store_data():
-    chains = {"arbitrum", "ethereum"}
+    chains = {"arbitrum", "ethereum", "optimism", "base", "fraxtal"}
+
 
     for chain in chains:
         api_url = f"https://api.curve.fi/v1/getLendingVaults/{chain}/"
@@ -101,8 +102,6 @@ def fetch_store_data():
                         logging.error(f"Error fetching data for pair: {e}")
 
                 db.session.commit()
-
-            logging.info(f"Data for Curve {chain} fetched and stored successfully.")
 
         except requests.RequestException as e:
             logging.error(f"RequestException: {e}")

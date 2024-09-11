@@ -9,7 +9,7 @@ sys.path.append(project_root)
 load_dotenv(os.path.join(project_root, '.env'))
 
 from app import app, db
-from scripts.utils import load_abi, get_curve_price
+from scripts.utils import load_abi
 from utils.get_price import get_price
 from instances.TokenData import TokenData as Data
 
@@ -26,6 +26,9 @@ rETH_contract = "0xae78736Cd615f374D3085123A210448E74Fc6393"
 token = "rETH"
 chain = "ethereum"
 
+def get_info():
+    pass
+
 def get_data_reth():
     web3 = Web3(Web3.HTTPProvider(infura_url + infura_key))
     pool_contract = web3.eth.contract(address=rETH_contract, abi=provider_abi)
@@ -35,10 +38,6 @@ def get_data_reth():
     supply_transformed = supply_raw / 10**decimals
 
     price = get_price(token, rETH_contract, chain)
-
-    supply_usd = supply_transformed * price
-
-    print(f"{token} - {price} - {supply_usd}")
 
     data = Data (
         token= token,

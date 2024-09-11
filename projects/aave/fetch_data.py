@@ -53,7 +53,6 @@ def token_data(total_lend_usd, total_borrowed_usd):
 
 
 def fetch_store_rates():
-    print("Starting Fetching Data for AaveV3")
     total_lend_usd = 0
     total_borrowed_usd = 0
 
@@ -102,8 +101,6 @@ def fetch_store_rates():
 
     db.session.commit()
     token_data(total_lend_usd,total_borrowed_usd)
-
-    print("Aave v3 data fetched and committed")
 
 if __name__ == '__main__':
     with app.app_context():

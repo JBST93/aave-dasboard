@@ -42,6 +42,7 @@ from projects.bitcoin.get_data import get_data as bitcoin
 from projects.fantom.get_data import get_data as fantom
 from projects.mantle.get_data import get_data as mantle
 from projects.maker.get_data import get_data as maker
+from projects.etherfi.get_data import get_data as etherfi
 
 
 
@@ -112,6 +113,7 @@ def fetch_store_data():
         "Bitcoin":bitcoin,
         "Fantom":fantom,
         "Mantle":mantle,
+        "EtherFi":etherfi,
     }
 
     with app.app_context():
@@ -119,6 +121,7 @@ def fetch_store_data():
         for name, task in tasks.items():
             try:
                 log_and_execute(task, name)
+                print(f"executed {name}")
             except Exception as e:
                 print(e)
 
