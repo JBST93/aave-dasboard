@@ -22,7 +22,7 @@ def token_data():
         token = "ADA"
         price = get_price(token,"","")
         circulating_supply_raw = requests.get(endpoint).json().get("circulatingSupply",{})
-        circulating_supply = circulating_supply_raw/10**6
+        circulating_supply = float(circulating_supply_raw)/10**6
 
         total_supply = 45000000000
         info = Info(

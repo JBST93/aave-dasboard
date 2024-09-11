@@ -14,7 +14,7 @@ token = "MNT"
 
 def get_data():
     r = requests.get("https://api.mantle.xyz/api/v1/token-data")
-    data = r.json().get("results").get("totalSupply")
+    data = r.json().get("results")
     circ_supply = data.get("circulatingSupply")
     total_supply = data.get("totalSupply")
     price = get_price(token,"0x3c3a81e81dc49a522a592e7622a7e711c06bf354","Ethereum")
