@@ -92,7 +92,6 @@ def fetch_data_metamorpho():
     """
 
     response = requests.post(url, headers=headers, json={'query': query})
-    print("Started to fetch Metamorpho")
 
     if response.status_code == 200:
         data = response.json().get("data", {}).get("vaults", {}).get("items", [])
@@ -151,8 +150,6 @@ def fetch_data_metamorpho():
 
                 except Exception as e:
                     logger.error(f"Error processing vault data: {e}")
-
-            print("MetaMorpho comitted")
 
 
     else:

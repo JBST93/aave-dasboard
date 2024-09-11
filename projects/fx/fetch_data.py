@@ -24,7 +24,6 @@ project = "FX Protocol"
 chain = "Ethereum"
 
 def fetch_store_data():
-    print("Starting to Fetch Data for FX")
     with app.app_context():
         try:
             r = requests.get(api_stability)
@@ -47,8 +46,6 @@ def fetch_store_data():
 
         except Exception as e:
             print(f"Error fetching {name}: {e}", 500)
-
-        print("FX Fetched")
 
         db.session.commit()
 

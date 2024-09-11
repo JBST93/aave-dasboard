@@ -8,14 +8,13 @@ from app import app, db
 
 from utils.get_price import get_price
 from instances.TokenData import TokenData as Data
-
 token = "BTC"
 total_supply = 21000000
 
 def get_data():
     r = requests.get("https://blockchain.info/q/totalbc")
     data = r.json()
-    circ_supply = data
+    circ_supply = float(data) / 10**9
     price = get_price(token,"","")
 
     data = Data (
