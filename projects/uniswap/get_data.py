@@ -70,9 +70,7 @@ def get_uniswap_pools():
         }}
         """
 
-        logger.info("Sending request for pairDayData")
         response = requests.post(url, json={'query': pair_day_data_query})
-        logger.info(f"Received response with status code: {response.status_code}")
         response.raise_for_status()
         pair_day_data = response.json()
 

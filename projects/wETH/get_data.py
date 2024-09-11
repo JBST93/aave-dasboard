@@ -29,8 +29,6 @@ def token_data():
         totalSupply_raw = pool_contract.functions.totalSupply().call()
         totalSupply = totalSupply_raw / 10**decimals
         totalSupply_usd = totalSupply * price
-        print(totalSupply)
-        print(totalSupply_usd)
 
 
         info = Info(

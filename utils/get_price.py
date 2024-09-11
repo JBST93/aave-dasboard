@@ -10,7 +10,7 @@ from app import app
 
 def get_price(token, address=None, chain=None):
     with app.app_context():
-        price = get_price_kraken(token) or get_price_bitstamp(token) or get_price_curve(address, chain) or get_gateio_price(token) or get_angle_price(token) or 0
+        price = get_price_kraken(token) or get_price_bitstamp(token) or get_price_okx(token) or get_price_curve(address, chain) or get_gateio_price(token) or get_angle_price(token) or 0
         return price
 
 def get_price_kraken(token):
@@ -27,6 +27,18 @@ def get_price_kraken(token):
     except requests.RequestException as e:
         logger.error(f"Error fetching price from Kraken: {e}")
 
+    return None
+
+def get_price_okx(token):
+    endpoint = f"https://www.okx.com/api/v5/market/ticker?instId={token}-USDT"
+    try:
+        r = requests.get(endpoint, timeout=10)
+        r.raise_for_status()
+        data = r.json()
+        price = data.get("data", [{}])[0].get("last")
+        return float(price)
+    except requests.RequestException as e:
+        logger.error(f"Error fetching price from OKX: {e}")
     return None
 
 def get_price_bitstamp(token):

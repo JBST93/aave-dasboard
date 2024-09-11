@@ -11,13 +11,11 @@ from utils.get_price import get_price
 from instances.TokenData import TokenData as Data
 
 token = "BNB"
-circ_supply = 145887575
-max_supply = 200000000
 
 def get_data():
     price = get_price(token,"","")
-    total_supply = max_supply
-    circ_supply = circ_supply
+    total_supply = 200000000
+    circ_supply = 145887575
 
 
     data = Data (
