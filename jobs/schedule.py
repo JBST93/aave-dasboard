@@ -44,6 +44,8 @@ from projects.mantle.get_data import get_data as mantle
 from projects.maker.get_data import get_data as maker
 from projects.etherfi.get_data import get_data as etherfi
 from projects.bnb.get_data import get_data as bnb
+from projects.circle.get_data import get_data as circle
+
 
 
 
@@ -116,6 +118,7 @@ def fetch_store_data():
         "Mantle":mantle,
         "EtherFi":etherfi,
         "BNB":bnb,
+        "Circle":circle,
     }
 
     with app.app_context():
