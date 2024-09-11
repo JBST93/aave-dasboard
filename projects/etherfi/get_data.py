@@ -59,7 +59,9 @@ def get_data():
                 circ_supply= float(supply),
                 timestamp=datetime.utcnow(),
                 )
+
                 db.session.add(info)
+
             except Exception as e:
                 print(e)
 

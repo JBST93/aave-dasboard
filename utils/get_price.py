@@ -35,8 +35,14 @@ def get_price_okx(token):
         r = requests.get(endpoint, timeout=10)
         r.raise_for_status()
         data = r.json()
-        price = data.get("data", [{}])[0].get("last")
+        price = data.get("data", [])
+        if price:
+            price = price[0].get("last")
+        else:
+            price = None
+
         return float(price)
+
     except requests.RequestException as e:
         logger.error(f"Error fetching price from OKX: {e}")
     return None
