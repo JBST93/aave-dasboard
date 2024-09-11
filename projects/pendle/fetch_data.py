@@ -51,7 +51,6 @@ def fetch_data():
                 r.raise_for_status()
                 dataset = r.json()
             except requests.exceptions.RequestException as e:
-                logger.error(f"Failed to fetch yield data for address {address} on chain {chain_id}: {e}")
                 continue
 
             name = result.get('pt', {}).get('name', 'N/A')

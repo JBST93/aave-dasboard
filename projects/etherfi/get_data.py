@@ -50,7 +50,6 @@ def get_data():
                 supply_raw = pool_contract.functions.totalSupply().call()
                 supply = supply_raw / 10 ** token["decimals"]
                 price = get_price(token["token"],token["contract"],token["chain"])
-                print(supply, price)
 
                 info = Info(
                 token=token["token"],

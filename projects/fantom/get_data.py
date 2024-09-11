@@ -17,7 +17,6 @@ def get_data():
     r = requests.get("https://kfbcljyy2krzipz5b5vt323i440djihv.lambda-url.us-east-1.on.aws")
     data = r.text
     circ_supply = data
-    print(circ_supply)
     price = get_price(token,"","")
 
     data = Data (

@@ -145,7 +145,6 @@ def token_data(total_lend_usd, total_borrowed_usd):
 
 
 def fetch_store_rates():
-    print("Starting Fetching Data for Compound V3")
     comp_price = get_comp_price()
 
     with app.app_context():

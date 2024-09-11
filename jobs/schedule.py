@@ -43,6 +43,7 @@ from projects.fantom.get_data import get_data as fantom
 from projects.mantle.get_data import get_data as mantle
 from projects.maker.get_data import get_data as maker
 from projects.etherfi.get_data import get_data as etherfi
+from projects.bnb.get_data import get_data as bnb
 
 
 
@@ -114,6 +115,7 @@ def fetch_store_data():
         "Fantom":fantom,
         "Mantle":mantle,
         "EtherFi":etherfi,
+        "BNB":bnb,
     }
 
     with app.app_context():

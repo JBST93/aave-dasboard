@@ -44,10 +44,9 @@ def get_token():
             else:
                 web3 = select_infura(token["chain"])
                 pool_contract = web3.eth.contract(address=token["contract_address"], abi=token["provider_abi"])
-                circ_supply_raw = pool_contract.functions.totalSupply().call()
+                circ_supply_raw = float(pool_contract.functions.totalSupply().call())
                 circl_supply = circ_supply_raw / 10**token["decimals"]
 
-            circ_supply_usd = circl_supply * price
 
             if "tot_supply" in token:
                 tot_supply = float(token["tot_supply"])
