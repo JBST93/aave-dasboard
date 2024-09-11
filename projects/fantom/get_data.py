@@ -11,12 +11,13 @@ from utils.get_price import get_price
 from instances.TokenData import TokenData as Data
 
 token = "FTM"
-total_supply = 3,175,000,000
+total_supply = 3175000000
 
 def get_data():
     r = requests.get("https://kfbcljyy2krzipz5b5vt323i440djihv.lambda-url.us-east-1.on.aws")
-    data = r.json()
+    data = r.text
     circ_supply = data
+    print(circ_supply)
     price = get_price(token,"","")
 
     data = Data (

@@ -21,7 +21,9 @@ def token_data():
     with app.app_context():
         token = "ADA"
         price = get_price(token,"","")
-        circulating_supply = requests.get(endpoint).json().get("circulatingSupply",{})
+        circulating_supply_raw = requests.get(endpoint).json().get("circulatingSupply",{})
+        circulating_supply = circulating_supply_raw/10**6
+
         total_supply = 45000000000
         info = Info(
             token=token,
