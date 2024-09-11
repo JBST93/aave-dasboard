@@ -18,18 +18,24 @@ data = r.json()
 
 def get_data():
     with app.app_context():
-        for i in range(len(data.get("data"))):
-            symbol = data.get("data")[i].get("symbol")
-            totalAmount = data.get("data")[i].get("totalAmount")
-            price = get_price(symbol,"","")
-            info = Info(
-                token=symbol,
-                price=price,
-                price_source= "",
-                tot_supply= float(totalAmount),
-                circ_supply= float(totalAmount),
-                timestamp=datetime.utcnow(),
-            )
+        for token_data in data.get("data", []):
+            symbol = token_data.get("symbol")
+            total_amount = float(token_data.get("totalAmount", 0))
 
-            db.session.add(info)
+            try:
+                price = get_price(symbol, "", "")
+            except Exception as e:
+                price = None
+
+            if price is not None:
+                info = Info(
+                    token=symbol,
+                    price=price,
+                    price_source="",
+                    tot_supply=total_amount,
+                    circ_supply=total_amount,
+                    timestamp=datetime.utcnow(),
+                )
+                db.session.add(info)
+
         db.session.commit()
