@@ -153,7 +153,7 @@ def fetch_store_DSR():
 
             data = Data(
                     market=token,
-                    project="DAI Savings Rate",
+                    project="Maker DAO (DSR)",
                     information=None,
                     yield_rate_base=float(apy),
                     yield_rate_reward=None,
@@ -174,10 +174,13 @@ def fetch_store_DSR():
 
     return dsr_tvl
 
-
-# return "Fetched"
-if __name__ == '__main__':
+def get_all_data():
     with app.app_context():
         total_lend_usd, total_borrowed_usd = fetch_store_sparklend()
         dsr_tvl = fetch_store_DSR()
         token_data(total_lend_usd, total_borrowed_usd, dsr_tvl)
+
+
+# return "Fetched"
+if __name__ == '__main__':
+    get_all_data()
