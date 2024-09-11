@@ -38,10 +38,11 @@ def get_price_okx(token):
         price = data.get("data", [])
         if price:
             price = price[0].get("last")
+            return float(price)
+
         else:
             price = None
-
-        return float(price)
+            return price
 
     except requests.RequestException as e:
         logger.error(f"Error fetching price from OKX: {e}")
