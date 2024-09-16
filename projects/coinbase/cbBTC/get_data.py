@@ -34,7 +34,7 @@ tokens = [
     }
 ]
 
-abi = load_abi("Coinbase/cbBTC",'abi.json')
+abi = load_abi("coinbase/cbBTC",'abi.json')
 
 
 def token_data():
