@@ -18,6 +18,7 @@ from instances.YieldRate import YieldRate as Yield
 from utils.get_price import get_price
 
 
+
 def token_data():
     with app.app_context():
         token = "cbETH"
@@ -28,8 +29,7 @@ def token_data():
         address = "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
         chain = "ethereum"
         price = (get_price(token,address,chain))
-        tot_supply_usd = total_supply
-        circ_supply_usd = circulating_supply * price
+        tvl = circulating_supply*price
 
         info = Info(
             token=token,
@@ -37,7 +37,7 @@ def token_data():
             price_source="",
             tot_supply=total_supply,
             circ_supply=circulating_supply,
-            tvl=0,
+            tvl=tvl,
             revenue=0,
             timestamp=datetime.utcnow()
         )

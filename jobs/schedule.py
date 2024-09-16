@@ -28,6 +28,7 @@ from projects.wBTC.get_data import get_store_data as wbtc
 from projects.jito.get_data import get_supply as jito
 from projects.avax.get_data import get_data as avax
 from projects.coinbase.get_data import token_data as coinbase
+from projects.coinbase.cbBTC.get_data import token_data as cbbtc
 from projects.wETH.get_data import token_data as weth
 from projects.liquity.get_data import get_token as liquity
 from projects.abracadabra.get_data import get_token as abra
@@ -47,6 +48,7 @@ from projects.bnb.get_data import get_data as bnb
 from projects.circle.get_data import get_data as circle
 from projects.tether.get_data import get_data as tether
 from projects.ethereum.get_data import get_data as ethereum
+
 
 
 
@@ -107,6 +109,7 @@ def fetch_store_data():
         "Jito":jito,
         "Avax":avax,
         "coinbase":coinbase,
+        "cbbtc":cbbtc,
         "wETH":weth,
         "liquity": liquity,
         "Abracadabra":abra,

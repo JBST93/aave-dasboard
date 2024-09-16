@@ -52,7 +52,7 @@ def get_data_steth():
             stETH_price = get_latest_price("stETH") or 1
             price = 1.1770 * stETH_price
         else:
-            price = get_price(token["token"])
+            price = get_price(token["token"],address,token["chain"])
 
         data = Data (
             token= token["token"],

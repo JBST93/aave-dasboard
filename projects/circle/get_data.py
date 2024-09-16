@@ -34,8 +34,6 @@ def get_data():
                     price = None
 
 
-            print(f"{symbol} : {price}")
-
             if price is not None:
                 info = Info(
                     token=symbol,
