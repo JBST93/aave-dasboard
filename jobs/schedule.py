@@ -48,6 +48,7 @@ from projects.bnb.get_data import get_data as bnb
 from projects.circle.get_data import get_data as circle
 from projects.tether.get_data import get_data as tether
 from projects.ethereum.get_data import get_data as ethereum
+from projects.threshold.get_data import get_token_data as tbtc
 
 
 
@@ -127,6 +128,7 @@ def fetch_store_data():
         "Circle":circle,
         "Tether":tether,
         "Ethereum":ethereum,
+        "tbtc":tbtc
     }
 
     with app.app_context():
