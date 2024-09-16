@@ -51,7 +51,7 @@ def token_data():
         tvl = circ_supply_tot * price
 
         info = Info(
-            token=token,
+            token="cbBTC",
             price=price,
             price_source="",
             tot_supply=circ_supply_tot,
