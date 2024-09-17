@@ -46,6 +46,8 @@ def get_ethereum_yields():
                 **rate.to_dict(),
                 'tvl_formatted': f"{rate.tvl:,.0f}" if rate.tvl is not None else 0,
                 'yield_rate_base': f"{rate.yield_rate_base:,.2f}" if rate.yield_rate_base is not None else 0,
+                'yield_rate_reward': f"{rate.yield_rate_reward:,.2f}" if rate.yield_rate_reward is not None else 0,
+
                 'humanized_timestamp': humanize.naturaltime(datetime.utcnow() - rate.timestamp),
                 'information_transformed': rate.information if isinstance(rate.information, list) else [],
 
