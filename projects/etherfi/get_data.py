@@ -61,6 +61,7 @@ def get_data():
                 )
 
                 db.session.add(info)
+                print(info)
 
             except Exception as e:
                 print(e)
@@ -68,6 +69,10 @@ def get_data():
     db.session.commit()
 
 
+
+if __name__ == '__main__':
+    with app.app_context():
+        get_data()
 
 
 
