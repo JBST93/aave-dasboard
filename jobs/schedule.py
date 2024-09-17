@@ -50,6 +50,7 @@ from projects.tether.get_data import get_data as tether
 from projects.ethereum.get_data import get_data as ethereum
 from projects.threshold.get_data import get_token_data as tbtc
 from projects.lombard.get_data import get_token_data as lombart
+from projects.stacks.get_data import get_store_data as stacks
 
 
 
@@ -130,7 +131,8 @@ def fetch_store_data():
         "Tether":tether,
         "Ethereum":ethereum,
         "tbtc":tbtc,
-        "lombart":lombart
+        "lombart":lombart,
+        "stacks":stacks
     }
 
     with app.app_context():
