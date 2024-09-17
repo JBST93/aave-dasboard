@@ -51,17 +51,7 @@ from projects.ethereum.get_data import get_data as ethereum
 from projects.threshold.get_data import get_token_data as tbtc
 from projects.lombard.get_data import get_token_data as lombart
 from projects.stacks.get_data import get_store_data as stacks
-
-
-
-
-
-
-
-
-
-
-
+from projects.venus.get_data import  get_store_data as venus
 
 from scripts.get_price_supply import get_price_supply
 
@@ -132,7 +122,8 @@ def fetch_store_data():
         "Ethereum":ethereum,
         "tbtc":tbtc,
         "lombart":lombart,
-        "stacks":stacks
+        "stacks":stacks,
+        "venus":venus
     }
 
     with app.app_context():

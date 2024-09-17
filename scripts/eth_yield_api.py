@@ -40,7 +40,6 @@ def get_ethereum_yields():
                 if rate.timestamp > unique_rates[smart_contract].timestamp:
                     unique_rates[smart_contract] = rate
 
-
         rates_list = [
             {
                 **rate.to_dict(),
