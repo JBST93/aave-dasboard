@@ -35,6 +35,7 @@ def get_store_data():
                 supply = contract.functions.totalSupply().call()
                 tot_supply = supply / 10 ** token["decimals"]
                 price = get_price(token["token"],token["contract"],token["chain"])
+                tvl = tot_supply*price
 
                 data = Data (
                     token=token["token"],
@@ -42,6 +43,7 @@ def get_store_data():
                     price_source= "",
                     tot_supply= tot_supply,
                     circ_supply= tot_supply,
+                    tvl=tvl,
                     timestamp=datetime.utcnow(),
                 )
 
