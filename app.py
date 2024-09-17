@@ -7,8 +7,7 @@ from flask_cors import CORS
 
 load_dotenv()
 
-static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'frontend', 'dist')
-app = Flask(__name__, static_folder=static_folder, static_url_path='')
+app = Flask(__name__)
 app.config.from_object(os.getenv('APP_SETTINGS', 'config.DevelopmentConfig'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your_secret_key_here'
@@ -131,25 +130,6 @@ def stablecoin_info():
 def pools_route():
     return get_pools()
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    try:
-        if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-            return send_from_directory(app.static_folder, path)
-        else:
-            return send_from_directory(app.static_folder, 'index.html')
-    except Exception as e:
-        app.logger.error(f"Error in catch_all: {str(e)}")
-        return str(e), 500
-
-@app.errorhandler(404)
-def not_found(e):
-    try:
-        return send_from_directory(app.static_folder, 'index.html')
-    except Exception as e:
-        app.logger.error(f"Error in not_found: {str(e)}")
-        return str(e), 500
 
 if __name__ == '__main__':
     app.run()

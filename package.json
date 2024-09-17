@@ -2,11 +2,6 @@
   "name": "defi-dashboard",
   "version": "1.0.0",
   "scripts": {
-    "start": "gunicorn app:app",
-    "heroku-prebuild": "echo 'Node version:' && node -v && echo 'NPM version:' && npm -v",
-    "heroku-postbuild": "cd frontend && npm install && npm run build"
-  },
-  "engines": {
-    "node": "16.x"
+    "start": "gunicorn app:app"
   }
 }

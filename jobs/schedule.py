@@ -49,6 +49,7 @@ from projects.circle.get_data import get_data as circle
 from projects.tether.get_data import get_data as tether
 from projects.ethereum.get_data import get_data as ethereum
 from projects.threshold.get_data import get_token_data as tbtc
+from projects.lombard.get_data import get_token_data as lombart
 
 
 
@@ -128,7 +129,8 @@ def fetch_store_data():
         "Circle":circle,
         "Tether":tether,
         "Ethereum":ethereum,
-        "tbtc":tbtc
+        "tbtc":tbtc,
+        "lombart":lombart
     }
 
     with app.app_context():
