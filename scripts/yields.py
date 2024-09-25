@@ -35,7 +35,7 @@ def get_rates():
         # Dictionary to hold the latest entry for each combination of (token, chain, collateral, protocol)
         unique_rates = {}
         for rate in records:
-            key = (rate.project, rate.chain, rate.smart_contract)  # Combining project, chain, and smart_contract
+            key = (rate.project, rate.chain, rate.smart_contract, rate.information)  # Combining project, chain, and smart_contract
 
             if key not in unique_rates:
                 unique_rates[key] = rate
