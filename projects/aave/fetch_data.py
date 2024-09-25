@@ -10,7 +10,7 @@ sys.path.append(project_root)
 load_dotenv(os.path.join(project_root, '.env'))
 
 from app import app, db
-from instances.YieldRate import YieldRate
+from instances.YieldRate import YieldRate as Yield
 from instances.TokenData import TokenData as Info
 from scripts.utils import load_abi, insert_yield_db, get_curve_price
 from utils.get_price import get_price
@@ -147,7 +147,20 @@ def fetch_store_rates():
 
                 print(f"{token} - {information} - {supply_amount_usd}")
 
-                insert_yield_db(token, "Aave", information, apy_base_formatted,None,None,supply_amount_usd,chain, "", contract)
+                data = Yield(
+                    market=token,
+                    project='Aave',
+                    information=information,
+                    chain=chain,
+                    tvl=supply_amount_usd,
+                    yield_rate_base=apy_base_formatted,
+                    yield_rate_reward=None,
+                    smart_contract=contract,
+                    action='Lend',
+                    timestamp=datetime.now()
+                )
+
+                db.session.add(data)
 
             except Exception as e:
                 print(f"Error fetching data for {token}: {e}")
