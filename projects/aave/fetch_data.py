@@ -24,16 +24,62 @@ gov_token_price = get_price("AAVE")
 tot_supply=118250087,
 circ_supply=118250087,
 
-smart_contracts = {
-    "ethereum":"0x7B4EB56E7CD4b454BA8ff71E4518426369a138a3",
-    "arbitrum":"0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
-    "optimism":"0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
-    "polygon":"0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
-    "fantom":"0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
-    # "avalanche":"0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
-    "base":"0x2d8A3C5677189723C4cB8873CfC9C8976FDF38Ac",
-    # "bsc":"0x41585C50524fb8c3899B43D7D797d9486AAc94DB",
-}
+smart_contracts = [
+        {
+            "chain": "ethereum" ,
+            "address": "0x7B4EB56E7CD4b454BA8ff71E4518426369a138a3",
+            "version": "v3",
+            "instance":"Main"
+        },
+        {
+            "chain": "ethereum" ,
+            "address": "0xa3206d66cF94AA1e93B21a9D8d409d6375309F4A",
+            "version": "v3",
+            "instance":"Lido"
+        },
+        {
+            "chain": "ethereum" ,
+            "address": "0xa3206d66cF94AA1e93B21a9D8d409d6375309F4A",
+            "version": "v3",
+            "instance": "EtherFi"
+        },
+        {
+            "chain": "arbitrum" ,
+            "address": "0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
+            "version": "v3",
+            "instance":"Main"
+        },
+        {
+            "chain": "optimism" ,
+            "address": "0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
+            "version": "v3",
+            "instance":"Main"
+        },
+        {
+            "chain": "polygon" ,
+            "address": "0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
+            "version": "v3",
+            "instance":"Main"
+        },
+        {
+            "chain": "fantom" ,
+            "address": "0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
+            "version": "v3",
+            "instance":"Main"
+        },
+        {
+            "chain": "avalanche" ,
+            "address": "0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
+            "version": "v3",
+            "instance":"Main"
+        },
+        {
+            "chain": "base" ,
+            "address": "0x2d8A3C5677189723C4cB8873CfC9C8976FDF38Ac",
+            "version": "v3",
+            "instance":"Main"
+        }
+]
 
 def token_data(total_lend_usd, total_borrowed_usd):
     tvl_usd = total_lend_usd - total_borrowed_usd
@@ -56,10 +102,17 @@ def fetch_store_rates():
     total_lend_usd = 0
     total_borrowed_usd = 0
 
-    for chain, contract_address in smart_contracts.items():
+    for contract in smart_contracts:
+        chain = contract['chain']
+        address = contract['address']
+        version = contract['version']
+        instance = contract['instance']
+
         web3 = select_infura(chain)
-        pool_contract = web3.eth.contract(address=contract_address, abi=provider_abi)
+        pool_contract = web3.eth.contract(address=address, abi=provider_abi)
         data = pool_contract.functions.getAllReservesTokens().call()
+
+        information = f"({version}) - {instance} instance"
 
         for item in data:
             try:
@@ -92,9 +145,9 @@ def fetch_store_rates():
                 total_lend_usd += supply_amount_usd
                 total_borrowed_usd += borrowed_amount_usd
 
-                type = "Lending market"
+                print(f"{token} - {information} - {supply_amount_usd}")
 
-                insert_yield_db(token, "Aave v3", "", apy_base_formatted,None,None,supply_amount_usd,chain, type, contract)
+                insert_yield_db(token, "Aave", information, apy_base_formatted,None,None,supply_amount_usd,chain, "", contract)
 
             except Exception as e:
                 print(f"Error fetching data for {token}: {e}")

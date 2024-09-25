@@ -17,6 +17,7 @@ class YieldRate(db.Model):
     yield_token_reward = db.Column(db.String(50), nullable=True)
 
     tvl = db.Column(db.Float, nullable=False, default=0)
+    action = db.Column(db.String(150), nullable=True)
 
     chain = db.Column(db.String(20), nullable=False)
     type = db.Column(db.String(150), nullable=False)

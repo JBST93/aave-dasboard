@@ -52,12 +52,13 @@ def fetch_store_data():
 
     for chain in chains:
         api_url = f"https://api.curve.fi/v1/getLendingVaults/{chain}/"
+        reward_api = "https://api.curve.fi/v1/getAllGauges"
 
         try:
             r = requests.get(api_url)
             r.raise_for_status()
-
             data = r.json()["data"]["lendingVaultData"]
+            reward_data = requests.get(reward_api).json().get("data",{})
 
             with app.app_context():
                 for pair in data:
@@ -71,6 +72,15 @@ def fetch_store_data():
                         type = "Lending"
                         contract = dataset["address"]
                         information= f"Collateral: {collateral}"
+                        action = f"Lend in the {collateral} pool"
+
+                        for pool_info in reward_data.items():
+                            print(f"Type of pool_info: {type(pool_info)}")  # This will help debug the error
+
+                            if pool_info.get("gauge") == contract:
+                                apy = pool_info
+                                print(apy)# replace 'desired_key' with the actual key you're looking for
+                                break  #
 
                         # Handle missing 'gaugeRewards'
                         if "gaugeRewards" in dataset and dataset["gaugeRewards"]:
@@ -90,6 +100,7 @@ def fetch_store_data():
                             tvl=tvl,
                             chain=chain.capitalize(),
                             type=type,
+                            action=action,
                             smart_contract=contract,
                             timestamp=datetime.utcnow()
                         )
@@ -109,5 +120,6 @@ def fetch_store_data():
             logging.error(f"Unexpected error: {e}")
 
 if __name__ == '__main__':
-    fetch_store_data()
-    get_crvusd()
+    with app.app_context():
+        fetch_store_data()
+        get_crvusd()
