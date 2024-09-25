@@ -163,12 +163,15 @@ def fetch_store_rates():
                 )
 
                 db.session.add(data)
+                print("ADDED TO DB")
 
             except Exception as e:
                 print(f"Error fetching data for {token}: {e}")
 
     db.session.commit()
+    print("COMMITED")
     token_data(total_lend_usd,total_borrowed_usd)
+    print("ADDED TVL")
 
 if __name__ == '__main__':
     with app.app_context():
