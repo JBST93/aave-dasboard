@@ -152,7 +152,7 @@ def fetch_store_rates():
                     market=token,
                     project='Aave',
                     information=information,
-                    chain=chain,
+                    chain=chain.capitalize(),
                     tvl=supply_amount_usd,
                     yield_rate_base=apy_base_formatted,
                     yield_rate_reward=None,
