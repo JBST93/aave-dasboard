@@ -168,8 +168,9 @@ def fetch_store_rates():
             except Exception as e:
                 print(f"Error fetching data for {token}: {e}")
 
-    db.session.commit()
-    print("COMMITED")
+        db.session.commit()
+        print("COMMITED")
+
     token_data(total_lend_usd,total_borrowed_usd)
     print("ADDED TVL")
 
