@@ -158,7 +158,7 @@ def fetch_store_rates():
                     yield_rate_reward=None,
                     smart_contract=contract,
                     action='Lend',
-                    type = contract_type
+                    type = contract_type,
                     timestamp=datetime.now()
                 )
 
