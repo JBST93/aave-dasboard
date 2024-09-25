@@ -146,6 +146,7 @@ def fetch_store_rates():
                 total_borrowed_usd += borrowed_amount_usd
 
                 print(f"{token} - {information} - {supply_amount_usd}")
+                contract_type = "Lending"
 
                 data = Yield(
                     market=token,
@@ -157,6 +158,7 @@ def fetch_store_rates():
                     yield_rate_reward=None,
                     smart_contract=contract,
                     action='Lend',
+                    type = contract_type
                     timestamp=datetime.now()
                 )
 
