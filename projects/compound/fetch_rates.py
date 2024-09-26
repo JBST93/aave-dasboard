@@ -202,11 +202,12 @@ def fetch_store_rates():
 
                 data = Data(
                     market=market,
-                    project="Compound v3",
+                    project="Compound",
                     information="",
                     yield_rate_base=float(apy_base_formatted),
                     yield_rate_reward=reward_apy,
                     yield_token_reward="COMP",
+                    information = "v3",
                     tvl = lend_usd,
                     chain=chain.capitalize(),
                     type='',

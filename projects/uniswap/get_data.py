@@ -219,8 +219,9 @@ def get_uniswap_pools():
 
                 data = YieldRate(
                     market=f"{pair['token0']['symbol']} / {pair['token1']['symbol']}",
-                    project='Uniswap v2',
+                    project='Uniswap',
                     chain='Ethereum',
+                    information = "v2",
                     tvl=reserve_usd,
                     yield_rate_base=yield_rate_base,
                     yield_rate_reward=yield_rate_reward,

@@ -39,7 +39,7 @@ smart_contracts = [
         },
         {
             "chain": "ethereum" ,
-            "address": "0xa3206d66cF94AA1e93B21a9D8d409d6375309F4A",
+            "address": "0x8Cb4b66f7B13F2Ae4D3c91338fC007dbF8C14208",
             "version": "v3",
             "instance": "EtherFi"
         },
@@ -112,7 +112,7 @@ def fetch_store_rates():
         pool_contract = web3.eth.contract(address=address, abi=provider_abi)
         data = pool_contract.functions.getAllReservesTokens().call()
 
-        information = f"({version}) - {instance} instance"
+        information = f"{version} - {instance} instance"
 
         for item in data:
             try:

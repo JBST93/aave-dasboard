@@ -151,8 +151,8 @@ def fetch_store_DSR():
 
             data = Data(
                     market=token,
-                    project="Maker DAO (DSR)",
-                    information=None,
+                    project="Maker DAO",
+                    information="Dai Saving Rate (DSR)",
                     yield_rate_base=float(apy),
                     yield_rate_reward=None,
                     yield_token_reward=None,

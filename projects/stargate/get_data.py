@@ -141,7 +141,7 @@ stg_address = {
 
 def get_yield():
     with app.app_context():
-        project = "Stargate V2"
+        project = "Stargate"
         total_tvl = 0
 
         for item in contracts:
@@ -195,7 +195,7 @@ def get_yield():
                 data = Yield(
                     market=token,
                     project=project,
-                    information="",
+                    information="v2",
                     yield_rate_base=0,
                     yield_rate_reward=reward_apy,
                     yield_token_reward="STG",
