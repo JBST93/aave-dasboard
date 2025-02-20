@@ -71,6 +71,7 @@ def log_and_execute(func, func_name):
     """Log execution of the given function with error handling."""
     try:
         func()  # Execute the function
+        print(f"executed {func_name}")
     except Exception as e:
         logger.error(f"Error fetching {func_name} data: {e}")
 
