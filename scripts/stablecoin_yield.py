@@ -16,9 +16,9 @@ from instances.Projects import Project
 
 def load_stablecoins():
     with app.app_context():
-        stablecoin_projects = Project.query.filter_by(category_main='Stablecoin').all()
-        stablecoins = [project.token_ticker for project in stablecoin_projects if project.token_ticker]
-    return stablecoins
+        # stablecoin_projects = Project.query.filter_by(category_main='Stablecoin').all()
+        # stablecoins = [project.token_ticker for project in stablecoin_projects if project.token_ticker]
+            return ['USDC', 'USDT', 'DAI']
 
 stablecoins = load_stablecoins()
 
