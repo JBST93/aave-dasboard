@@ -1,0 +1,98 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "contract IPoolAddressesProvider",
+        "name": "provider",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserReservesData",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "underlyingAsset",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "decimals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currentATokenBalance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currentStableDebt",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currentVariableDebt",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "principalStableDebt",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "scaledVariableDebt",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "stableBorrowRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "liquidityRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint40",
+            "name": "stableRateLastUpdated",
+            "type": "uint40"
+          },
+          {
+            "internalType": "bool",
+            "name": "usageAsCollateralEnabled",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct IUiPoolDataProviderV3.UserReserveData[]",
+        "name": "",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
