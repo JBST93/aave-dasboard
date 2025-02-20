@@ -122,7 +122,7 @@ def fetch_store_rates():
 
                 reserve_data = pool_contract.functions.getReserveData(contract).call()
 
-                apy_base = reserve_data[5] / 1e27 * 100  # Convert from Ray to percentage
+                apy_base = (reserve_data[5] / 1e27 * 100) if reserve_data[5] != 0 else 0
                 apy_base_formatted = round(apy_base, 2)
 
                 lend_amount_raw = reserve_data[2]
@@ -169,8 +169,7 @@ def fetch_store_rates():
                 print(f"Error fetching data for {token}: {e}")
 
         db.session.commit()
-        print("COMMITED")
-
+    print("COMMITED")
     token_data(total_lend_usd,total_borrowed_usd)
     print("ADDED TVL")
 

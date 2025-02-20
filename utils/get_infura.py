@@ -34,7 +34,6 @@ def select_infura(chain):
         raise ValueError(f"Unsupported chain: {chain}")
 
     # Log the selected URL for debugging purposes
-    print(f"Using URL for {chain}: {infura_url}")
 
     # Handle different API key requirements for chains
     if chain == "fantom":
