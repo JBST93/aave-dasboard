@@ -48,20 +48,44 @@ def get_price_okx(token):
         logger.error(f"Error fetching price from OKX: {e}")
     return None
 
-def get_price_bitstamp(token):
-    pair = f"{token.lower()}usd"
+def get_price_bitstamp(token: str, quote: str = "usd"):
+    """
+    Robust Bitstamp price fetcher.
+    Handles:
+    - normal dict response: {"last": "...", ...}
+    - list responses: [{"pair": "ETHUSD", "last": "..."} ...]
+    - missing/invalid pairs -> returns None (lets the caller fall through)
+    """
+    pair = f"{token.lower()}{quote.lower()}"           # e.g. "ethusd"
+    url = f"https://www.bitstamp.net/api/v2/ticker/{pair}/"  # trailing slash helps avoid redirects
 
-    endpoint = f"https://www.bitstamp.net/api/v2/ticker/{pair}"
-    r = requests.get(endpoint, timeout=10)
-    if r.status_code == 200:
-        try:
-           data = r.json()
-        except requests.RequestException as e:
-            logger.error(f"Error fetching price from Bitstamp: {e}")
-            return None
+    try:
+        r = requests.get(url, timeout=10)
+        r.raise_for_status()
+        data = r.json()
 
-        return float(data.get("last"))
-    else:
+        # Case 1: Dict response (normal for a valid pair)
+        if isinstance(data, dict):
+            last = data.get("last") or data.get("last_price")
+            return float(last) if last is not None else None
+
+        # Case 2: List response (Bitstamp sometimes returns a list of tickers)
+        if isinstance(data, list):
+            # Prefer exact pair match if present
+            for item in data:
+                if isinstance(item, dict) and item.get("pair", "").lower() == pair:
+                    if "last" in item:
+                        return float(item["last"])
+            # Fallback to the first dict that has "last"
+            for item in data:
+                if isinstance(item, dict) and "last" in item:
+                    return float(item["last"])
+
+        # No usable price found
+        return None
+
+    except Exception as e:
+        logger.warning(f"Bitstamp price fetch failed for {pair}: {e}")
         return None
 
 
