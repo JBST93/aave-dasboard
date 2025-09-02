@@ -18,7 +18,7 @@ def load_stablecoins():
     with app.app_context():
         # stablecoin_projects = Project.query.filter_by(category_main='Stablecoin').all()
         # stablecoins = [project.token_ticker for project in stablecoin_projects if project.token_ticker]
-            return ['USDC', 'USDT', 'DAI', 'crvUSD','USDe',"LUSD",'GHO']
+            return ['USDC', 'USDT', 'DAI','GHO']
 
 stablecoins = load_stablecoins()
 
