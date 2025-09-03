@@ -64,6 +64,9 @@ def get_stablecoin_rates():
             rate for rate in unique_rates.values()
             if is_valid_stablecoin_market(rate.market)
         ]
+        
+        # Re-sort by TVL after deduplication to maintain proper order
+        filtered_rates.sort(key=lambda x: x.tvl, reverse=True)
 
         # Debug: Log what's being filtered out
         for rate in unique_rates.values():
