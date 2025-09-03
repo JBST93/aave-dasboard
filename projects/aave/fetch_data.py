@@ -168,16 +168,16 @@ def fetch_store_rates():
                                                             # Debug logging for large TVL amounts and problematic tokens
                     if supply_amount_usd > 1000000000 or token in ['LUSD', 'crvUSD', 'USDe']:  # > $1B or problematic tokens
                         print(f"DEBUG: {token} - Raw: {lend_amount_raw}, Supply: {lend_amount:,.2f}, Price: ${price:,.2f}, TVL: ${supply_amount_usd:,.2f}")
-                        
+
                         # Additional debugging for price issues
                         if token in ['LUSD', 'crvUSD', 'USDe'] and price > 1000:
                             print(f"⚠️  {token} PRICE ISSUE: Price ${price:,.2f} seems too high! Expected ~$1")
                             print(f"    This suggests the price source is returning incorrect data for {token}")
                             print(f"    Expected TVL: ~${lend_amount:,.2f}, Actual TVL: ${supply_amount_usd:,.2f}")
-                        
+
                         # Additional debugging for crvUSD specifically
                         if token == 'crvUSD':
-                            print(f"🔍 crvUSD DETAILS: Instance={instance_name}, Chain={chain}, Contract={contract_addr}")
+                            print(f"🔍 crvUSD DETAILS: Instance={instance}, Chain={chain}, Contract={contract_addr}")
                             print(f"    Final values: Supply={lend_amount:,.2f}, Price=${price:,.2f}, TVL=${supply_amount_usd:,.2f}")
 
                     # Only process if there's meaningful TVL (> $1000)
@@ -206,7 +206,7 @@ def fetch_store_rates():
 
                     # Debug crvUSD database storage
                     if token == 'crvUSD':
-                        print(f"💾 STORING crvUSD: TVL=${supply_amount_usd:,.2f}, Instance={instance_name}")
+                        print(f"💾 STORING crvUSD: TVL=${supply_amount_usd:,.2f}, Instance={instance}")
 
                     db.session.add(yield_data)
                     processed_count += 1
