@@ -48,10 +48,11 @@ def get_stablecoin_rates():
             Table.timestamp > time_threshold,
         ).order_by(desc(Table.tvl)).all()
 
-        # Dictionary to hold the latest entry for each combination of (token, chain, collateral, protocol)
+        # Dictionary to hold the latest entry for each combination of (project, chain, smart_contract, information)
+        # This allows multiple instances per project (e.g., Aave v3 Main, Aave v3 Prime, etc.)
         unique_rates = {}
         for rate in records:
-            key = (rate.project, rate.chain, rate.smart_contract)  # Combining project, chain, and smart_contract
+            key = (rate.project, rate.chain, rate.smart_contract, rate.information)  # Include instance information
 
             if key not in unique_rates:
                 unique_rates[key] = rate
@@ -64,7 +65,7 @@ def get_stablecoin_rates():
             rate for rate in unique_rates.values()
             if is_valid_stablecoin_market(rate.market)
         ]
-        
+
         # Re-sort by TVL after deduplication to maintain proper order
         filtered_rates.sort(key=lambda x: x.tvl, reverse=True)
 
