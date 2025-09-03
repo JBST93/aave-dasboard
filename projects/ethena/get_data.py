@@ -46,7 +46,7 @@ def get_data():
                 pool_contract = web3.eth.contract(address=token["address"], abi=token["abi"])
                 supply_raw = float(pool_contract.functions.totalSupply().call())
                 supply_transformed = float(supply_raw / 10**token["decimals"])
-                price = get_price(token["token"], token["address"], token["chain"])
+                price = 1
 
                 data = Data (
                     token=token["token"],

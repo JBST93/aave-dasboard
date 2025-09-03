@@ -37,7 +37,7 @@ tokens_info = [
 def get_token():
     with app.app_context():
         for token in tokens_info:
-            price = get_price(token["token"], token["contract_address"], token["chain"])
+            price = 1
 
             if "api" in token:
                 circl_supply = float(requests.get(token["api"]).text.strip())

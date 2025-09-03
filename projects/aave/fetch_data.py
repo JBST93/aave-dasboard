@@ -165,15 +165,15 @@ def fetch_store_rates():
                     supply_amount_usd = lend_amount * price
                     borrowed_amount_usd = borrowed_amount * price
 
-                    # Debug logging for large TVL amounts and problematic tokens
+                                        # Debug logging for large TVL amounts and problematic tokens
                     if supply_amount_usd > 1000000000 or token in ['LUSD', 'crvUSD', 'USDe']:  # > $1B or problematic tokens
                         print(f"DEBUG: {token} - Raw: {lend_amount_raw}, Supply: {lend_amount:,.2f}, Price: ${price:,.2f}, TVL: ${supply_amount_usd:,.2f}")
-
+                        
                         # Additional debugging for price issues
-                        if token == 'LUSD' and price > 1000:
-                            print(f"⚠️  LUSD PRICE ISSUE: Price ${price:,.2f} seems too high! Expected ~$1")
-                        if token == 'USDe' and price > 1000:
-                            print(f"⚠️  USDe PRICE ISSUE: Price ${price:,.2f} seems too high! Expected ~$1")
+                        if token in ['LUSD', 'crvUSD', 'USDe'] and price > 1000:
+                            print(f"⚠️  {token} PRICE ISSUE: Price ${price:,.2f} seems too high! Expected ~$1")
+                            print(f"    This suggests the price source is returning incorrect data for {token}")
+                            print(f"    Expected TVL: ~${lend_amount:,.2f}, Actual TVL: ${supply_amount_usd:,.2f}")
 
                     # Only process if there's meaningful TVL (> $1000)
                     if supply_amount_usd < 1000:

@@ -10,7 +10,19 @@ from app import app
 
 def get_price(token, address=None, chain=None):
     with app.app_context():
+        # Debug problematic tokens
+        if token in ['LUSD', 'crvUSD', 'USDe']:
+            print(f"🔍 Fetching price for {token}...")
+            
         price = get_price_kraken(token) or get_price_bitstamp(token) or get_price_okx(token) or get_price_curve(address, chain) or get_gateio_price(token) or get_angle_price(token) or 0
+        
+        # Debug problematic tokens
+        if token in ['LUSD', 'crvUSD', 'USDe']:
+            if price > 1000:
+                print(f"⚠️  {token} price from external source: ${price:,.2f} (seems too high!)")
+            else:
+                print(f"✅ {token} price from external source: ${price:,.2f}")
+                
         return price
 
 def get_price_kraken(token):
