@@ -47,114 +47,146 @@ def get_volumes(chain):
 
 @functools.cache
 def get_pools():
-    price = get_latest_token_data("CRV")
-    supply_raw = get_supply()
-    supply_usd = supply_raw*price
-    data_list = []
+    try:
+        price = get_latest_token_data("CRV")
+        supply_raw = get_supply()
+        supply_usd = supply_raw * price
+        data_list = []
+        processed_count = 0
+        skipped_count = 0
 
-    for chain in chains:
-        endpoint = f"https://api.curve.fi/v1/getPools/all/{chain}"
-        r = requests.get(endpoint)
-        data = r.json()
+        for chain in chains:
+            endpoint = f"https://api.curve.fi/v1/getPools/all/{chain}"
+            try:
+                r = requests.get(endpoint, timeout=30)
+                r.raise_for_status()
+                data = r.json()
 
-        pools = data.get("data",{}).get("poolData",{})
-        count_pools = len(pools)
-        total_tvl = 0
+                if "data" not in data or "poolData" not in data["data"]:
+                    print(f"No pool data for {chain}")
+                    continue
 
-        volumes = get_volumes(chain)
+                pools = data["data"]["poolData"]
+                print(f"Processing {len(pools)} pools for {chain}")
 
-        for pool in pools:
-            address = pool.get("address")
-            tvl = pool.get("usdTotalExcludingBasePool")
-            total_tvl += tvl
-            coins_info = pool.get("coins")
-            chain = pool.get("blockchainId")
-            type = pool.get("assetTypeName")
-            if type == "usd":
-                type = "Stable Pool"
-            elif type =="eth":
-                type="ETH Pool"
-            elif type =="btc":
-                type ="BTC Pool"
-            else:
-                type ="Unknown"
+                volumes = get_volumes(chain)
 
-            gaugeCrvApy = pool.get("gaugeCrvApy",[]) or []
-            if isinstance(gaugeCrvApy, list) and len(gaugeCrvApy) > 0 and gaugeCrvApy[0] is not None:
-                reward_apy = round(float(gaugeCrvApy[0]),2)
-            else:
-                reward_apy = 0
+                for pool in pools:
+                    try:
+                        address = pool.get("address")
+                        tvl = pool.get("usdTotalExcludingBasePool", 0)
+                        coins_info = pool.get("coins", [])
+                        chain_name = pool.get("blockchainId", chain)
+                        type_name = pool.get("assetTypeName", "Unknown")
 
-            coins = []
-            if tvl > 1:
-                for coin in coins_info:
-                    token = coin.get("symbol")
+                        # Normalize type names
+                        if type_name == "usd":
+                            type_name = "Stable Pool"
+                        elif type_name == "eth":
+                            type_name = "ETH Pool"
+                        elif type_name == "btc":
+                            type_name = "BTC Pool"
+                        else:
+                            type_name = "Other Pool"
 
-                    usd_price = float(coin.get("usdPrice") or 0)
-                    balance = float(coin.get("poolBalance", 0))
-                    decimals = float(coin.get("decimals", 18))
+                        # Handle gauge CRV APY
+                        gaugeCrvApy = pool.get("gaugeCrvApy", [])
+                        if isinstance(gaugeCrvApy, list) and len(gaugeCrvApy) > 0 and gaugeCrvApy[0] is not None:
+                            reward_apy = round(float(gaugeCrvApy[0]), 2)
+                        else:
+                            reward_apy = 0
 
-                    balance_normalised = balance / 10**(decimals)
-                    balance_normalised_usd = balance_normalised * usd_price
-                    if tvl > 0:
-                        percent = round(float(balance_normalised_usd) / float(tvl) * 100, 2)
-                    else:
-                        percent = 0
-                    coins.append([token,balance_normalised_usd, percent])
+                        # Process coins
+                        coins = []
+                        if tvl > 1 and coins_info:
+                            for coin in coins_info:
+                                token = coin.get("symbol", "Unknown")
+                                usd_price = float(coin.get("usdPrice", 0))
+                                balance = float(coin.get("poolBalance", 0))
+                                decimals = float(coin.get("decimals", 18))
 
-            if tvl > 1:
-                for volume_data in volumes:
-                    if volume_data.get("address") == address:
-                        volume = volume_data.get("volumeUSD", 0)
-                        base_apy = volume_data.get("latestDailyApyPcent",0)
-                        break
-            apy = round((base_apy + reward_apy),2)
+                                balance_normalised = balance / 10**(decimals)
+                                balance_normalised_usd = balance_normalised * usd_price
+                                if tvl > 0:
+                                    percent = round(float(balance_normalised_usd) / float(tvl) * 100, 2)
+                                else:
+                                    percent = 0
+                                coins.append([token, balance_normalised_usd, percent])
 
-            if tvl > 1 and volume > 1:
-                symbol = " / ".join([coin[0] for coin in coins])
+                        # Get volume and base APY
+                        volume = 0
+                        base_apy = 0
+                        if tvl > 1 and volumes:
+                            for volume_data in volumes:
+                                if volume_data.get("address") == address:
+                                    volume = volume_data.get("volumeUSD", 0)
+                                    base_apy = volume_data.get("latestDailyApyPcent", 0)
+                                    break
 
-                data = {
-                    "symbol":symbol,
-                    "coins":coins,
-                    "tvl":tvl,
-                    "apy":apy,
-                    "volume":volume,
-                    "address":address,
-                    "chain":chain.capitalize(),
-                    "type":type,
-                    "base_apy":base_apy,
-                    "reward_apy":reward_apy
-                }
+                        apy = round((base_apy + reward_apy), 2)
 
-                data_list.append(data)
+                        # Only process pools with meaningful TVL and volume
+                        if tvl > 1000 and volume > 100:  # Increased thresholds for better data quality
+                            symbol = " / ".join([coin[0] for coin in coins]) if coins else "Unknown"
 
-                info = YieldRate(
-                    market = symbol,
-                    project = "Curve",
-                    information = "Curve Finance",
-                    yield_rate_base = base_apy,
-                    yield_rate_reward = reward_apy,
-                    yield_token_reward = "CRV",
-                    tvl = tvl,
-                    chain = chain.capitalize(),
-                    type = type,
-                    smart_contract = address,
-                    timestamp = datetime.utcnow()
-                )
-                db.session.add(info)
+                            pool_data = {
+                                "symbol": symbol,
+                                "coins": coins,
+                                "tvl": tvl,
+                                "apy": apy,
+                                "volume": volume,
+                                "address": address,
+                                "chain": chain_name.capitalize(),
+                                "type": type_name,
+                                "base_apy": base_apy,
+                                "reward_apy": reward_apy
+                            }
 
-        db.session.commit()
+                            data_list.append(pool_data)
 
-    sorted_data_list = sorted(data_list, key=lambda x: x['tvl'], reverse=True)
+                            info = YieldRate(
+                                market=symbol,
+                                project="Curve",
+                                information="Curve Finance Pool",
+                                yield_rate_base=base_apy,
+                                yield_rate_reward=reward_apy,
+                                yield_token_reward="CRV",
+                                tvl=tvl,
+                                chain=chain_name.capitalize(),
+                                type=type_name,
+                                smart_contract=address,
+                                timestamp=datetime.utcnow()
+                            )
+                            db.session.add(info)
+                            processed_count += 1
+                        else:
+                            skipped_count += 1
 
-    result = {
+                    except Exception as e:
+                        print(f"Error processing pool {address}: {e}")
+                        skipped_count += 1
+
+                db.session.commit()
+                print(f"Curve {chain}: {processed_count} pools processed, {skipped_count} skipped")
+
+            except Exception as e:
+                print(f"Error fetching pools for {chain}: {e}")
+
+        sorted_data_list = sorted(data_list, key=lambda x: x['tvl'], reverse=True)
+
+        result = {
             "name": "Curve Finance",
             "price": price,
-            "supply":supply_usd,
-            "pools": sorted_data_list
+            "supply": supply_usd,
+            "pools": sorted_data_list,
+            "total_processed": processed_count
         }
 
-    return jsonify(result)
+        return jsonify(result)
+
+    except Exception as e:
+        print(f"Error in get_pools: {e}")
+        return jsonify({"error": str(e)})
 # Run the Flask app
 if __name__ == "__main__":
     with app.app_context():
