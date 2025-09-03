@@ -180,9 +180,17 @@ def fetch_data_metamorpho():
                                             collaterals.append(collateral)
 
                         if collaterals:
-                            formatted_collaterals = f"Collaterals for pool: {', '.join(collaterals)}"
+                            # Truncate to fit database field (200 chars max)
+                            collaterals_str = ', '.join(collaterals)
+                            if len(collaterals_str) > 180:  # Leave room for "Collaterals for pool: " prefix
+                                collaterals_str = collaterals_str[:177] + "..."
+                            formatted_collaterals = f"Collaterals for pool: {collaterals_str}"
                         else:
                             formatted_collaterals = f"Vault: {vault_name}"
+
+                        # Ensure the final string doesn't exceed 200 characters
+                        if len(formatted_collaterals) > 200:
+                            formatted_collaterals = formatted_collaterals[:197] + "..."
 
                         # Process rewards
                         reward_rate = 0
