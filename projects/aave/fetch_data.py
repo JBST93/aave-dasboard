@@ -168,7 +168,7 @@ def fetch_store_rates():
                                         # Debug logging for large TVL amounts and problematic tokens
                     if supply_amount_usd > 1000000000 or token in ['LUSD', 'crvUSD', 'USDe']:  # > $1B or problematic tokens
                         print(f"DEBUG: {token} - Raw: {lend_amount_raw}, Supply: {lend_amount:,.2f}, Price: ${price:,.2f}, TVL: ${supply_amount_usd:,.2f}")
-                        
+
                         # Additional debugging for price issues
                         if token in ['LUSD', 'crvUSD', 'USDe'] and price > 1000:
                             print(f"⚠️  {token} PRICE ISSUE: Price ${price:,.2f} seems too high! Expected ~$1")

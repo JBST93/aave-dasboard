@@ -20,6 +20,8 @@ def get_price(token, address=None, chain=None):
         if token in ['LUSD', 'crvUSD', 'USDe']:
             if price > 1000:
                 print(f"⚠️  {token} price from external source: ${price:,.2f} (seems too high!)")
+                print(f"🔧 Using fallback price $1.00 for stablecoin {token}")
+                price = 1.0  # Fallback to $1 for stablecoins
             else:
                 print(f"✅ {token} price from external source: ${price:,.2f}")
                 
