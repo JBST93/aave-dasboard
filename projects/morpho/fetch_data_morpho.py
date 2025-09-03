@@ -14,7 +14,6 @@ from instances.YieldRate import YieldRate as Data
 # Define the endpoint and headers
 url = 'https://blue-api.morpho.org/graphql'
 headers = {
-    'Accept-Encoding': 'gzip, deflate, br',
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     'Connection': 'keep-alive',
@@ -93,7 +92,10 @@ def fetch_data_metamorpho():
     """
 
     try:
-        response = requests.post(url, headers=headers, json={'query': query}, timeout=30)
+        # Make request with explicit decompression handling
+        # Try with session to ensure proper connection handling
+        session = requests.Session()
+        response = session.post(url, headers=headers, json={'query': query}, timeout=30)
         response.raise_for_status()  # Raise exception for bad status codes
 
         # Check if response has content
@@ -101,12 +103,27 @@ def fetch_data_metamorpho():
             logger.error("Morpho API returned empty response")
             return
 
-        # Parse JSON with error handling
+        # Check content type
+        content_type = response.headers.get('content-type', '')
+        if 'application/json' not in content_type:
+            logger.error(f"Morpho API returned non-JSON content: {content_type}")
+            logger.error(f"Response content: {response.text[:500]}")
+            return
+
+        # Parse JSON with error handling and explicit decompression
         try:
-            json_data = response.json()
+            # Try to get text content first to ensure proper decompression
+            response_text = response.text
+            if not response_text.strip():
+                logger.error("Morpho API returned empty text content")
+                return
+
+            json_data = json.loads(response_text)
         except json.JSONDecodeError as e:
             logger.error(f"Morpho API returned invalid JSON: {e}")
-            logger.error(f"Response content: {response.text[:500]}")
+            logger.error(f"Response content type: {content_type}")
+            logger.error(f"Response encoding: {response.encoding}")
+            logger.error(f"Response content (first 500 chars): {response_text[:500] if 'response_text' in locals() else response.text[:500]}")
             return
 
         # Check for GraphQL errors

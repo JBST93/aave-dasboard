@@ -145,7 +145,6 @@ def fetch_store_rates():
                 total_lend_usd += supply_amount_usd
                 total_borrowed_usd += borrowed_amount_usd
 
-                print(f"{token} - {information} - {supply_amount_usd}")
                 contract_type = "Lending"
 
                 data = Yield(
@@ -163,7 +162,6 @@ def fetch_store_rates():
                 )
 
                 db.session.add(data)
-                print("ADDED TO DB")
 
             except Exception as e:
                 print(f"Error fetching data for {token}: {e}")
