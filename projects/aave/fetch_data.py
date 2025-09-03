@@ -73,12 +73,7 @@ smart_contracts = [
             "version": "v3",
             "instance":"Main"
         },
-        {
-            "chain": "fantom" ,
-            "address": "0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
-            "version": "v3",
-            "instance":"Main"
-        },
+
         {
             "chain": "avalanche" ,
             "address": "0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654",
@@ -91,18 +86,7 @@ smart_contracts = [
             "version": "v3",
             "instance":"Main"
         },
-        {
-            "chain": "ethereum" ,
-            "address": "0xA1a8c33C9a9a9DE231b13a2271a7C09c11C849F1",
-            "version": "v3",
-            "instance":"Horizon RWA"
-        },
-        {
-            "chain": "ethereum" ,
-            "address": "0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8",
-            "version": "v3",
-            "instance":"Horizon RWA Pool"
-        }
+
 ]
 
 def token_data(total_lend_usd, total_borrowed_usd):
@@ -166,6 +150,9 @@ def fetch_store_rates():
                     elif token == "WBTC":
                         lend_amount = lend_amount_raw / 1e8
                         borrowed_amount = borrowed_amount_raw / 1e8
+                    elif token in ['USDe', 'LUSD']:
+                        lend_amount = lend_amount_raw / 1e18
+                        borrowed_amount = borrowed_amount_raw / 1e18
                     else:
                         lend_amount = lend_amount_raw / 1e18
                         borrowed_amount = borrowed_amount_raw / 1e18
@@ -173,6 +160,10 @@ def fetch_store_rates():
                     price = get_latest_price(token) or 0
                     supply_amount_usd = lend_amount * price
                     borrowed_amount_usd = borrowed_amount * price
+
+                    # Debug logging for large TVL amounts
+                    if supply_amount_usd > 1000000000:  # > $1B
+                        print(f"DEBUG: {token} - Supply: {lend_amount:,.2f}, Price: ${price:,.2f}, TVL: ${supply_amount_usd:,.2f}")
 
                     # Only process if there's meaningful TVL (> $1000)
                     if supply_amount_usd < 1000:
