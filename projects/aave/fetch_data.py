@@ -154,7 +154,7 @@ def fetch_store_rates():
                     elif token == "WBTC":
                         lend_amount = lend_amount_raw / 1e8
                         borrowed_amount = borrowed_amount_raw / 1e8
-                    elif token in ['USDe', 'LUSD','crvUSD']:
+                    elif token in ['USDe', 'LUSD', 'crvUSD']:
                         lend_amount = lend_amount_raw / 1e18
                         borrowed_amount = borrowed_amount_raw / 1e18
                     else:
@@ -167,7 +167,13 @@ def fetch_store_rates():
 
                     # Debug logging for large TVL amounts and problematic tokens
                     if supply_amount_usd > 1000000000 or token in ['LUSD', 'crvUSD', 'USDe']:  # > $1B or problematic tokens
-                        print(f"DEBUG: {token} - Supply: {lend_amount:,.2f}, Price: ${price:,.2f}, TVL: ${supply_amount_usd:,.2f}")
+                        print(f"DEBUG: {token} - Raw: {lend_amount_raw}, Supply: {lend_amount:,.2f}, Price: ${price:,.2f}, TVL: ${supply_amount_usd:,.2f}")
+
+                        # Additional debugging for price issues
+                        if token == 'LUSD' and price > 1000:
+                            print(f"⚠️  LUSD PRICE ISSUE: Price ${price:,.2f} seems too high! Expected ~$1")
+                        if token == 'USDe' and price > 1000:
+                            print(f"⚠️  USDe PRICE ISSUE: Price ${price:,.2f} seems too high! Expected ~$1")
 
                     # Only process if there's meaningful TVL (> $1000)
                     if supply_amount_usd < 1000:
