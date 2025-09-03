@@ -121,7 +121,6 @@ def fetch_store_data():
         for name, task in tasks.items():
             try:
                 log_and_execute(task, name)
-                print(f"executed {name}")
             except Exception as e:
                 print(e)
 

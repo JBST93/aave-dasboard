@@ -1,4 +1,5 @@
 import requests
+import json
 from datetime import datetime
 import sys, os
 import logging
@@ -91,12 +92,40 @@ def fetch_data_metamorpho():
     }
     """
 
-    response = requests.post(url, headers=headers, json={'query': query})
+    try:
+        response = requests.post(url, headers=headers, json={'query': query}, timeout=30)
+        response.raise_for_status()  # Raise exception for bad status codes
 
-    if response.status_code == 200:
-        data = response.json().get("data", {}).get("vaults", {}).get("items", [])
+        # Check if response has content
+        if not response.content:
+            logger.error("Morpho API returned empty response")
+            return
+
+        # Parse JSON with error handling
+        try:
+            json_data = response.json()
+        except json.JSONDecodeError as e:
+            logger.error(f"Morpho API returned invalid JSON: {e}")
+            logger.error(f"Response content: {response.text[:500]}")
+            return
+
+        # Check for GraphQL errors
+        if "errors" in json_data:
+            logger.error(f"Morpho GraphQL errors: {json_data['errors']}")
+            return
+
+        # Extract data safely
+        data = json_data.get("data", {}).get("vaults", {}).get("items", [])
         logger.info(f"Fetched {len(data)} vaults from Morpho API")
 
+    except requests.RequestException as e:
+        logger.error(f"Morpho API request failed: {e}")
+        return
+    except Exception as e:
+        logger.error(f"Unexpected error fetching Morpho data: {e}")
+        return
+
+    if data:  # Only process if we have data
         with app.app_context():
             processed_count = 0
             skipped_count = 0
@@ -180,10 +209,8 @@ def fetch_data_metamorpho():
             except Exception as e:
                 db.session.rollback()
                 logger.error(f"Error committing Morpho data: {e}")
-
     else:
-        logger.error(f"Morpho API query failed with status code: {response.status_code}")
-        logger.error(f"Response: {response.text}")
+        logger.warning("No Morpho data to process")
 
 
 if __name__ == '__main__':
