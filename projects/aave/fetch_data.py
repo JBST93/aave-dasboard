@@ -33,6 +33,18 @@ smart_contracts = [
         },
         {
             "chain": "ethereum" ,
+            "address": "0x53519c32f73fE1797d10210c4950fFeBa3b21504",
+            "version": "v3",
+            "instance":"Horizon RWA"
+        },
+        {
+            "chain": "ethereum" ,
+            "address": "0x66FeAe868EBEd74A34A7043e88742AAE00D2bC53",
+            "version": "v3",
+            "instance":"Prime"
+        },
+        {
+            "chain": "ethereum" ,
             "address": "0xa3206d66cF94AA1e93B21a9D8d409d6375309F4A",
             "version": "v3",
             "instance":"Lido"
@@ -78,6 +90,18 @@ smart_contracts = [
             "address": "0x2d8A3C5677189723C4cB8873CfC9C8976FDF38Ac",
             "version": "v3",
             "instance":"Main"
+        },
+        {
+            "chain": "ethereum" ,
+            "address": "0xA1a8c33C9a9a9DE231b13a2271a7C09c11C849F1",
+            "version": "v3",
+            "instance":"Horizon RWA"
+        },
+        {
+            "chain": "ethereum" ,
+            "address": "0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8",
+            "version": "v3",
+            "instance":"Horizon RWA Pool"
         }
 ]
 
@@ -101,6 +125,8 @@ def token_data(total_lend_usd, total_borrowed_usd):
 def fetch_store_rates():
     total_lend_usd = 0
     total_borrowed_usd = 0
+    processed_count = 0
+    skipped_count = 0
 
     for contract in smart_contracts:
         chain = contract['chain']
@@ -108,68 +134,87 @@ def fetch_store_rates():
         version = contract['version']
         instance = contract['instance']
 
-        web3 = select_infura(chain)
-        pool_contract = web3.eth.contract(address=address, abi=provider_abi)
-        data = pool_contract.functions.getAllReservesTokens().call()
+        try:
+            web3 = select_infura(chain)
+            pool_contract = web3.eth.contract(address=address, abi=provider_abi)
+            data = pool_contract.functions.getAllReservesTokens().call()
 
-        information = f"{version} - {instance} instance"
+            information = f"{version} - {instance} instance"
+            print(f"Processing {chain} {instance} instance: {len(data)} tokens")
 
-        for item in data:
-            try:
-                token = item[0]
-                contract = item[1]
-                price = get_latest_price(token)
+            for item in data:
+                try:
+                    token = item[0]
+                    contract_addr = item[1]
 
-                reserve_data = pool_contract.functions.getReserveData(contract).call()
+                    # Skip if no token symbol
+                    if not token or token.strip() == "":
+                        continue
 
-                apy_base = (reserve_data[5] / 1e27 * 100) if reserve_data[5] != 0 else 0
-                apy_base_formatted = round(apy_base, 2)
+                    reserve_data = pool_contract.functions.getReserveData(contract_addr).call()
 
-                lend_amount_raw = reserve_data[2]
-                borrowed_amount_raw = reserve_data[3]+reserve_data[4]
+                    apy_base = (reserve_data[5] / 1e27 * 100) if reserve_data[5] != 0 else 0
+                    apy_base_formatted = round(apy_base, 2)
 
-                if token in ['USDC', 'pyUSD', 'USDT']:
-                    lend_amount = lend_amount_raw / 1e6
-                    borrowed_amount = borrowed_amount_raw /1e6
-                elif token == "WBTC":
-                    lend_amount = lend_amount_raw / 1e8
-                    borrowed_amount = borrowed_amount_raw/1e8
-                else:
-                    lend_amount = lend_amount_raw / 1e18
-                    borrowed_amount = borrowed_amount_raw / 1e18
+                    lend_amount_raw = reserve_data[2]
+                    borrowed_amount_raw = reserve_data[3] + reserve_data[4]
 
-                price = get_latest_price(token) or 0
-                supply_amount_usd = lend_amount * price
-                borrowed_amount_usd = borrowed_amount * price
+                    # Handle different token decimals
+                    if token in ['USDC', 'pyUSD', 'USDT', 'PYUSD']:
+                        lend_amount = lend_amount_raw / 1e6
+                        borrowed_amount = borrowed_amount_raw / 1e6
+                    elif token == "WBTC":
+                        lend_amount = lend_amount_raw / 1e8
+                        borrowed_amount = borrowed_amount_raw / 1e8
+                    else:
+                        lend_amount = lend_amount_raw / 1e18
+                        borrowed_amount = borrowed_amount_raw / 1e18
 
-                total_lend_usd += supply_amount_usd
-                total_borrowed_usd += borrowed_amount_usd
+                    price = get_latest_price(token) or 0
+                    supply_amount_usd = lend_amount * price
+                    borrowed_amount_usd = borrowed_amount * price
 
-                contract_type = "Lending"
+                    # Only process if there's meaningful TVL (> $1000)
+                    if supply_amount_usd < 1000:
+                        skipped_count += 1
+                        continue
 
-                data = Yield(
-                    market=token,
-                    project='Aave',
-                    information=information,
-                    chain=chain.capitalize(),
-                    tvl=supply_amount_usd,
-                    yield_rate_base=apy_base_formatted,
-                    yield_rate_reward=None,
-                    smart_contract=contract,
-                    action='Lend',
-                    type = contract_type,
-                    timestamp=datetime.now()
-                )
+                    total_lend_usd += supply_amount_usd
+                    total_borrowed_usd += borrowed_amount_usd
 
-                db.session.add(data)
+                    contract_type = "Lending"
 
-            except Exception as e:
-                print(f"Error fetching data for {token}: {e}")
+                    yield_data = Yield(
+                        market=token,
+                        project='Aave',
+                        information=information,
+                        chain=chain.capitalize(),
+                        tvl=supply_amount_usd,
+                        yield_rate_base=apy_base_formatted,
+                        yield_rate_reward=None,
+                        smart_contract=contract_addr,
+                        action='Lend',
+                        type=contract_type,
+                        timestamp=datetime.now()
+                    )
 
-        db.session.commit()
-    print("COMMITED")
-    token_data(total_lend_usd,total_borrowed_usd)
-    print("ADDED TVL")
+                    db.session.add(yield_data)
+                    processed_count += 1
+
+                except Exception as e:
+                    print(f"Error processing {token} on {chain} {instance}: {e}")
+                    skipped_count += 1
+
+            db.session.commit()
+            print(f"Committed {chain} {instance} instance")
+
+        except Exception as e:
+            print(f"Error processing {chain} {instance} instance: {e}")
+            db.session.rollback()
+
+    print(f"Aave processing complete: {processed_count} processed, {skipped_count} skipped")
+    token_data(total_lend_usd, total_borrowed_usd)
+    print("Added TVL data")
 
 if __name__ == '__main__':
     with app.app_context():

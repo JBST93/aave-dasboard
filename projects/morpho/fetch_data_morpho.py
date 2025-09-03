@@ -180,7 +180,7 @@ def fetch_data_metamorpho():
                                             collaterals.append(collateral)
 
                         # Use vault name for better user identification
-                        formatted_collaterals = f"Vault Name:{vault_name}"
+                        formatted_collaterals = f"Vault Name: {vault_name}"
 
                         # Ensure the final string doesn't exceed 200 characters
                         if len(formatted_collaterals) > 200:
