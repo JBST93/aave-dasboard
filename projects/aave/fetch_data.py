@@ -126,6 +126,10 @@ def fetch_store_rates():
             information = f"{version} - {instance} instance"
             print(f"Processing {chain} {instance} instance: {len(data)} tokens")
 
+            # Debug for RWA and Prime instances
+            if instance in ["Horizon RWA", "Prime"]:
+                print(f"DEBUG: {instance} tokens: {[item[0] for item in data]}")
+
             for item in data:
                 try:
                     token = item[0]
@@ -161,8 +165,8 @@ def fetch_store_rates():
                     supply_amount_usd = lend_amount * price
                     borrowed_amount_usd = borrowed_amount * price
 
-                    # Debug logging for large TVL amounts
-                    if supply_amount_usd > 1000000000:  # > $1B
+                    # Debug logging for large TVL amounts and problematic tokens
+                    if supply_amount_usd > 1000000000 or token in ['LUSD', 'crvUSD', 'USDe']:  # > $1B or problematic tokens
                         print(f"DEBUG: {token} - Supply: {lend_amount:,.2f}, Price: ${price:,.2f}, TVL: ${supply_amount_usd:,.2f}")
 
                     # Only process if there's meaningful TVL (> $1000)
