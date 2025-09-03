@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 def fetch_data_metamorpho():
     query = """
     query {
-      vaults {
+      vaults(first: 1000) {
         items {
           address
           symbol
@@ -95,48 +95,70 @@ def fetch_data_metamorpho():
 
     if response.status_code == 200:
         data = response.json().get("data", {}).get("vaults", {}).get("items", [])
+        logger.info(f"Fetched {len(data)} vaults from Morpho API")
+
         with app.app_context():
+            processed_count = 0
+            skipped_count = 0
+
             for market in data:
                 try:
-                    if market and market["state"] and market["state"].get("totalAssetsUsd"):
-                        if market["state"].get("allocation") and market["state"]["allocation"][0].get("market"):
-                            supply_token = market["state"]["allocation"][0]["market"]["loanAsset"]["symbol"]
-                        else:
-                            continue
-                        supply_apy = market["state"].get("apy", 0)
-                        chain = market["chain"]["network"]
-                        supply_amount = market["state"].get("totalAssetsUsd", 0)
-                        contract= market["address"]
-                        type="Lending"
+                    # More flexible conditions - process vaults with valid APY even if TVL is 0
+                    if market and market.get("state") and market["state"].get("apy") is not None:
+                        state = market["state"]
+                        supply_apy = state.get("apy", 0)
+                        supply_amount = state.get("totalAssetsUsd", 0)
+                        chain = market.get("chain", {}).get("network", "Unknown")
+                        contract = market.get("address", "Unknown")
+                        vault_symbol = market.get("symbol", "Unknown")
+                        vault_name = market.get("name", "Unknown Vault")
 
+                        # Try to get supply token from allocation, fallback to vault symbol
+                        supply_token = vault_symbol
+                        if state.get("allocation") and len(state["allocation"]) > 0:
+                            allocation = state["allocation"][0]
+                            if allocation.get("market") and allocation["market"].get("loanAsset"):
+                                supply_token = allocation["market"]["loanAsset"]["symbol"]
+
+                        type = "Lending"
+
+                        # Process collaterals
                         collaterals = []
-                        collateral_data = market.get("state",{}).get("allocation",{})
-                        for item in collateral_data:
-                            collateral_asset = item.get("market",{}).get("collateralAsset",{})
-                            if collateral_asset:
-                                collateral = collateral_asset.get("symbol")
-                                collaterals.append(collateral)
+                        if state.get("allocation"):
+                            for item in state["allocation"]:
+                                if item.get("market") and item["market"].get("collateralAsset"):
+                                    collateral_asset = item["market"]["collateralAsset"]
+                                    if collateral_asset:
+                                        collateral = collateral_asset.get("symbol")
+                                        if collateral:
+                                            collaterals.append(collateral)
+
                         if collaterals:
                             formatted_collaterals = f"Collaterals for pool: {', '.join(collaterals)}"
                         else:
-                            formatted_collaterals = ""
+                            formatted_collaterals = f"Vault: {vault_name}"
 
+                        # Process rewards
+                        reward_rate = 0
+                        reward_asset = ""
+                        if state.get("rewards") and len(state["rewards"]) > 0:
+                            reward = state["rewards"][0]
+                            reward_rate = reward.get("supplyApr", 0)
+                            if reward.get("asset"):
+                                reward_asset = reward["asset"].get("symbol", "")
 
+                        # Only skip if both APY and TVL are 0 (truly inactive vaults)
+                        if supply_apy == 0 and supply_amount == 0:
+                            skipped_count += 1
+                            continue
 
-                        if market["state"].get("rewards"):
-                            reward_rate = market["state"].get("rewards")[0].get("supplyApr")
-                            reward_asset = market["state"].get("rewards")[0].get("asset").get("symbol")
-                        else:
-                            reward_rate = 0
-                            reward_asset = ""
-
-                        data = Data(
+                        data_record = Data(
                             market=supply_token,
                             project="Morpho",
                             information=formatted_collaterals,
                             yield_rate_base=supply_apy * 100,
                             yield_rate_reward=reward_rate * 100,
-                            yield_token_reward=None,
+                            yield_token_reward=reward_asset if reward_asset else None,
                             tvl=supply_amount,
                             chain=chain.capitalize(),
                             type=type,
@@ -144,16 +166,24 @@ def fetch_data_metamorpho():
                             timestamp=datetime.utcnow()
                         )
 
-                        db.session.add(data)
-
-                        db.session.commit()
+                        db.session.add(data_record)
+                        processed_count += 1
 
                 except Exception as e:
                     logger.error(f"Error processing vault data: {e}")
+                    skipped_count += 1
 
+            # Commit all changes at once for better performance
+            try:
+                db.session.commit()
+                logger.info(f"Morpho data processing complete: {processed_count} processed, {skipped_count} skipped")
+            except Exception as e:
+                db.session.rollback()
+                logger.error(f"Error committing Morpho data: {e}")
 
     else:
-        logger.error(f"Query failed to run with a {response.status_code}.")
+        logger.error(f"Morpho API query failed with status code: {response.status_code}")
+        logger.error(f"Response: {response.text}")
 
 
 if __name__ == '__main__':
