@@ -150,7 +150,7 @@ def fetch_store_rates():
                     elif token == "WBTC":
                         lend_amount = lend_amount_raw / 1e8
                         borrowed_amount = borrowed_amount_raw / 1e8
-                    elif token in ['USDe', 'LUSD']:
+                    elif token in ['USDe', 'LUSD','crvUSD']:
                         lend_amount = lend_amount_raw / 1e18
                         borrowed_amount = borrowed_amount_raw / 1e18
                     else:

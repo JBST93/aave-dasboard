@@ -18,7 +18,7 @@ def load_stablecoins():
     with app.app_context():
         # stablecoin_projects = Project.query.filter_by(category_main='Stablecoin').all()
         # stablecoins = [project.token_ticker for project in stablecoin_projects if project.token_ticker]
-            return ['USDC', 'USDT', 'DAI','GHO']
+            return ['USDC', 'USDT', 'DAI', 'GHO', 'USDe', 'LUSD', 'crvUSD', 'PYUSD', 'FRAX', 'LUSD', 'sDAI', 'RLUSD']
 
 stablecoins = load_stablecoins()
 
@@ -64,6 +64,11 @@ def get_stablecoin_rates():
             rate for rate in unique_rates.values()
             if is_valid_stablecoin_market(rate.market)
         ]
+
+        # Debug: Log what's being filtered out
+        for rate in unique_rates.values():
+            if not is_valid_stablecoin_market(rate.market):
+                print(f"FILTERED OUT: {rate.project} - {rate.market} - {rate.information}")
 
         rates_list = [
             {
