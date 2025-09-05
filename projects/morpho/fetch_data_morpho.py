@@ -153,6 +153,12 @@ def fetch_data_metamorpho():
                     if market and market.get("state") and market["state"].get("apy") is not None:
                         state = market["state"]
                         supply_apy = state.get("apy", 0)
+                        
+                        # Smart APY conversion: if APY < 1, assume it's a decimal and convert to percentage
+                        # If APY >= 1, assume it's already a percentage
+                        if supply_apy < 1 and supply_apy > 0:
+                            supply_apy = supply_apy * 100
+                        
                         supply_amount = state.get("totalAssetsUsd", 0)
                         chain = market.get("chain", {}).get("network", "Unknown")
                         contract = market.get("address", "Unknown")
@@ -192,13 +198,21 @@ def fetch_data_metamorpho():
                         if state.get("rewards") and len(state["rewards"]) > 0:
                             reward = state["rewards"][0]
                             reward_rate = reward.get("supplyApr", 0)
+                            
+                            # Smart reward rate conversion: if rate < 1, assume it's a decimal and convert to percentage
+                            if reward_rate < 1 and reward_rate > 0:
+                                reward_rate = reward_rate * 100
+                                
                             if reward.get("asset"):
                                 reward_asset = reward["asset"].get("symbol", "")
 
-                        # Debug high APY vaults
-                        if supply_apy > 50:  # Debug vaults with >50% APY
-                            print(f"🔍 HIGH APY VAULT: {vault_name} - APY: {supply_apy:.2f}%, TVL: ${supply_amount:,.2f}")
-                            print(f"    Rewards: {reward_rate:.2f}% {reward_asset}")
+                        # Debug APY conversion for specific vaults
+                        if "Spark DAI" in vault_name or "Relend USDC" in vault_name:
+                            raw_apy = state.get("apy", 0)
+                            print(f"🔍 APY CONVERSION: {vault_name}")
+                            print(f"    Raw APY: {raw_apy:.6f}")
+                            print(f"    Converted APY: {supply_apy:.2f}%")
+                            print(f"    TVL: ${supply_amount:,.2f}")
                             print(f"    Contract: {contract}")
 
                         # Only skip if both APY and TVL are 0 (truly inactive vaults)
