@@ -34,8 +34,9 @@ def is_valid_stablecoin_market(market):
     # Split the market string into tokens
     tokens = [token.strip() for token in market_upper.replace('/', ' ').split()]
 
-    # Check if all tokens are stablecoins
-    return all(token in [s.upper() for s in stablecoins] for token in tokens)
+    # Check if any token exactly matches a stablecoin (exact match only)
+    stablecoin_list_upper = [s.upper() for s in stablecoins]
+    return any(token == stablecoin for token in tokens for stablecoin in stablecoin_list_upper)
 
 def get_stablecoin_rates():
     with app.app_context():

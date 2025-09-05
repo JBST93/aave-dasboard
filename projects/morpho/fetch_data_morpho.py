@@ -195,6 +195,12 @@ def fetch_data_metamorpho():
                             if reward.get("asset"):
                                 reward_asset = reward["asset"].get("symbol", "")
 
+                        # Debug high APY vaults
+                        if supply_apy > 50:  # Debug vaults with >50% APY
+                            print(f"🔍 HIGH APY VAULT: {vault_name} - APY: {supply_apy:.2f}%, TVL: ${supply_amount:,.2f}")
+                            print(f"    Rewards: {reward_rate:.2f}% {reward_asset}")
+                            print(f"    Contract: {contract}")
+
                         # Only skip if both APY and TVL are 0 (truly inactive vaults)
                         if supply_apy == 0 and supply_amount == 0:
                             skipped_count += 1
@@ -204,8 +210,8 @@ def fetch_data_metamorpho():
                             market=supply_token,
                             project="Morpho",
                             information=formatted_collaterals,
-                            yield_rate_base=supply_apy * 100,
-                            yield_rate_reward=reward_rate * 100,
+                            yield_rate_base=supply_apy,
+                            yield_rate_reward=reward_rate,
                             yield_token_reward=reward_asset if reward_asset else None,
                             tvl=supply_amount,
                             chain=chain.capitalize(),
