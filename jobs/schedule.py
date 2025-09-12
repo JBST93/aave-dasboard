@@ -52,6 +52,7 @@ from projects.threshold.get_data import get_token_data as tbtc
 from projects.lombard.get_data import get_token_data as lombart
 from projects.stacks.get_data import get_store_data as stacks
 from projects.venus.get_data import  get_store_data as venus
+from projects.maple.get_yield_info import fetch_store_rates as maple
 
 from scripts.get_price_supply import get_price_supply
 
@@ -113,7 +114,8 @@ def fetch_store_data():
         "Circle":circle,
         "Tether":tether,
         "Ethereum":ethereum,
-        "venus":venus
+        "venus":venus,
+        "Maple":maple
     }
 
     with app.app_context():

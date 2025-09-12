@@ -153,12 +153,12 @@ def fetch_data_metamorpho():
                     if market and market.get("state") and market["state"].get("apy") is not None:
                         state = market["state"]
                         supply_apy = state.get("apy", 0)
-                        
+
                         # Smart APY conversion: if APY < 1, assume it's a decimal and convert to percentage
                         # If APY >= 1, assume it's already a percentage
                         if supply_apy < 1 and supply_apy > 0:
                             supply_apy = supply_apy * 100
-                        
+
                         supply_amount = state.get("totalAssetsUsd", 0)
                         chain = market.get("chain", {}).get("network", "Unknown")
                         contract = market.get("address", "Unknown")
@@ -198,11 +198,11 @@ def fetch_data_metamorpho():
                         if state.get("rewards") and len(state["rewards"]) > 0:
                             reward = state["rewards"][0]
                             reward_rate = reward.get("supplyApr", 0)
-                            
+
                             # Smart reward rate conversion: if rate < 1, assume it's a decimal and convert to percentage
                             if reward_rate < 1 and reward_rate > 0:
                                 reward_rate = reward_rate * 100
-                                
+
                             if reward.get("asset"):
                                 reward_asset = reward["asset"].get("symbol", "")
 
