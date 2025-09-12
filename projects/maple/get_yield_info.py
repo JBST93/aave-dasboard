@@ -119,8 +119,8 @@ def calculate_syrup_metrics(pool_data, drips_yield_boost):
     weekly_apy_raw = Decimal(pool.get("weeklyApy", 0))
     apy_base = float(weekly_apy_raw / (Decimal(10) ** 28))
 
-    drips_boost_raw = 0
-    apy_reward = 0
+    drips_boost_raw = Decimal(drips_yield_boost)
+    apy_reward = float(drips_boost_raw / (Decimal(10) ** 4))
 
     return {
         "pool_id": pool["id"],
@@ -173,9 +173,15 @@ def fetch_store_rates():
 
     pools = syrup_data["pools"]
 
+    # Set default drips yield boost since it's not in the GraphQL response
+    drips_yield_boost = 0
+
+    print(f"\nProcessing {len(pools)} Syrup pools...")
+    print(f"Global drips yield boost: {drips_yield_boost}")
+
     for pool_data in pools:
         try:
-            metrics = calculate_syrup_metrics(pool_data)
+            metrics = calculate_syrup_metrics(pool_data, drips_yield_boost)
 
             # Skip pools with minimal TVL (< $1000)
             if metrics['tvl_usd'] < 1000:
