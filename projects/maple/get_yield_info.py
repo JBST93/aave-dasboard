@@ -172,15 +172,10 @@ def fetch_store_rates():
         return
 
     pools = syrup_data["pools"]
-    syrup_globals = syrup_data["syrup_globals"]
-    drips_yield_boost = syrup_globals.get("dripsYieldBoost", 0)
-
-    print(f"\nProcessing {len(pools)} Syrup pools...")
-    print(f"Global drips yield boost: {drips_yield_boost}")
 
     for pool_data in pools:
         try:
-            metrics = calculate_syrup_metrics(pool_data, drips_yield_boost)
+            metrics = calculate_syrup_metrics(pool_data)
 
             # Skip pools with minimal TVL (< $1000)
             if metrics['tvl_usd'] < 1000:
@@ -231,12 +226,9 @@ def fetch_store_rates():
 
 
     if processed_count > 0:
-        print(f"\n🎉 SUCCESS! Stored Maple Syrup yield data:")
-        print("  Base APY = weeklyApy ÷ 10^28")
-        print("  Reward APY = dripsYieldBoost ÷ 10^4")
-        print("  Total APY = Base APY + Reward APY")
+        return
     else:
-        print("\n❌ No pools processed")
+        print("\n❌ No pools processed Maple")
 
 if __name__ == '__main__':
     with app.app_context():
