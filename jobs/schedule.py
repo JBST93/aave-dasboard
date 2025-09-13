@@ -21,7 +21,7 @@ from projects.lido.get_rate import get_data_steth as lido
 from projects.rocketpool.fetch_data import get_data_reth as rocketpool
 from projects.ethena.get_data import get_data as ethena
 from projects.optimism.get_data import get_token_data as optimism
-from projects.silo.get_data import get_token_data as silo
+from projects.silo.fetch_data import fetch_store_rates as silo
 from projects.stargate.get_data import get_data as stargate
 from projects.paypal.get_data import get_supply as paypal
 from projects.wBTC.get_data import get_store_data as wbtc
