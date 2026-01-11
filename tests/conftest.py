@@ -20,6 +20,7 @@ def app():
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
 
     with flask_app.app_context():
+        db.drop_all()  # Clean slate
         db.create_all()
         yield flask_app
         db.drop_all()

@@ -3,10 +3,13 @@ from datetime import datetime
 
 class TokenData(db.Model):
     __tablename__ = "token_data"
+    __table_args__ = (
+        db.Index('ix_token_data_token_timestamp', 'token', 'timestamp'),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
 
-    token = db.Column(db.String(100), nullable=False)
+    token = db.Column(db.String(100), nullable=False, index=True)
 
     price = db.Column(db.Float, nullable=True)
     price_source = db.Column(db.String(100), nullable=True)
@@ -17,7 +20,7 @@ class TokenData(db.Model):
     tvl = db.Column(db.Float, nullable=True)
     revenue = db.Column(db.Float, nullable=True)
 
-    timestamp = db.Column(db.DateTime, default=datetime.now)
+    timestamp = db.Column(db.DateTime, default=datetime.now, index=True)
 
 
     def to_dict(self):

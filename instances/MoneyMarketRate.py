@@ -4,18 +4,22 @@ from sqlalchemy.dialects.postgresql import JSONB
 
 class MoneyMarketRate(db.Model):
     __tablename__ = "money_market_rate"
+    __table_args__ = (
+        db.Index('ix_money_market_protocol_chain_timestamp', 'protocol', 'chain', 'timestamp'),
+        db.Index('ix_money_market_token_timestamp', 'token', 'timestamp'),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
-    protocol = db.Column(db.String(50), nullable=False)
-    token = db.Column(db.String(50), nullable=False)
+    protocol = db.Column(db.String(50), nullable=False, index=True)
+    token = db.Column(db.String(50), nullable=False, index=True)
     collateral = db.Column(JSONB, nullable=True)
     liquidity_rate = db.Column(db.Float, nullable=False)
     liquidity_reward_rate = db.Column(db.Float, nullable=True)
     liquidity_reward_token = db.Column(db.String(50), nullable=True)
     borrow_rate = db.Column(db.Float, nullable=False)
-    chain = db.Column(db.String(20), nullable=False)
+    chain = db.Column(db.String(20), nullable=False, index=True)
     tvl = db.Column(db.Float, nullable=False, default=0)
-    timestamp = db.Column(db.DateTime, default=datetime.now)
+    timestamp = db.Column(db.DateTime, default=datetime.now, index=True)
 
     def to_dict(self):
         return {

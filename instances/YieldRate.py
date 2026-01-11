@@ -3,11 +3,16 @@ from datetime import datetime
 
 class YieldRate(db.Model):
     __tablename__ = "yield_rate"
+    __table_args__ = (
+        # Composite indexes for common query patterns
+        db.Index('ix_yield_rate_project_chain_ts', 'project', 'chain', 'timestamp'),
+        db.Index('ix_yield_rate_contract_ts', 'smart_contract', 'timestamp'),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
 
     market = db.Column(db.String(100), nullable=False)
-    project = db.Column(db.String(100), nullable=False)
+    project = db.Column(db.String(100), nullable=False, index=True)
 
     information = db.Column(db.String(200), nullable=True)
 
@@ -19,11 +24,11 @@ class YieldRate(db.Model):
     tvl = db.Column(db.Float, nullable=False, default=0)
     action = db.Column(db.String(150), nullable=True)
 
-    chain = db.Column(db.String(20), nullable=False)
+    chain = db.Column(db.String(20), nullable=False, index=True)
     type = db.Column(db.String(150), nullable=False)
-    smart_contract = db.Column(db.String(150), nullable=False)
+    smart_contract = db.Column(db.String(150), nullable=False, index=True)
 
-    timestamp = db.Column(db.DateTime, default=datetime.now)
+    timestamp = db.Column(db.DateTime, default=datetime.now, index=True)
 
     def to_dict(self):
         return {
