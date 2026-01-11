@@ -1,16 +1,24 @@
+"""
+Clearpool Protocol data fetcher.
+
+Fetches lending rates from Clearpool pools.
+"""
 from web3 import Web3
 from dotenv import load_dotenv
 from sqlalchemy import desc
 import os
 import sys
+import logging
 from datetime import datetime
-
 
 # Ensure the root directory is in the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.append(project_root)
 
 load_dotenv(os.path.join(project_root, '.env'))
+
+# Setup logging
+logger = logging.getLogger(__name__)
 
 from app import app, db
 from instances.YieldRate import YieldRate
@@ -109,7 +117,7 @@ def fetch_store_rates():
                     insert_yield_db(market, project, information, supply_rate_annualised,reward_rate_transformed,reward_token,lend_amount_transformed,chain, business, smart_contract)
 
                 except Exception as e:
-                    print(f"Error fetching data for {item}: {e}")
+                    logger.error(f"Error fetching data for {item}: {e}")
 
             db.session.commit()
 

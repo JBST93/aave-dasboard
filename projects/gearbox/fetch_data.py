@@ -1,14 +1,22 @@
+"""
+Gearbox Protocol data fetcher.
+
+Fetches lending rates from Gearbox pools.
+"""
 from web3 import Web3
 from dotenv import load_dotenv
 import os
 import sys
 import json
+import logging
 from datetime import datetime
-
 
 # Ensure the root directory is in the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.append(project_root)
+
+# Setup logging
+logger = logging.getLogger(__name__)
 
 from app import app,db
 from instances.YieldRate import YieldRate as Data
@@ -61,7 +69,7 @@ def fetch_store_data():
 
 
         except Exception as e:
-            print(f"Error fetching {token} Saving Rate: {e}", 500)
+            logger.error(f"Error fetching {token} rate: {e}")
 
         db.session.commit()
 

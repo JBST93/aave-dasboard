@@ -1,7 +1,13 @@
+"""
+Silo Finance data fetcher.
+
+Fetches lending rates from Silo Finance vaults.
+"""
 import requests
 import json
 import os
 import sys
+import logging
 from datetime import datetime
 from dotenv import load_dotenv
 
@@ -10,6 +16,9 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..
 sys.path.append(project_root)
 
 load_dotenv(os.path.join(project_root, '.env'))
+
+# Setup logging
+logger = logging.getLogger(__name__)
 
 from app import app, db
 from instances.YieldRate import YieldRate as Yield
@@ -22,7 +31,7 @@ def fetch_silo_data():
     Fetch Silo Finance data from their API
     """
     try:
-        print("🔍 Fetching Silo Finance data...")
+        logger.info("Fetching Silo Finance data...")
 
         # Silo Finance API endpoint
         api_url = "https://app.silo.finance/api/earn"
@@ -40,14 +49,14 @@ def fetch_silo_data():
         if response.status_code == 200:
             data = response.json()
             pools = data.get("pools", [])
-            print(f"✅ Fetched {len(pools)} pools from Silo Finance API")
+            logger.info(f"Fetched {len(pools)} pools from Silo Finance API")
             return pools
         else:
-            print(f"❌ Silo Finance API returned status {response.status_code}")
+            logger.error(f"Silo Finance API returned status {response.status_code}")
             return []
 
     except Exception as e:
-        print(f"❌ Error fetching Silo Finance data: {e}")
+        logger.error(f"Error fetching Silo Finance data: {e}")
         return []
 
 def process_silo_pools(pools):
@@ -57,7 +66,7 @@ def process_silo_pools(pools):
     processed_pools = []
 
     try:
-        print(f"📊 Processing {len(pools)} Silo Finance pools...")
+        logger.info(f"Processing {len(pools)} Silo Finance pools...")
 
         for pool in pools:
             try:
@@ -127,16 +136,16 @@ def process_silo_pools(pools):
 
                 processed_pools.append(yield_record)
 
-                print(f"   ✅ {symbol} ({name}) - {vault_type} - TVL: ${tvl_usd:,.2f}, APY: {final_apy:.2f}%, Chain: {chain_key}")
+                logger.debug(f"{symbol} ({name}) - {vault_type} - TVL: ${tvl_usd:,.2f}, APY: {final_apy:.2f}%, Chain: {chain_key}")
 
             except Exception as e:
-                print(f"   ❌ Error processing pool {symbol}: {e}")
+                logger.error(f"Error processing pool {symbol}: {e}")
                 continue
 
         return processed_pools
 
     except Exception as e:
-        print(f"❌ Error processing Silo Finance pools: {e}")
+        logger.error(f"Error processing Silo Finance pools: {e}")
         return []
 
 def fetch_store_rates():
@@ -144,22 +153,21 @@ def fetch_store_rates():
     Main function to fetch and store Silo Finance yield rates
     """
     try:
-        print("SILO FINANCE - FETCHING YIELD RATES")
-        print("=" * 60)
+        logger.info("SILO FINANCE - FETCHING YIELD RATES")
 
         # Fetch data from API
         pools = fetch_silo_data()
         if not pools:
-            print("❌ No pools fetched from Silo Finance API")
+            logger.warning("No pools fetched from Silo Finance API")
             return
 
         # Process pools
         processed_pools = process_silo_pools(pools)
         if not processed_pools:
-            print("❌ No pools processed")
+            logger.warning("No pools processed")
             return
 
-        print(f"✅ Processed {len(processed_pools)} Silo Finance pools")
+        logger.info(f"Processed {len(processed_pools)} Silo Finance pools")
 
         # Store in database
         try:
@@ -171,23 +179,20 @@ def fetch_store_rates():
                 db.session.add(pool)
 
             db.session.commit()
-            print(f"✅ Stored {len(processed_pools)} Silo Finance yield rates in database")
+            logger.info(f"Stored {len(processed_pools)} Silo Finance yield rates in database")
 
         except Exception as e:
-            print(f"❌ Error storing Silo Finance data: {e}")
+            logger.error(f"Error storing Silo Finance data: {e}")
             db.session.rollback()
 
         # Summary
         total_tvl = sum(pool.tvl for pool in processed_pools)
         chains = list(set(pool.chain for pool in processed_pools))
 
-        print(f"\n📊 SILO FINANCE SUMMARY:")
-        print(f"Total pools: {len(processed_pools)}")
-        print(f"Total TVL: ${total_tvl:,.2f}")
-        print(f"Chains: {', '.join(chains)}")
+        logger.info(f"SILO FINANCE SUMMARY: Total pools: {len(processed_pools)}, Total TVL: ${total_tvl:,.2f}, Chains: {', '.join(chains)}")
 
     except Exception as e:
-        print(f"❌ Error in fetch_store_rates: {e}")
+        logger.error(f"Error in fetch_store_rates: {e}")
 
 if __name__ == '__main__':
     with app.app_context():

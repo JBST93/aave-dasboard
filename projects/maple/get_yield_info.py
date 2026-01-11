@@ -1,7 +1,13 @@
+"""
+Maple Finance data fetcher.
+
+Fetches lending rates from Maple Syrup pools.
+"""
 import requests
 import json
 import os
 import sys
+import logging
 from datetime import datetime
 from decimal import Decimal, getcontext
 from dotenv import load_dotenv
@@ -11,6 +17,9 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')
 sys.path.append(project_root)
 
 load_dotenv(os.path.join(project_root, '.env'))
+
+# Setup logging
+logger = logging.getLogger(__name__)
 
 from app import app, db
 from instances.YieldRate import YieldRate as Yield
@@ -68,15 +77,13 @@ def fetch_syrup_apy_data():
             data = response.json()
 
             if "errors" in data:
-                print("GraphQL errors:")
-                for error in data["errors"]:
-                    print(f"  - {error}")
+                logger.error(f"GraphQL errors: {data['errors']}")
                 return None
 
             if "data" in data:
                 pools = data["data"].get("poolV2S", [])
 
-                print(f"Found {len(pools)} Syrup pools")
+                logger.info(f"Found {len(pools)} Syrup pools")
 
                 return {
                     "pools": pools,
@@ -87,7 +94,7 @@ def fetch_syrup_apy_data():
             return None
 
     except Exception as e:
-        print(f"Request failed: {e}")
+        logger.error(f"Request failed: {e}")
         return None
 
 def calculate_syrup_metrics(pool_data, drips_yield_boost):
@@ -157,8 +164,7 @@ def fetch_store_rates():
     """
     Main function to fetch and store Maple Syrup rates in the database
     """
-    print("MAPLE SYRUP APY - FETCHING AND STORING RATES")
-    print("=" * 50)
+    logger.info("MAPLE SYRUP APY - FETCHING AND STORING RATES")
 
     total_tvl_usd = 0
     processed_count = 0
@@ -168,7 +174,7 @@ def fetch_store_rates():
     syrup_data = fetch_syrup_apy_data()
 
     if not syrup_data:
-        print("Failed to fetch Syrup data")
+        logger.error("Failed to fetch Syrup data")
         return
 
     pools = syrup_data["pools"]
@@ -176,8 +182,8 @@ def fetch_store_rates():
     # Set default drips yield boost since it's not in the GraphQL response
     drips_yield_boost = 0
 
-    print(f"\nProcessing {len(pools)} Syrup pools...")
-    print(f"Global drips yield boost: {drips_yield_boost}")
+    logger.info(f"Processing {len(pools)} Syrup pools...")
+    logger.debug(f"Global drips yield boost: {drips_yield_boost}")
 
     for pool_data in pools:
         try:
@@ -217,7 +223,7 @@ def fetch_store_rates():
 
 
         except Exception as e:
-            print(f"Error processing pool {pool_data.get('name', 'Unknown')}: {e}")
+            logger.error(f"Error processing pool {pool_data.get('name', 'Unknown')}: {e}")
             skipped_count += 1
 
     try:
@@ -225,7 +231,7 @@ def fetch_store_rates():
         token_data(total_tvl_usd)
 
     except Exception as e:
-        print(f"Error committing to database: {e}")
+        logger.error(f"Error committing to database: {e}")
         db.session.rollback()
 
     # Summary
@@ -234,7 +240,7 @@ def fetch_store_rates():
     if processed_count > 0:
         return
     else:
-        print("\n❌ No pools processed Maple")
+        logger.warning("No pools processed Maple")
 
 if __name__ == '__main__':
     with app.app_context():

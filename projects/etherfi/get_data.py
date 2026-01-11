@@ -1,6 +1,9 @@
 from dotenv import load_dotenv
 import os, sys
+import logging
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.append(project_root)
@@ -61,10 +64,10 @@ def get_data():
                 )
 
                 db.session.add(info)
-                print(info)
+                logger.debug(info)
 
             except Exception as e:
-                print(e)
+                logger.error(e)
 
     db.session.commit()
 

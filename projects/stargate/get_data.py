@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 from datetime import datetime
 import logging
 
+logger = logging.getLogger(__name__)
+
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.append(project_root)
 
@@ -185,7 +187,7 @@ def get_yield():
                         share = None  # or some default value
                 except ZeroDivisionError:
                     share = None  # or some default value if you want to handle it explicitly
-                    print("Division by zero occurred when calculating share")
+                    logger.warning("Division by zero occurred when calculating share")
 
 
                 reward = share * stg_reward / 10**18 * 60*60*24*365 * 0.3119 * 100
@@ -210,7 +212,7 @@ def get_yield():
                 db.session.commit()
 
             except Exception as e:
-                print(f"Error processing vault data: {e}")
+                logger.error(f"Error processing vault data: {e}")
 
 def get_data():
     get_token_data()

@@ -3,6 +3,9 @@ from dotenv import load_dotenv
 import os
 import sys
 import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Setup paths
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
@@ -43,7 +46,7 @@ def main():
         totalAssets = pool_contract.functions.totalAssets().call()
         decimals = pool_contract.functions.decimals().call()
         totalAssets_usd = totalAssets / 10**decimals
-        print(symbol, totalAssets_usd)
+        logger.info(f"{symbol} {totalAssets_usd}")
 
 if __name__ == "__main__":
     main()

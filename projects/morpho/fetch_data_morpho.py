@@ -209,11 +209,7 @@ def fetch_data_metamorpho():
                         # Debug APY conversion for specific vaults
                         if "Spark DAI" in vault_name or "Relend USDC" in vault_name:
                             raw_apy = state.get("apy", 0)
-                            print(f"🔍 APY CONVERSION: {vault_name}")
-                            print(f"    Raw APY: {raw_apy:.6f}")
-                            print(f"    Converted APY: {supply_apy:.2f}%")
-                            print(f"    TVL: ${supply_amount:,.2f}")
-                            print(f"    Contract: {contract}")
+                            logger.debug(f"APY CONVERSION: {vault_name} - Raw: {raw_apy:.6f}, Converted: {supply_apy:.2f}%, TVL: ${supply_amount:,.2f}")
 
                         # Only skip if both APY and TVL are 0 (truly inactive vaults)
                         if supply_apy == 0 and supply_amount == 0:

@@ -1,9 +1,15 @@
+"""
+Spark Protocol data fetcher.
+
+Fetches lending rates from Spark Lend and DAI Savings Rate (DSR).
+"""
 from web3 import Web3
 from dotenv import load_dotenv
 import os
 import sys
 import json
 import math
+import logging
 from datetime import datetime
 
 # Ensure the root directory is in the Python path
@@ -11,6 +17,9 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 sys.path.append(project_root)
 
 load_dotenv(os.path.join(project_root, '.env'))
+
+# Setup logging
+logger = logging.getLogger(__name__)
 
 from app import app, db
 
@@ -46,12 +55,15 @@ def token_data(total_lend_usd, total_borrowed_usd, dsr_tvl):
 
 def fetch_store_sparklend():
     abi_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'spark_abi.json')
-    with open(abi_path) as f:
-        try:
+    try:
+        with open(abi_path) as f:
             provider_abi = json.load(f)
-        except FileNotFoundError:
-            print("ABI file not found. Please make sure 'dsr_abi.json' is in the current directory.")
-            exit(1)
+    except FileNotFoundError:
+        logger.error(f"ABI file not found: {abi_path}")
+        return 0, 0
+    except json.JSONDecodeError as e:
+        logger.error(f"Invalid JSON in ABI file {abi_path}: {e}")
+        return 0, 0
     total_lend_usd = 0
     total_borrowed_usd = 0
 
@@ -110,7 +122,7 @@ def fetch_store_sparklend():
             db.session.add(data)
 
         except Exception as e:
-            print(f"Error fetching data for {token}: {e}")
+            logger.error(f"Error fetching data for {token}: {e}")
 
     db.session.commit()
 
@@ -121,12 +133,15 @@ def fetch_store_DSR():
     pool_contract_address = "0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7" #DSR contract
     token = "DAI"
     abi_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dsr_abi.json')
-    with open(abi_path) as f:
-        try:
+    try:
+        with open(abi_path) as f:
             provider_abi = json.load(f)
-        except FileNotFoundError:
-            print("ABI file not found. Please make sure 'dsr_abi.json' is in the current directory.")
-            exit(1)
+    except FileNotFoundError:
+        logger.error(f"ABI file not found: {abi_path}")
+        return 0
+    except json.JSONDecodeError as e:
+        logger.error(f"Invalid JSON in ABI file {abi_path}: {e}")
+        return 0
     pool_contract = web3.eth.contract(address=pool_contract_address, abi=provider_abi)
     dsr_tvl = 0
 
@@ -168,7 +183,7 @@ def fetch_store_DSR():
 
 
     except Exception as e:
-        print(f"Error fetching {token} Saving Rate: {e}", 500)
+        logger.error(f"Error fetching {token} Saving Rate: {e}")
 
     return dsr_tvl
 

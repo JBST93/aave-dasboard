@@ -1,13 +1,23 @@
+"""
+Aave Protocol data fetcher.
+
+Fetches lending/borrowing rates from Aave v3 across multiple chains.
+"""
 from web3 import Web3
 from dotenv import load_dotenv
 import os
 import sys
+import logging
 from datetime import datetime
+
 # Ensure the root directory is in the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.append(project_root)
 
 load_dotenv(os.path.join(project_root, '.env'))
+
+# Setup logging
+logger = logging.getLogger(__name__)
 
 from app import app, db
 from instances.YieldRate import YieldRate as Yield
@@ -124,11 +134,11 @@ def fetch_store_rates():
             data = pool_contract.functions.getAllReservesTokens().call()
 
             information = f"{version} - {instance} instance"
-            print(f"Processing {chain} {instance} instance: {len(data)} tokens")
+            logger.info(f"Processing {chain} {instance} instance: {len(data)} tokens")
 
             # Debug for RWA and Prime instances
             if instance in ["Horizon RWA", "Prime"]:
-                print(f"DEBUG: {instance} tokens: {[item[0] for item in data]}")
+                logger.debug(f"{instance} tokens: {[item[0] for item in data]}")
 
             for item in data:
                 try:
@@ -167,18 +177,18 @@ def fetch_store_rates():
 
                                                             # Debug logging for large TVL amounts and problematic tokens
                     if supply_amount_usd > 1000000000 or token in ['LUSD', 'crvUSD', 'USDe']:  # > $1B or problematic tokens
-                        print(f"DEBUG: {token} - Raw: {lend_amount_raw}, Supply: {lend_amount:,.2f}, Price: ${price:,.2f}, TVL: ${supply_amount_usd:,.2f}")
+                        logger.debug(f"{token} - Raw: {lend_amount_raw}, Supply: {lend_amount:,.2f}, Price: ${price:,.2f}, TVL: ${supply_amount_usd:,.2f}")
 
                         # Additional debugging for price issues
                         if token in ['LUSD', 'crvUSD', 'USDe'] and price > 1000:
-                            print(f"⚠️  {token} PRICE ISSUE: Price ${price:,.2f} seems too high! Expected ~$1")
-                            print(f"    This suggests the price source is returning incorrect data for {token}")
-                            print(f"    Expected TVL: ~${lend_amount:,.2f}, Actual TVL: ${supply_amount_usd:,.2f}")
+                            logger.warning(f"{token} PRICE ISSUE: Price ${price:,.2f} seems too high! Expected ~$1")
+                            logger.warning(f"    This suggests the price source is returning incorrect data for {token}")
+                            logger.warning(f"    Expected TVL: ~${lend_amount:,.2f}, Actual TVL: ${supply_amount_usd:,.2f}")
 
                         # Additional debugging for crvUSD specifically
                         if token == 'crvUSD':
-                            print(f"🔍 crvUSD DETAILS: Instance={instance}, Chain={chain}, Contract={contract_addr}")
-                            print(f"    Final values: Supply={lend_amount:,.2f}, Price=${price:,.2f}, TVL=${supply_amount_usd:,.2f}")
+                            logger.debug(f"crvUSD DETAILS: Instance={instance}, Chain={chain}, Contract={contract_addr}")
+                            logger.debug(f"    Final values: Supply={lend_amount:,.2f}, Price=${price:,.2f}, TVL=${supply_amount_usd:,.2f}")
 
                     # Only process if there's meaningful TVL (> $1000)
                     if supply_amount_usd < 1000:
@@ -206,25 +216,25 @@ def fetch_store_rates():
 
                     # Debug crvUSD database storage
                     if token == 'crvUSD':
-                        print(f"💾 STORING crvUSD: TVL=${supply_amount_usd:,.2f}, Instance={instance}")
+                        logger.debug(f"STORING crvUSD: TVL=${supply_amount_usd:,.2f}, Instance={instance}")
 
                     db.session.add(yield_data)
                     processed_count += 1
 
                 except Exception as e:
-                    print(f"Error processing {token} on {chain} {instance}: {e}")
+                    logger.error(f"Error processing {token} on {chain} {instance}: {e}")
                     skipped_count += 1
 
             db.session.commit()
-            print(f"Committed {chain} {instance} instance")
+            logger.info(f"Committed {chain} {instance} instance")
 
         except Exception as e:
-            print(f"Error processing {chain} {instance} instance: {e}")
+            logger.error(f"Error processing {chain} {instance} instance: {e}")
             db.session.rollback()
 
-    print(f"Aave processing complete: {processed_count} processed, {skipped_count} skipped")
+    logger.info(f"Aave processing complete: {processed_count} processed, {skipped_count} skipped")
     token_data(total_lend_usd, total_borrowed_usd)
-    print("Added TVL data")
+    logger.info("Added TVL data")
 
 if __name__ == '__main__':
     with app.app_context():

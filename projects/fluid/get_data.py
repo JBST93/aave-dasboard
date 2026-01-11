@@ -3,7 +3,10 @@ from dotenv import load_dotenv
 import os
 import sys
 import json
+import logging
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.append(project_root)
@@ -36,6 +39,6 @@ for data in dataset:
         "convert_to_shares": data[9],  # e.g., 876914 (scaled by 1e6)
         "convert_to_assets": data[10]
         }
-    print(token)
+    logger.debug(token)
 
-print(data[0])
+logger.debug(data[0])

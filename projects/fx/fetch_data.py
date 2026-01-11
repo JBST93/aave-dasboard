@@ -1,12 +1,20 @@
-import requests
-from datetime import datetime
+"""
+FX Protocol data fetcher.
 
+Fetches stability pool and LP rates from FX Protocol.
+"""
+import requests
+import logging
+from datetime import datetime
 import os
 import sys
 
 # Ensure the root directory is in the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.append(project_root)
+
+# Setup logging
+logger = logging.getLogger(__name__)
 
 from app import app,db
 from instances.YieldRate import YieldRate as Data
@@ -45,7 +53,7 @@ def fetch_store_data():
 
 
         except Exception as e:
-            print(f"Error fetching {name}: {e}", 500)
+            logger.error(f"Error fetching {name}: {e}")
 
         db.session.commit()
 

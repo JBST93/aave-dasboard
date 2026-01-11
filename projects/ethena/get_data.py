@@ -1,4 +1,10 @@
+"""
+Ethena Protocol data fetcher.
+
+Fetches USDe token supply data.
+"""
 import requests, sys, os
+import logging
 from web3 import Web3
 from dotenv import load_dotenv
 from datetime import datetime
@@ -7,6 +13,9 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')
 sys.path.append(project_root)
 
 load_dotenv(os.path.join(project_root, '.env'))
+
+# Setup logging
+logger = logging.getLogger(__name__)
 
 from app import app, db
 from scripts.utils import load_abi
@@ -62,7 +71,7 @@ def get_data():
 
                 db.session.add(data)
             except Exception as e:
-                print(e)
+                logger.error(f"Error fetching {token['token']} data: {e}")
 
         db.session.commit()
 

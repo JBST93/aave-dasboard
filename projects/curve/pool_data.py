@@ -1,17 +1,24 @@
+"""
+Curve Finance pool data fetcher.
+
+Fetches pool and liquidity data from Curve Finance.
+"""
 from flask import jsonify
 import sys, os
 import requests
-
+import logging
 import functools
 import time
 from sqlalchemy import desc, and_
 from datetime import datetime
 
-
 chains = ["ethereum","arbitrum","optimism","base","fraxtal"]
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 sys.path.append(project_root)
+
+# Setup logging
+logger = logging.getLogger(__name__)
 
 from app import app, db
 
@@ -31,7 +38,7 @@ def get_crvusd():
     r = requests.get(endpoint_crvusd)
     data = r.json()
     supply_crv_usd = data.get("data",{}).get("crvusdTotalSupply")
-    print(supply_crv_usd)
+    logger.debug(f"crvUSD supply: {supply_crv_usd}")
 
 def get_latest_token_data(token):
     """Fetch the latest token data from the database based on timestamp."""
@@ -63,11 +70,11 @@ def get_pools():
                 data = r.json()
 
                 if "data" not in data or "poolData" not in data["data"]:
-                    print(f"No pool data for {chain}")
+                    logger.warning(f"No pool data for {chain}")
                     continue
 
                 pools = data["data"]["poolData"]
-                print(f"Processing {len(pools)} pools for {chain}")
+                logger.info(f"Processing {len(pools)} pools for {chain}")
 
                 volumes = get_volumes(chain)
 
@@ -163,14 +170,14 @@ def get_pools():
                             skipped_count += 1
 
                     except Exception as e:
-                        print(f"Error processing pool {address}: {e}")
+                        logger.error(f"Error processing pool {address}: {e}")
                         skipped_count += 1
 
                 db.session.commit()
-                print(f"Curve {chain}: {processed_count} pools processed, {skipped_count} skipped")
+                logger.info(f"Curve {chain}: {processed_count} pools processed, {skipped_count} skipped")
 
             except Exception as e:
-                print(f"Error fetching pools for {chain}: {e}")
+                logger.error(f"Error fetching pools for {chain}: {e}")
 
         sorted_data_list = sorted(data_list, key=lambda x: x['tvl'], reverse=True)
 
@@ -185,7 +192,7 @@ def get_pools():
         return jsonify(result)
 
     except Exception as e:
-        print(f"Error in get_pools: {e}")
+        logger.error(f"Error in get_pools: {e}")
         return jsonify({"error": str(e)})
 # Run the Flask app
 if __name__ == "__main__":

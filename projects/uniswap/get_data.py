@@ -118,11 +118,11 @@ def get_uniswap_pools_v3():
         # Sort results by TVL in descending order
         results.sort(key=lambda x: x['tvl'], reverse=True)
 
-        # Print results
-        print("\nToken0/Token1 - TVL - Volume - APY - Fee Tier")
-        print("-----------------------------------------------")
+        # Log results
+        logger.info("Token0/Token1 - TVL - Volume - APY - Fee Tier")
+        logger.info("-----------------------------------------------")
         for result in results[:100]:  # Limit to top 100 pools
-            print(f"{result['pair']} -- ${result['tvl']:,.2f} - ${result['volume']:,.2f} - {result['apy']:.2f}% - {result['fee_tier']:.2f}%")
+            logger.info(f"{result['pair']} -- ${result['tvl']:,.2f} - ${result['volume']:,.2f} - {result['apy']:.2f}% - {result['fee_tier']:.2f}%")
 
         return results
 

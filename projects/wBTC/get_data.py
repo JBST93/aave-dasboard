@@ -1,6 +1,9 @@
 import sys, os
+import logging
 from dotenv import load_dotenv
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.append(project_root)
@@ -49,7 +52,7 @@ def get_store_data():
 
                 db.session.add(data)
             except Exception as e:
-                print(f"Error processing token {token['token']}: {e}")
+                logger.error(f"Error processing token {token['token']}: {e}")
 
         db.session.commit()
 
