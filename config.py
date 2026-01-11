@@ -7,7 +7,8 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL2').replace("postgres://", "postgresql://")
+    _db_url = os.getenv('DATABASE_URL2', '')
+    SQLALCHEMY_DATABASE_URI = _db_url.replace("postgres://", "postgresql://") if _db_url else None
 
 
 class ProductionConfig(Config):
@@ -23,3 +24,8 @@ class StagingConfig(Config):
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
+
+
+class TestConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
