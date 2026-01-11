@@ -32,7 +32,7 @@ class YieldRate(db.Model):
             'project': self.project,
             'information': self.information,
             'yield_rate_base': self.yield_rate_base,
-            'yield_rate_base': getattr(self, 'liquidity_rate_formatted', None),
+            'yield_rate_base_formatted': getattr(self, 'yield_rate_base_formatted', None),
             'yield_rate_reward': self.yield_rate_reward,
             'yield_token_reward': self.yield_token_reward,
             'tvl': self.tvl,
