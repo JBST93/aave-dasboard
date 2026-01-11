@@ -1,10 +1,10 @@
-from flask import Flask, jsonify
-import sys, os
+from flask import jsonify
+import sys
+import os
 import humanize
 from datetime import datetime, timedelta
 
-from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy import or_, desc
+from sqlalchemy import desc
 
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -12,15 +12,7 @@ sys.path.append(project_root)
 
 from app import app, db
 from instances.YieldRate import YieldRate as Table
-from instances.Projects import Project
-
-def load_stablecoins():
-    with app.app_context():
-        # stablecoin_projects = Project.query.filter_by(category_main='Stablecoin').all()
-        # stablecoins = [project.token_ticker for project in stablecoin_projects if project.token_ticker]
-            return ['USDC', 'USDT', 'DAI', 'GHO', 'USDe', 'LUSD', 'crvUSD', 'PYUSD', 'FRAX', 'RLUSD', 'USTB', 'USCC', 'USYC', 'USDS']
-
-stablecoins = load_stablecoins()
+from constants import MIN_TVL_THRESHOLD, DATA_FRESHNESS_HOURS, STABLECOINS
 
 def clean_information(info):
     # Remove curly braces and split the string by commas
@@ -30,22 +22,19 @@ def clean_information(info):
 
 
 def is_valid_stablecoin_market(market):
+    """Check if a market contains a recognized stablecoin."""
     market_upper = market.upper()
-    # Split the market string into tokens
     tokens = [token.strip() for token in market_upper.replace('/', ' ').split()]
-
-    # Check if any token exactly matches a stablecoin (exact match only)
-    stablecoin_list_upper = [s.upper() for s in stablecoins]
+    stablecoin_list_upper = [s.upper() for s in STABLECOINS]
     return any(token == stablecoin for token in tokens for stablecoin in stablecoin_list_upper)
+
 
 def get_stablecoin_rates():
     with app.app_context():
-        # Calculate the time threshold for 3 hours ago
-        time_threshold = datetime.utcnow() - timedelta(hours=3)
+        time_threshold = datetime.utcnow() - timedelta(hours=DATA_FRESHNESS_HOURS)
 
-        # Fetch all records that match the conditions
         records = db.session.query(Table).filter(
-            Table.tvl > 1000,
+            Table.tvl > MIN_TVL_THRESHOLD,
             Table.timestamp > time_threshold,
         ).order_by(desc(Table.tvl)).all()
 

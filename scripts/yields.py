@@ -1,10 +1,10 @@
-from flask import Flask, jsonify
-import sys, os
+from flask import jsonify
+import sys
+import os
 import humanize
 from datetime import datetime, timedelta
 
-from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy import or_, desc
+from sqlalchemy import desc
 
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -12,23 +12,21 @@ sys.path.append(project_root)
 
 from app import app, db
 from instances.YieldRate import YieldRate as Table
+from constants import MIN_TVL_THRESHOLD, DATA_FRESHNESS_HOURS
+
 
 def clean_information(info):
-    # Remove curly braces and split the string by commas
+    """Remove curly braces and split the string by commas."""
     tokens = info.strip("{}").split(",")
-    # Remove any whitespace around tokens
     return [token.strip() for token in tokens]
 
 
 def get_rates():
     with app.app_context():
+        time_threshold = datetime.utcnow() - timedelta(hours=DATA_FRESHNESS_HOURS)
 
-        # Calculate the time threshold for 3 hours ago
-        time_threshold = datetime.utcnow() - timedelta(hours=3)
-
-        # Fetch all records that match the conditions
         records = db.session.query(Table).filter(
-            Table.tvl > 1000,
+            Table.tvl > MIN_TVL_THRESHOLD,
             Table.timestamp > time_threshold,
         ).order_by(desc(Table.tvl)).all()
 
