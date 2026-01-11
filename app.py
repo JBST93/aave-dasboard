@@ -10,7 +10,7 @@ load_dotenv()
 app = Flask(__name__)
 app.config.from_object(os.getenv('APP_SETTINGS', 'config.DevelopmentConfig'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'your_secret_key_here'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
