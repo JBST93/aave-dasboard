@@ -1,27 +1,32 @@
-from dotenv import load_dotenv
+"""
+Compound Protocol data fetcher.
+
+Fetches lending/borrowing rates from Compound v3 contracts across
+multiple chains.
+"""
 import os
 import sys
 import json
+import logging
 from datetime import datetime
-import requests
-from sqlalchemy import desc
 
+import requests
+from dotenv import load_dotenv
 
 # Ensure the root directory is in the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 sys.path.append(project_root)
 load_dotenv(os.path.join(project_root, '.env'))
 
-# Import app and db from the root directory
 from app import app, db
 from instances.YieldRate import YieldRate as Data
 from instances.TokenData import TokenData as Info
-
-
 from utils.get_last_price_db import get_latest_price
 from utils.get_infura import select_infura
 
-# Construct the absolute path to the aave_abi.json file
+# Setup logging
+logger = logging.getLogger(__name__)
+
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Addresses: https://docs.compound.finance/
@@ -163,11 +168,15 @@ def fetch_store_rates():
 
             abi_path = os.path.join(script_dir, f'compound_abi_{chain}.json')
 
-            with open(abi_path) as f:
-                try:
+            try:
+                with open(abi_path) as f:
                     provider_abi = json.load(f)
-                except FileNotFoundError:
-                    exit(1)
+            except FileNotFoundError:
+                logger.error(f"ABI file not found: {abi_path}")
+                continue
+            except json.JSONDecodeError as e:
+                logger.error(f"Invalid JSON in ABI file {abi_path}: {e}")
+                continue
 
             web3 = select_infura(contract["chain"])
             pool_contract = web3.eth.contract(address=address, abi=provider_abi)
@@ -218,10 +227,10 @@ def fetch_store_rates():
 
 
             except Exception as e:
-                print(f"Error fetching data for {market}: {e}")
+                logger.error(f"Error fetching data for {market} on {chain}: {e}")
 
         db.session.commit()
-        print("Compound Data Fetched")
+        logger.info("Compound data fetched successfully")
         token_data(total_lend_usd, total_borrow_usd)
 
 
