@@ -1,6 +1,5 @@
 from app import db
 from datetime import datetime
-from sqlalchemy.dialects.postgresql import JSONB
 
 class MoneyMarketRate(db.Model):
     __tablename__ = "money_market_rate"
@@ -12,7 +11,8 @@ class MoneyMarketRate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     protocol = db.Column(db.String(50), nullable=False, index=True)
     token = db.Column(db.String(50), nullable=False, index=True)
-    collateral = db.Column(JSONB, nullable=True)
+    # Use db.JSON for SQLite/PostgreSQL compatibility (JSONB is PostgreSQL-only)
+    collateral = db.Column(db.JSON, nullable=True)
     liquidity_rate = db.Column(db.Float, nullable=False)
     liquidity_reward_rate = db.Column(db.Float, nullable=True)
     liquidity_reward_token = db.Column(db.String(50), nullable=True)

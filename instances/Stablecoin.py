@@ -1,6 +1,5 @@
 from app import db
 from datetime import datetime
-from sqlalchemy.dialects.postgresql import JSONB
 
 class Stablecoin(db.Model):
     __tablename__ = "stablecoin"
