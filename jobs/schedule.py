@@ -1,63 +1,47 @@
-import os, sys
-from apscheduler.schedulers.background import BlockingScheduler
-from app import app
+"""
+Background job scheduler for fetching DeFi yield data.
+
+Runs periodic jobs to fetch yield rates from various protocols
+and update token price/supply data.
+"""
+import os
+import sys
 import logging
+
+from apscheduler.schedulers.background import BlockingScheduler
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+from app import app
+
+# Protocol fetchers - only import what's actively used
 from projects.aave.fetch_data import fetch_store_rates as aave
 from projects.compound.fetch_rates import fetch_store_rates as compound
 from projects.curve.fetch_store_data import fetch_store_data as curve
 from projects.curve.fetch_store_data import get_crvusd as crv_usd
-
+from projects.curve.pool_data import get_pools as curve_pools
 from projects.gearbox.fetch_data import fetch_store_data as gearbox
 from projects.morpho.fetch_data_morpho import fetch_data_metamorpho as morpho
 from projects.pendle.fetch_data import fetch_data as pendle
 from projects.spark.fetch_rates import get_all_data as spark
-from projects.yearn.get_yearn_data import fetch_yearn as yearn
+from projects.maker.get_data import get_data as maker
 from projects.fx.fetch_data import fetch_store_data as fx
 from projects.clearpool.fetch_data import fetch_store_rates as clearpool
 from projects.lido.get_rate import get_data_steth as lido
 from projects.rocketpool.fetch_data import get_data_reth as rocketpool
 from projects.ethena.get_data import get_data as ethena
-from projects.optimism.get_data import get_token_data as optimism
 from projects.silo.fetch_data import fetch_store_rates as silo
 from projects.stargate.get_data import get_data as stargate
 from projects.paypal.get_data import get_supply as paypal
-from projects.wBTC.get_data import get_store_data as wbtc
-from projects.jito.get_data import get_supply as jito
 from projects.avax.get_data import get_data as avax
-from projects.coinbase.get_data import token_data as coinbase
-from projects.coinbase.cbBTC.get_data import token_data as cbbtc
-from projects.wETH.get_data import token_data as weth
 from projects.liquity.get_data import get_token as liquity
 from projects.abracadabra.get_data import get_token as abra
-from projects.orca.get_data import get_info as orca
 from projects.ripple.get_data import token_data as ripple
-from projects.tron.get_data import token_data as tron
 from projects.uniswap.get_data import get_uniswap_pools as uniswap
-from projects.polkadot.get_data import get_token_data as polkadot
-from projects.cardano.get_data import token_data as cardano
-from projects.curve.pool_data import get_pools as curve_pools
-from projects.bitcoin.get_data import get_data as bitcoin
-from projects.fantom.get_data import get_data as fantom
-from projects.mantle.get_data import get_data as mantle
-from projects.maker.get_data import get_data as maker
-from projects.etherfi.get_data import get_data as etherfi
-from projects.bnb.get_data import get_data as bnb
-from projects.circle.get_data import get_data as circle
-from projects.tether.get_data import get_data as tether
-from projects.ethereum.get_data import get_data as ethereum
-from projects.threshold.get_data import get_token_data as tbtc
-from projects.lombard.get_data import get_token_data as lombart
-from projects.stacks.get_data import get_store_data as stacks
-from projects.venus.get_data import  get_store_data as venus
+from projects.venus.get_data import get_store_data as venus
 from projects.maple.get_yield_info import fetch_store_rates as maple
 
 from scripts.get_price_supply import get_price_supply
-
-
-from scripts.stablecoin_fetch import get_stablecoin_data as stablecoin
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -81,38 +65,30 @@ def fetch_store_data():
     """Fetch data for all defined projects."""
     tasks = {
         "Aave": aave,
+        "Compound": compound,
         "Curve": curve,
         "Curve Pools": curve_pools,
+        "CurveUSD": crv_usd,
         "Gearbox": gearbox,
-        "Maker DSR": spark,
-        "Maker": maker,
-        "Compound": compound,
         "Morpho": morpho,
-        # "Yearn": yearn,
         "Pendle": pendle,
+        "Spark": spark,
+        "Maker": maker,
         "FX": fx,
         "Clearpool": clearpool,
         "Lido": lido,
-        "RocketPool":rocketpool,
-        "Ethena":ethena,
-        "CurveUSD": crv_usd,
-        # "Optimism": optimism,
-        "Silo":silo,
-        "Stargate":stargate,
-        "Paypal":paypal,
-        "Avax":avax,
-        # "coinbase":coinbase,
-        "liquity": liquity,
-        "Abracadabra":abra,
-        "Ripple":ripple,
-        "Uniswap":uniswap,
-        # "Mantle":mantle,
-        # "EtherFi":etherfi,
-        # "Circle":circle,
-        # "Tether":tether,
-        # "Ethereum":ethereum,
-        "venus":venus,
-        "Maple":maple
+        "RocketPool": rocketpool,
+        "Ethena": ethena,
+        "Silo": silo,
+        "Stargate": stargate,
+        "Paypal": paypal,
+        "Avax": avax,
+        "Liquity": liquity,
+        "Abracadabra": abra,
+        "Ripple": ripple,
+        "Uniswap": uniswap,
+        "Venus": venus,
+        "Maple": maple,
     }
 
     with app.app_context():
